@@ -1,0 +1,150 @@
+.AddUser
+ {
+ /* Hidden by default *///display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding: 100px;
+    padding-left:600px;
+    padding-right:300px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    .adduser_head
+        {
+            color:black;
+            font-size: 20px;
+            width:810px;
+            background-color: rgba(244, 245, 248 ,1);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+
+            svg 
+            {
+                padding-left: 620px;
+                color: rgb(185, 183, 183);
+            }            
+
+        }
+    #content
+    {
+        margin:0px;
+        width:850px;
+        min-height:850px;
+        
+    }
+     #one-third
+     {
+       min-width:35%;
+       border-right:1.5px dashed rgb(223, 220, 220);
+       float:left;
+       height:555px;
+       background-color:white;
+       opacity:1;
+       .groupicon
+       {
+            margin-top: 20%;
+            height:60%;
+
+
+       }
+     }
+
+     #two-third
+     {
+         min-width:50%;
+         height:530px;
+         background-color:white;
+         padding-left: 47%;
+         padding-top: 3%;
+         p 
+         {
+             margin-top:2%;
+             margin-bottom: 1%;
+         }
+         .Name
+         {
+             padding: 1.5%;
+             width:70%;
+
+         }
+         textarea
+        {
+            padding: 1.5%;
+            width:80%;
+        } 
+        label
+        {
+            margin-bottom: 2%;
+            
+        } 
+        div
+        {
+            display: flex;
+            flex-direction: row;
+        }
+        .tblabel
+        {
+                margin-top: 100px;
+        }   
+        .textline
+        {
+            width:80%;
+            border-top: none;
+            border-left: none;
+            border-right:none;
+            margin-top:4%;
+            padding-bottom: 2%;
+            margin-bottom: 3%;
+            &:focus
+            {
+                outline: none;
+            }
+        }
+        .buttons
+        {
+            padding-left: 60%;
+        .cancelbutton
+        {
+            outline: none;
+            border: none;
+            padding: 12px 15px 12px 15px;
+            border-radius: 5px;
+            color: white;
+            background-color: rgb(185, 183, 183);          
+        }
+        .addclub
+        {
+            outline: none;
+            border: none;
+            padding:  12px 15px 12px 15px;
+            border-radius: 5px;
+            color: white;
+            background-color: #76618B;      
+            margin:2%;    
+        }
+    }
+     }
+     h4{
+         background-color:#f4f5f8;
+         margin:0px;
+         padding:20px
+
+     }
+     span 
+     {
+         label 
+         {
+             display: flex;
+             flex-direction: row;
+             justify-content:left;
+             input{
+                 display:inline;
+             }
+         }
+     }    
+}

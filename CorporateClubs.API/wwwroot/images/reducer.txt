@@ -1,0 +1,24 @@
+import {ActionReturnType,ActionsTypes} from './Actions'
+
+interface IntialStateType
+{
+    UserID:Number
+}
+
+const IntialState:IntialStateType=
+{
+    UserID:1
+}
+
+
+function ProfilePageReducer(State=IntialState,Action:ActionReturnType):IntialStateType
+{
+    switch(Action.ActionType)
+    {
+        case ActionsTypes.FetchProfileDetailsSuccess:
+            State.UserID=Action.Payload.UserID
+            return {...State}
+        default:
+            return {...State}
+    }
+}

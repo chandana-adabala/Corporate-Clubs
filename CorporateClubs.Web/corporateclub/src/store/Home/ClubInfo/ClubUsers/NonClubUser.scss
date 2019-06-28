@@ -1,0 +1,38 @@
+
+.nonUser{
+    height:65px;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row;
+
+    .nonUserprofilePic{ 
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        img{
+                width:24px;
+                height:24px;
+                border-radius: 50%;
+                border: 1px solid white;
+            }
+    }
+    .details{
+        display:flex;
+        flex-flow: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 1rem;
+        
+        
+        .userName{
+            width: 100%;
+            font-size: 0.9rem;
+        }
+            .email{
+                padding-top: 0.2rem;
+                font-size: 0.7rem;
+                color: grey;
+            }
+    }
+   
+}

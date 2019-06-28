@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+<form asp-action="uploadFile" asp-controller="Users" method="post">
+<input type="file" name="file" id="file"/>
+<input type="submit" value="upload"/>
+</form>
+</body>
+
+</html>

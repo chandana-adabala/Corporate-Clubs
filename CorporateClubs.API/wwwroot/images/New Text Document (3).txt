@@ -1,0 +1,1 @@
+server=(localdb)\\MSSQLLocalDB;AttachDbFileName=C:\\Users\\ramgirish.k\\CorporateClubs.mdf;database=CorporateClubs,Trusted_Connection=true
