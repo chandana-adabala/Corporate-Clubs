@@ -5,7 +5,7 @@ import { Icon } from 'react-icons-kit'
 import {match,Router,Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import IUser from '../../../../models/IUsers'
-import {UpdateUserDetails} from '../../Actions'
+import {UpdateUserDetails,FetchProfileDetails} from '../../Actions'
 
 
 
@@ -26,8 +26,9 @@ class ChangePersonalDetails extends React.Component<any,any>{
     debugger;
       }
 
-      handleSubmit(event)
+ async handleSubmit(event)
   {
+    debugger;
    const User:IUser={...this.props.User}
    console.log(User,"event")
    User.firstName=this.state.firstName;
@@ -41,7 +42,8 @@ class ChangePersonalDetails extends React.Component<any,any>{
    User.dOB=this.state.dOB;
    debugger;
    console.log(User)
-   this.props.dispatch(UpdateUserDetails(User,"personaldetails"));;
+   this.props.dispatch(UpdateUserDetails(User,"personaldetails"));
+  
   }
 
 
@@ -81,7 +83,7 @@ class ChangePersonalDetails extends React.Component<any,any>{
     console.log(this.state)
   }
     render()
-    {
+    {debugger;
         return(
                <div id="ChangePersonalDetailsModal" >
                <div id="content">
@@ -91,8 +93,8 @@ class ChangePersonalDetails extends React.Component<any,any>{
                <Icon size={'2em'} icon={ic_close}/>
                </Link>
                </div>
-               <div id="formbody" onSubmit={this.handleSubmit}>
-                <form>
+               <div id="formbody" >
+               
                     <label>First Name
                         <input type="text" name="firstName" value={this.state.firstName} onChange={this.handleChange} />
                         </label>
@@ -131,11 +133,11 @@ class ChangePersonalDetails extends React.Component<any,any>{
                         <input type="text" name="bloodGroup" value={this.state.bloodGroup} onChange={this.handleChange}/>
                         </label>
                         <div className="buttons">
-                                <button className="addclub" value="submit"><Link to="/Profile">Change</Link></button>
-                                <button className="cancelbutton" type="submit"><Link to="/Profile">Cancel</Link></button>
+                                <button className="addclub" onClick={this.handleSubmit}>Change</button>
+                                <button className="cancelbutton" ><Link to="/Profile">Cancel</Link></button>
                         </div>
 
-                    </form>
+           
                </div>
 
            

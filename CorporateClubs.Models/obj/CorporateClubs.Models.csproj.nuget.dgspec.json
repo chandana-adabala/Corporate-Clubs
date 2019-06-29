@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\chandana.a\\source\\repos\\CORPORATE CLUB\\web-team1\\CorporateClubs.Models\\CorporateClubs.Models.csproj": {}
+    "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj": {}
   },
   "projects": {
-    "C:\\Users\\chandana.a\\source\\repos\\CORPORATE CLUB\\web-team1\\CorporateClubs.Models\\CorporateClubs.Models.csproj": {
+    "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\chandana.a\\source\\repos\\CORPORATE CLUB\\web-team1\\CorporateClubs.Models\\CorporateClubs.Models.csproj",
+        "projectUniqueName": "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj",
         "projectName": "CorporateClubs.Models",
-        "projectPath": "C:\\Users\\chandana.a\\source\\repos\\CORPORATE CLUB\\web-team1\\CorporateClubs.Models\\CorporateClubs.Models.csproj",
+        "projectPath": "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj",
         "packagesPath": "C:\\Users\\chandana.a\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\chandana.a\\source\\repos\\CORPORATE CLUB\\web-team1\\CorporateClubs.Models\\obj\\",
+        "outputPath": "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -5,7 +5,7 @@ import {user} from 'react-icons-kit/icomoon/user';
 import { Interface } from 'readline';
 import { number } from 'prop-types';
 import {connect} from 'react-redux'
-import { FetchRequests } from './Actions/ClubActions';
+import { FetchRequests,makeAndCancelRequest,removeUser,addUserToPublicClub } from './Actions/ClubActions';
 
 
 
@@ -13,10 +13,30 @@ class Club extends React.Component<any,any>{
     componentDidMount()
   {
       console.log("did mount");
-      
-      this.props.dispatch(FetchRequests(this.props.club.clubID));
   }
   
+  getButtonType(clubMember)
+  {
+       if(clubMember.members==null)
+       {
+        if(clubMember.clubs.clubType=='Public-Open Club')
+         return <ConnectedJoinbtn clubID={clubMember.clubs.clubID} userID={2}/>
+        if(clubMember.clubs.clubType=='Public-Closed Club')
+         return <ConnectedRequestJoinbtn clubID={clubMember.clubs.clubID} userID={2}/>
+       }
+
+       if(clubMember.members!=null)
+       {
+           if(clubMember.members.ispersonBlock)
+           return <span/>
+       if(clubMember.members.isRequested)
+        return <ConnectedCancelRequest clubID={clubMember.clubs.clubID} userID={2}/>
+
+        if(!clubMember.members.isRequested)
+        return <ConnectedExitbtn clubID={clubMember.clubs.clubID} userID={2}/> 
+       }
+        
+  }
     render(){
 debugger;
 
@@ -24,7 +44,7 @@ debugger;
     return(
         <div className="club">
             <div className="clubhead">
-                <text className="title">{this.props.club.clubTitle}</text>
+                <text className="title">{this.props.clubMember.clubs.clubTitle}</text>
               <span className="menu"><Icon icon={ic_more_vert} size={30}/>
               <span className="menu-content">
                       <p>Report Club</p>
@@ -33,57 +53,51 @@ debugger;
                   </span>
             </div>
             
-            <div>  <img src={this.props.club.profilePic} alt="profile pic" className="groupicon" /></div>  
+            <div>  <img src={this.props.clubMember.clubs.profilePic} alt="profile pic" className="groupicon" /></div>  
             <div>
                 <p className="status">
-                    {this.props.club.description}
+                    {this.props.clubMember.clubs.description}
                 </p>
                 <p className="creation">
-                    Created By {this.props.users!=undefined?(this.props.users.map((user)=>{
-                        if(this.props.club.rowCreatedBy==user.userID)
-                            return <text>{user.displayName}</text>
-                    }
-                        )):(<span></span>)} on {new Date(this.props.club.rowCreatedOn).toDateString()}
+                     Created By {this.props.users.map(user=> {if(user.userID==this.props.clubMember.clubs.clubCreatedBy)return <text>{user.displayName}</text> })} on {new Date(this.props.clubMember.clubs.rowCreatedOn).toDateString()}}
                 </p>
             </div>
             <div className="members">
-                 <Icon icon={user} size={25}/><text>{this.props.club.members}</text>
-                 {this.props.members!=undefined?(this.props.members.map((member)=>{
-                        if(this.props.club.clubID==member.clubID)
-                            return  <span><Exitbtn/></span> 
-                    }
-                        )):(<span></span>)}
-                        
-                {this.props.requests!=undefined?(this.props.requests.map((request)=>{
-                        if(request.userID==2)
-                            return  <span><CancelRequest/></span> 
-                    }
-                        )):(<span>5985985</span>)}
+                 <span><Icon icon={user} size={25}/><text>{this.props.clubMember.count}</text></span>
+                 {this.getButtonType(this.props.clubMember)}
               
             </div>
         </div>
     );
 }
 }
-const Joinbtn: React.FC = () => {
-    return(
-        <button className="join">Join</button>
+class Joinbtn extends React.Component<any,any>{
+    render(){
+        return(
+        <button className="join" onClick={()=>this.props.dispatch(addUserToPublicClub(this.props.userID,this.props.clubID,this.props.userID))}>Join</button>
     )
+    }
 }
-const CancelRequest: React.FC = () => {
+class CancelRequest extends React.Component<any,any>{
+    render(){
     return(
-        <button className="cancelrequest">Cancel Request</button>
+        <button className="cancelrequest" onClick={()=>this.props.dispatch(makeAndCancelRequest(this.props.userID,this.props.clubID,this.props.userID))}>Cancel Request</button>
     )
+    }
 }
-const RequestJoinbtn: React.FC = () => {
+class RequestJoinbtn extends React.Component<any,any>{
+    render(){
     return(
-        <button className="join">Request Join</button>
+        <button className="join" onClick={()=>{debugger;this.props.dispatch(makeAndCancelRequest(this.props.userID,this.props.clubID,this.props.userID))}}>Request Join</button>
     )
+    }
 }
-const Exitbtn: React.FC = () => {
-    return(
-        <button className="exit">Exit Club</button>
+class Exitbtn extends React.Component<any,any>{
+    render(){
+        return(
+        <button className="exit" onClick={()=>this.props.dispatch(removeUser(this.props.userID,this.props.clubID,this.props.userID))}>Exit Club</button>
     )
+    }
 }
 function mapStateToProps(State)
   {
@@ -93,5 +107,11 @@ function mapStateToProps(State)
       requests:State.ClubReducer.requests,
     }
   }
+
+
+  const ConnectedJoinbtn=connect()(Joinbtn);
+  const ConnectedExitbtn=connect()(Exitbtn);
+  const ConnectedCancelRequest=connect()(CancelRequest);
+  const ConnectedRequestJoinbtn=connect()(RequestJoinbtn);
 
   export default connect(mapStateToProps)(Club);

@@ -24,5 +24,6 @@ namespace CorporateClubs.Services.Interfaces
         bool ReactiveUser(int u_id,string reason);
         void ChangeProfilePic(int userID, string url);
         bool UnblockUser(int u_id, int c_id);
+        Users GetUserByEmailId(string emailID);
     }
 }

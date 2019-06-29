@@ -270,6 +270,15 @@ namespace CorporateClubs.Services.Services
                 }
             }
         }
+
+        public Users GetUserByEmailId(string emailID)
+        {
+            using (var _context = new ModelContext())
+            {
+
+                return _context.Users.Single(u => u.Email == emailID && u.RowDeletedBy == null && u.IsActive == true);
+            }
+        }
     }
 
 

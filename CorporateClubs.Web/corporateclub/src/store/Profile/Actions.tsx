@@ -1,5 +1,6 @@
 import IUsers from '../../models/IUsers'
 import IClubs from '../../models/IClubs';
+import {getToken} from '../../Configure'
 export enum ActionsTypes {
     FetchDetailsStarted = "FetchDetailsStarted",
     FetchProfileDetails = "FetchProfileDetails",
@@ -8,14 +9,17 @@ export enum ActionsTypes {
     FetchClubDetails = "FetchInProgress",
     FetchFavouriteClubs = "FetchFavouriteClubs",
     ChangeSuccessful = "ChangesSuccessful",
-    ChangesFailed = "ChangesFailed"
+    ChangesFailed = "ChangesFailed",
+    RemoveMessages = "RemoveMessages"
+    
 }
 
 export interface PayloadType {
     User?: IUsers,
     Clubs?: IClubs[]
     FavClubs?: IClubs[]
-    error?: string
+    message?: string
+    error?:string
     IsLoading?: boolean
     Status?: string
 
@@ -82,12 +86,20 @@ function ChnageDetailsFailed(Payload: string): ActionReturnType {
         Payload: { Status: Payload }
     }
 }
-export function FetchProfileDetails(dispatch) {
+
+function RemoveMessageandError():ActionReturnType
+{
+    return {
+        type: ActionsTypes.RemoveMessages,
+        Payload: { message:'',error:''}
+    }
+}
+export function FetchProfileDetails() {
     return (dispatch) => {
         console.log("fetch call");
         debugger;
-    
-        return fetch('http://localhost:3333/api/users/getuserbyid/2')
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:64412/api/users/getuserbyid',{headers:headers})
             .then(data => data.json())
             .then(data => {
                 debugger;
@@ -105,13 +117,15 @@ export function FetchProfileDetails(dispatch) {
 
 
 export function UpdateUserDetails(user: IUsers, sender: string) {
+    debugger;
+    const headers = { 'Authorization': 'Bearer ' + getToken() };
     switch (sender) {
         case "contactdetails":
             return (dispatch) => {
                 debugger;
                 console.log("fetch call");
                 console.log(JSON.stringify(user));
-                return fetch('http://localhost:3333/api/users/changecontactdetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json" } })
+                return fetch('http://localhost:64412/api/users/changecontactdetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken()} })
                     .then(response => {
                         debugger;
                         if (!response.ok) {
@@ -127,7 +141,7 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
                 debugger;
                 console.log("fetch call");
                 console.log(JSON.stringify(user));
-                return fetch('http://localhost:3333/api/users/ChangePersonalDetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json" } })
+                return fetch('http://localhost:64412/api/users/ChangePersonalDetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken()} })
                     .then(response => {
                         debugger;
                         if (!response.ok) {
@@ -143,7 +157,7 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
                 debugger;
                 console.log("fetch call");
                 console.log(JSON.stringify(user));
-                return fetch('http://localhost:3333/api/users/ChangeProfessionalSummary', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json" } })
+                return fetch('http://localhost:64412/api/users/ChangeProfessionalSummary', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken() } })
                     .then(response => {
                         debugger;
                         if (!response.ok) {

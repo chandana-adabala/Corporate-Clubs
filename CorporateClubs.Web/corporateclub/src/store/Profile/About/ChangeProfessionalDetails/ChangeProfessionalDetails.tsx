@@ -75,19 +75,19 @@ class ChangeProfessionalDetails extends React.Component<any, any>{
                         </Link>
                     </div>
                     <div id="formbody">
-                        <form onSubmit={this.handleSubmit}>
+                       
                         
                             <label>professionalSummary </label>
                         <textarea name="address" value={this.state.profSum} rows={5} onChange={this.handleChange}/>
                            
                             <div className="buttons">
-                                <button className="addclub" value="submit"><Link to="/Profile">Change</Link></button>
-                                <button className="cancelbutton" type="submit"><Link to="/Profile">Cancel</Link></button>
+                                <button className="addclub" onClick={this.handleSubmit}><Link to="/Profile">Change</Link></button>
+                                <button className="cancelbutton" ><Link to="/Profile">Cancel</Link></button>
                             </div>
 
 
 
-                        </form>
+                       
                     </div>
 
 

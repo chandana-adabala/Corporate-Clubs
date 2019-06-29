@@ -9,3 +9,9 @@ C:\Users\chandana.a\source\repos\CORPORATE CLUB\web-team1\CorporateClubs.service
 C:\Users\chandana.a\source\repos\CORPORATE CLUB\web-team1\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.services.pdb
 C:\Users\chandana.a\source\repos\CORPORATE CLUB\web-team1\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.services.runtimeconfig.json
 C:\Users\chandana.a\source\repos\CORPORATE CLUB\web-team1\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.services.runtimeconfig.dev.json
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.csprojAssemblyReference.cache
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.csproj.CoreCompileInputs.cache
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.AssemblyInfoInputs.cache
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.AssemblyInfo.cs
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.dll
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.pdb

@@ -4,7 +4,118 @@ import {ic_close} from 'react-icons-kit/md/ic_close'
 import { Icon } from 'react-icons-kit'
 import {match,Router,Link} from 'react-router-dom'
 import axios from 'axios';
-interface Iprops
+import Avatar from 'react-avatar-edit'
+
+
+
+export default class ChangeProfilePicture extends React.Component<any,any>{
+    constructor(props) {
+        super(props)
+        this.state = {
+            selectedImage:null,
+          preview: null,
+          src:null,
+          name:null,
+        }
+        this.onCrop = this.onCrop.bind(this);
+        this.onClose = this.onClose.bind(this);
+        this.onFileLoad=this.onFileLoad.bind(this);
+      }
+      imageSelectHandler=(ev)=>{
+        console.log(ev.target.files[0]);
+        this.setState({
+            selectedImage:ev.target.files[0]
+        });
+        
+    }
+
+    imageUploadHandler=(ev)=>{
+        debugger;
+        console.log("image upload");
+        
+        const fd = new FormData();
+        fd.append('image',this.state.selectedImage);
+        console.log(fd.get('image'),this.state.selectedImage,this.state.selectedImage.name);
+        
+        axios.post('http://localhost:3333/api/users/api/UploadImage/4',
+        fd ,{headers: {'Content-Type': "multipart/form-data"}})
+        .then(res=>{
+            console.log(res);
+        })
+
+    }
+     
+      onClose() {
+        this.setState({preview: null,name:""})
+      }
+      
+      onCrop(preview) {
+        this.setState({preview})
+      }
+      onFileLoad(event)
+      {
+        console.log(event);
+        this.setState({
+            selectedImage:event.target.files[0]
+        });
+          this.setState({name:event.name})
+      }
+
+    render()
+    {
+      
+        return(
+               <div className="changeProfilePicture" >
+               <div id="content">
+               <div className="header">   
+               <h4>Add New Profile Picture</h4>
+               <Link to="/Profile">
+               <Icon size={'2em'} icon={ic_close}/>
+               </Link>
+               </div>
+               <div className="imageContent">
+               <div id="one-third">
+               <span className="preview">Preview</span>
+                <div className="previewImage">  
+               <img src={this.state.preview} alt="Preview" />
+               </div>
+               </div>
+
+
+               <div id="two-third">
+                  <span className="upload">uploaded from device: <span className="uploadFileName">{this.state.name}</span></span>
+               <Avatar
+          width={300}
+          height={200}
+          imageWidth={300}
+        
+          onCrop={this.onCrop}
+          onClose={this.onClose}
+          src={this.state.src}
+       
+          lineWidth={0}
+          cropColor	={"white"}
+          onFileLoad={this.onFileLoad}
+         
+
+        />
+         <div className="buttons">
+         <button className="cancelbutton" type="submit"><Link to="/Profile">Cancel</Link></button>
+        <button className="addclub" value="submit"  onClick={this.imageUploadHandler}><Link to="/Profile">Confirm</Link></button>
+                                
+          </div>
+               </div>
+
+           
+           </div>
+           </div>
+       </div>
+        )
+    }
+}
+
+
+{/* interface Iprops
 {
     userID?:number,
 name?:string,
@@ -85,4 +196,4 @@ export class ChangeProfilePicture extends React.Component<Iprops,any>{
                </div>
         )
     }
-}
+}*/}

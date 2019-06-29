@@ -1,21 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { createStore, applyMiddleware } from 'redux';
-import * as serviceWorker from './serviceWorker';
-import RootReducer from "./store/RootReducer";
-import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
+import { runWithAdal } from 'react-adal';
+import { authContext } from './Configure';
 
+const DO_NOT_LOGIN = false;
 
-const store = createStore(RootReducer,applyMiddleware(thunk));
+runWithAdal(authContext, () => {
 
-ReactDOM.render(<Provider store={store}>
-    <App/>
-</Provider>,document.getElementById('root'));
+  // eslint-disable-next-line
+  require('./indexApp.tsx');
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+},DO_NOT_LOGIN);

@@ -2,6 +2,8 @@ import IUsers from '../../../models/IUsers'
 import IClubs from '../../../models/IClubs'
 import IClubMembers from '../../../models/IClubMembers'
 import Club from '../Club';
+import IClubMembersList from '../../../models/IClubMembersList'
+import INewClub from '../../../models/INewClub'
 export enum Actions
 {
     ADD_CLUB='ADD_CLUB',
@@ -21,7 +23,12 @@ export enum Actions
     FETCH_STARTED='FETCH_STARTED',
     DETAILS_OF_USER='DETAILS_OF_USER',
     DETAILS_OF_MEMBERS='DETAILS_OF_MEMBERS',
-    REQUESTS_OF_CLUB='REQUESTS_OF_CLUB'
+    REQUESTS_OF_CLUB='REQUESTS_OF_CLUB',
+    FETCH_CLUB_MEMBERS_LIST='FETCH_CLUB_MEMBERS_LIST',
+    REQUEST_CHANGED='REQUEST_CHANGED',
+    USER_DELETED='USER_DELETED',
+    USER_ADDED='USER_ADDED'
+
 }
 export interface PayLoad
 {
@@ -31,6 +38,9 @@ export interface PayLoad
     allRequests?:{}
     users?:IUsers[],
     isLoading?:Boolean
+    clubMembersList?:IClubMembersList[],
+    message?:string
+
 
 }
 export interface AddClubPayLoad
@@ -152,11 +162,53 @@ function RequestsOfClub(payload:IClubMembers[]):ActionReturnType{
         payload:{requests:payload},
     }
 }
+
+function clubMembersListFetch(payload:IClubMembersList[]):ActionReturnType
+{
+    return{
+        type:Actions.FETCH_CLUB_MEMBERS_LIST,
+        payload:{clubMembersList:payload},
+    } 
+}
+
+function requestChanged(payload:string):ActionReturnType
+{
+    return{
+        type:Actions.REQUEST_CHANGED,
+        payload:{message:payload},
+    } 
+}
+
+function userDeleted(payload:string):ActionReturnType
+{
+    return{
+        type:Actions.USER_DELETED,
+        payload:{message:payload},
+    } 
+}
+
+function userAdded(payload:string):ActionReturnType
+{
+    return{
+        type:Actions.USER_ADDED,
+        payload:{message:payload},
+    } 
+}
+
+function clubAdded(payload:string):ActionReturnType
+{
+    return{
+        type:Actions.ADD_CLUB,
+        payload:{message:payload}
+    }
+}
+
+
 export const FetchClubs = UserID=>{
     debugger;
     return function(dispatch){
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/clubs/getallclubs/'+UserID)
+        return fetch('http://localhost:64412/api/clubs/getallclubs/'+UserID)
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -175,7 +227,7 @@ export const FetchUsers =()=>{
     return function(dispatch){
         debugger;
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/Users/GetAllUsers/2')
+        return fetch('http://localhost:64412/api/Users/GetAllUsers/2')
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -194,7 +246,7 @@ export const FetchMembers =()=>{
     return function(dispatch){
         debugger;
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/clubs/getallclubsofusers/2/2')
+        return fetch('http://localhost:64412/api/clubs/getallclubsofusers/2/2')
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -213,7 +265,7 @@ export const FetchRequests =ClubID=>{
     return function(dispatch){
         debugger;
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/clubs/getallrequestedmembers/2/'+ClubID)
+        return fetch('http://localhost:64412/api/clubs/getallrequestedmembers/2/'+ClubID)
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -226,5 +278,100 @@ export const FetchRequests =ClubID=>{
         })
         .catch(error=>dispatch(FetchFailed(error)))
 
+    }
+}
+
+export const FetchClubMembersList =()=>{
+    debugger;
+    return function(dispatch){
+        debugger;
+        console.log("fetch call");
+        return fetch('http://localhost:64412/api/clubs/getclubmemberslist/2')
+        .then(data => data.json())
+        .then(data =>{
+            if(data.message === "Not Found"){
+                throw new Error("User Not Found!");
+            }else{
+                console.log(data);
+                dispatch(clubMembersListFetch(data));
+            }
+        })
+        .catch(error=>dispatch(FetchFailed(error)))
+
+    }
+}
+
+export const makeAndCancelRequest=(requestID,clubID,userID)=>
+{
+    debugger;
+    return function(dispatch){
+        debugger;
+        return fetch('http://localhost:64412/api/clubs/MakeNCancelRequest/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
+        .then(response =>{
+            if(!response.ok){
+                throw new Error("User Not Found!");
+            }else{
+                console.log(response.status);
+                dispatch(requestChanged(response.statusText));
+            }
+        })
+        .catch(error=>dispatch(FetchFailed(error)))
+    }
+}
+
+
+export const removeUser=(requestID,clubID,userID)=>
+{
+    debugger;
+    return function(dispatch){
+        debugger;
+        return fetch('http://localhost:64412/api/clubs/removeuser/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
+        .then(response =>{
+            if(!response.ok){
+                throw new Error("User Not Found!");
+            }else{
+                console.log(response.status);
+                dispatch(userDeleted(response.statusText));
+            }
+        })
+        .catch(error=>dispatch(FetchFailed(error)))
+    }
+}
+
+export const addUserToPublicClub=(requestID,clubID,userID)=>
+{
+    debugger;
+    console.log('http://localhost:64412/api/clubs/addUserToPublicClub/'+requestID+'/'+clubID+'/'+userID, "HERo")
+    return function(dispatch){
+        debugger;
+        return fetch('http://localhost:64412/api/clubs/addUserToPublicClub/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
+        .then(response =>{
+            if(!response.ok){
+                throw new Error("User Not Found!");
+            }else{
+                console.log(response.status);
+                dispatch(userAdded(response.statusText));
+            }
+        })
+        .catch(error=>dispatch(FetchFailed(error)))
+    }
+}
+
+export function addClub(user,newClub:INewClub)
+{
+    debugger;
+    return function(dispatch){
+        debugger;
+         console.log(JSON.stringify(user));
+        return fetch('http://localhost:64412/api/clubs/addclub/'+user,{method:"post",body:JSON.stringify(newClub),headers:{'Content-Type': 'application/json'}})
+        .then(response =>{
+            if(!response.ok){
+                throw new Error("user added failed");
+            }else{
+                console.log(response.status);
+                dispatch(clubAdded(response.statusText));
+            }
+        })
+        .catch(error=>dispatch(FetchFailed(error)))
     }
 }

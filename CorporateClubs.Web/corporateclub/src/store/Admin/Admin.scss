@@ -54,7 +54,7 @@
 .dropdown
 {
     margin-top: 1em;
-    
+ 
     border-color: grey;
     &:focus
     {
@@ -102,13 +102,13 @@
   .dropbtn
   {
     display: inline-flex;
+    width:100%;
     justify-content: space-between;
     height:100%;
     text-align: left;
       color: grey;
       background-color: white;
       border :0.05px solid rgb(189, 187, 187);
-      width :10em;
       padding-top: 2em;
       padding-bottom: 2em;
       
@@ -117,7 +117,7 @@
   .dropdown2
 {
     margin-top: 1em;
-    
+    width:100%;
     border-color: grey;
     &:focus
     {
@@ -172,7 +172,7 @@
       color: grey;
       background-color: white;
       border :0.05px solid rgb(189, 187, 187);
-      width: 10em;
+     width:100%;
       display: inline-flex;
       justify-content: space-between;
       height:100%;

@@ -12,13 +12,13 @@ import Club from './Club';
 import { FetchClubs } from './Actions/ClubActions';
 import {FetchUsers,FetchMembers} from './Actions/ClubActions'
 import {connect} from 'react-redux';
-import { FetchRequests } from './Actions/ClubActions';
+import { FetchRequests,FetchClubMembersList} from './Actions/ClubActions';
 class Clubs extends React.Component<any,any>{
   componentDidMount()
-  {
-      this.props.dispatch(FetchClubs(4));
-      this.props.dispatch(FetchUsers());
-      this.props.dispatch(FetchMembers());
+  {   
+    this.props.dispatch(FetchUsers());
+      this.props.dispatch(FetchClubMembersList());
+      
   }
   render() {
     return(
@@ -77,9 +77,9 @@ class Clubs extends React.Component<any,any>{
   
 </div>
       <div className="club_tiles">  
-      {this.props.clubs.map((club)=>
+      {this.props.clubMembersList.map((clubMember)=>
       {
-      return <Club  club={club} users={this.props.users} members={this.props.members}/> }
+      return <Club  clubMember={clubMember} users={this.props.users}/> }
       )}
       </div>  
         </div>
@@ -94,6 +94,7 @@ function mapStateToProps(State)
        clubs:State.ClubReducer.clubs,
       users:State.ClubReducer.users,
       members:State.ClubReducer.members,
+      clubMembersList:State.ClubReducer.clubMembersList
     }
   }
 export default connect(mapStateToProps)(Clubs);

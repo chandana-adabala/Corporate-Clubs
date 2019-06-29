@@ -6,7 +6,7 @@ import { match, Router, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import IUser from '../../../../models/IUsers'
 import {DefaultUser} from '../../../../models/IUsers'
-import {UpdateUserDetails} from '../../Actions'
+import {UpdateUserDetails,FetchProfileDetails} from '../../Actions'
 interface Iprops {
     name?: string,
     status?: string,
@@ -46,7 +46,7 @@ class ChangeContactDetails extends React.Component<any, any>{
 // }
 
 
- handleSubmit(event)
+ async handleSubmit(event)
   {
    const User:IUser={...this.props.User}
    console.log(User,"event")
@@ -55,7 +55,8 @@ class ChangeContactDetails extends React.Component<any, any>{
    User.address=this.state.address;
    debugger;
    console.log(User)
-   this.props.dispatch(UpdateUserDetails(User,"contactdetails"));;
+   await this.props.dispatch(UpdateUserDetails(User,"contactdetails"));
+   await this.props.dispatch(FetchProfileDetails())
   }
 
 
@@ -82,7 +83,6 @@ class ChangeContactDetails extends React.Component<any, any>{
                         </Link>
                     </div>
                     <div id="formbody">
-                        <form onSubmit={this.handleSubmit}>
                             <label>WorkPhone
                         <input type="text" name="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange}/>
                             </label>
@@ -93,13 +93,12 @@ class ChangeContactDetails extends React.Component<any, any>{
                         <input type="text" name="address" value={this.state.address}onChange={this.handleChange} />
                             </label>
                             <div className="buttons">
-                                <button className="addclub" value="submit">Change</button>
-                                <button className="cancelbutton" type="submit"><Link to="/Profile">Cancel</Link></button>
+                                <button className="addclub" onClick={this.handleSubmit} value="submit"><Link to="/Profile">Change</Link></button>
+                                <button className="cancelbutton" ><Link to="/Profile">Cancel</Link></button>
                             </div>
 
 
 
-                        </form>
                     </div>
 
 
@@ -115,7 +114,9 @@ function mapStatetoProps(state) {
     console.log("changecontactDetails");
     debugger;
     return {
-        User: state.ProfilePageReducer.User
+        User: state.ProfilePageReducer.User,
+        error:state.ProfilePageReducer.error,
+        message:state.ProfilePageReducer.message,
     }
 
 

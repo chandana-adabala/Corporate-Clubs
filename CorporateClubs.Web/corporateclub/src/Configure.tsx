@@ -7,7 +7,7 @@ const adalConfig = {
  },
  postLogoutRedirectUri: window.location.origin,
  redirectUri: "http://localhost:3000",
- cacheLocation: undefined
+ cacheLocation: "string"
 };
 
 export const authContext = new AuthenticationContext(adalConfig);
