@@ -1,0 +1,83 @@
+
+
+.user{
+    height:65px;
+    border-bottom:1px dashed lightgray;
+    border-width: thin;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    .profilePic{ 
+        padding: 1rem;
+        img{
+                width:24px;
+                height:24px;
+                border-radius: 50%;
+                border: 1px solid white;
+            }
+    }
+    .userName{
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        .email{
+            padding-top: 0.2rem;
+            font-size: 0.7rem;
+            color: grey;
+        }
+    }
+    .lastMsgTime{
+        padding: 0.5rem;
+    font-size: 0.8rem;
+    color: grey;
+    }
+    .menu
+  {
+    float: right;
+    height: 1.5em;
+    width: 0.9rem;
+
+  }
+    .menu-content {
+        display: none;
+        font-size: 12px;
+        position: relative;
+        left: -99px;
+        background-color: #f9f9f9;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+        min-width: 116px;
+      }
+      
+      .menu-content p {
+        
+        color:rgb(85, 81, 81);
+        padding: 6px 8px;
+        
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        margin: 0px;
+        &:hover
+        {
+            background-color: rgb(206, 204, 204);
+            color: black
+        }
+      }
+      
+      .menu-content p:active {
+        background-color: #ddd;
+        color: black;
+      
+      }
+      
+      .menu:hover .menu-content {
+        display: block;
+        color:black;
+       
+    
+      }
+}

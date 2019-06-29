@@ -1,0 +1,52 @@
+.head
+{
+    position:fixed;
+    text-decoration-color: white;
+    color:white;
+    background-color: rgb(84, 62, 107);
+    min-height: 56px;
+    opacity: 0.8;
+    display:flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    
+.leftHead
+{   display:flex;
+    align-items: center;
+    margin-left: 1.2em;
+    .headname
+{
+    font-family:Microsoft JhengHei Light;
+    font-weight: lighter;
+    margin-left:2.5rem;
+    font-size:1.2rem;
+    margin-right: 0.5rem;
+}
+}
+
+.rightHead
+{
+    margin-right:2rem;
+    .profile
+    {
+        display:flex;
+        align-items: center;
+    }
+    
+    svg
+    {
+        margin-right:1.2rem;
+    
+    }
+
+    .profilepic
+    {
+        border-radius: 50%;
+        height:1.5rem;
+        width:1.5rem;
+        margin-right:0.6rem;
+    }
+}
+
+}

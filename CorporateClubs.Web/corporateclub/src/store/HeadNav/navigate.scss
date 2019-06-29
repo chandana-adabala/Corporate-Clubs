@@ -1,0 +1,93 @@
+$color:(
+    bg:#15171b,
+    content:#A4AAB2,
+    hover:#505661
+   
+);
+.nav{
+    background-color: map-get($color, bg );
+    height: 100%;
+    width: 6em;
+    position: fixed;
+    opacity:0.8;
+    padding-top: 3.2em;
+    display:flex;
+    flex-flow:row;
+  nav
+  {
+      width:100%;
+  }
+    .options{
+        width:100%;
+        
+            padding:0.7em 0em 0.7em 0em;
+       
+        &:hover
+            {
+                background-color: map-get($color,hover );
+                .home
+                {
+                    color: white
+                }
+                .label
+                {
+                    color: white;
+                 
+                }
+            }
+    }
+      .home, .label
+      {
+        font-size: 0.8em;
+        display:flex;
+        justify-content: center;
+        color:map-get($color , content );
+      }
+      .label{
+        margin:0.3rem 0rem 0rem 0rem
+      }
+     
+      display:flex;
+      justify-content: center;
+ 
+    
+    
+}
+// .home{
+//     color:map-get($color , content );
+  
+   
+    
+   
+    
+// }
+// .icon
+// {
+    
+   
+// }
+// .label
+// {
+//     font-size: 0.8em;
+//     margin: 0em;
+//     text-align: center;
+//     color: map-get($color , content );
+// }
+// .options
+// {
+//     padding-top: 1em;
+//     padding-bottom: 1em;
+//     &:hover
+//     {
+//         background-color: map-get($color,hover );
+//         .home
+//         {
+//             color: white
+//         }
+//         .label
+//         {
+//             color: white
+//         }
+//     }
+    
+// }

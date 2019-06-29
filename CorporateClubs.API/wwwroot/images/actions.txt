@@ -1,0 +1,51 @@
+export enum ActionsTypes
+{
+    FetchProfileDetailsSuccess="FetchProfileDetailsSuccess",
+    FetchProfileDetailsFalied="FetchProfileDetailsFailed"
+}
+
+interface Payload
+{
+    UserID:Number
+}
+
+export interface ActionReturnType
+{
+    ActionType:ActionsTypes
+    Payload:Payload
+}
+
+interface body
+{
+
+}
+
+function FetchProfileDetaisSuccess(Payload):ActionReturnType
+{
+    return{
+          ActionType:ActionsTypes.FetchProfileDetailsSuccess,
+          Payload:Payload
+    }
+}
+
+
+function FetchProfileDetailsFailed(Payload:Payload):ActionReturnType
+{
+    return{
+          ActionType:ActionsTypes.FetchProfileDetailsFalied,
+          Payload:Payload
+    }
+}
+
+
+function FetchProfileDetails(dispatch)
+{
+    return (dispatch)=>{
+        
+        fetch("https://localhost:44377/api/users/getuserbyid/1/1",
+        {
+            headers:{"Content-Type":"application/json"},
+            method:"post"
+        }).then((response)=>dispatch(FetchProfileDetaisSuccess(response.json())))
+    }
+}

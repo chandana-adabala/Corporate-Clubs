@@ -1,0 +1,16 @@
+{
+  "name": "corporate-clubs.web",
+  "version": "0.0.0",
+  "description": "CorporateClubs.Web",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  },
+  "dependencies": {
+    "create-react-app": "^3.0.1",
+    "node-sass": "^4.12.0",
+    "react-redux": "^7.0.3",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  }
+}

@@ -1,0 +1,23 @@
+.home-nav-options
+{
+    margin-left: 1.5em;
+    padding-bottom: 1em;
+
+    &:hover
+    {
+            
+            border-bottom: solid #76618B;
+            color: black;
+            
+    }
+}
+.home-nav
+{
+   
+    display:flex;
+    padding-top:1em;
+  background-color: #f7f7f7;
+    color: rgb(128,128,128);
+    
+}
+

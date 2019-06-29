@@ -1,0 +1,214 @@
+$homeBorderStyle: 0.08rem solid #dad9d9;
+$bodyColor:#e3e5e6;
+
+.clubInfo{
+
+    box-sizing: border-box;
+    .clubTitle{
+        min-height: 9.25rem;
+        border-bottom:$homeBorderStyle;
+        background-color: #fff;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: 20% 80%;
+        .appleIcon{
+            padding:1rem 0rem 0rem 4rem;
+
+        }
+        .clubDetails{
+            padding:1rem 0rem 0rem 4rem;
+            color: #000000bd;
+                .firstLine{
+                    font-size: 1.3rem;
+                    display:flex;
+                    justify-content: space-between;
+                        .i{
+                           
+                        }
+                }
+                .secondLine{
+                    font-size: 0.8rem;
+                    height: 2rem;
+                    padding: 1rem 11rem 1rem 0rem;
+                }
+                }
+
+                .thirdLine{
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0rem 1rem 0rem 0rem;
+                   
+                    font-size: 0.8rem;
+                    .addParticipant{
+                        padding-right: 1rem;
+                        .menu
+                        {
+                          float:right;
+                          height:1.5rem;
+                          width:1.5rem;
+                          
+                      
+                        }
+                        
+  .menu-content {
+    display: none;
+    position: relative;
+    right:13rem;
+    background-color: #f9f9f9;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    min-width: 16rem;
+   
+  }
+  
+  .menu-content p {
+    
+    color:rgb(85, 81, 81);
+    padding: 6px 8px;
+    
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    margin: 0px;
+    &:hover
+    {
+        background-color: gray;
+        color: black
+    }
+  }
+  
+  .menu-content p:active {
+    background-color: #ddd;
+    color: black;
+  
+  }
+  
+  .menu:hover .menu-content {
+    display: block;
+    color:black;
+   
+
+  }
+                    }
+                }
+        }
+    }
+    .clubBody{
+        max-height: 34.5rem;
+        background-color: $bodyColor;
+        display:grid;
+        grid-template-columns: 46% 54%;
+        box-sizing: border-box;
+        overflow-y:auto;
+       
+        .leftGrid{
+            .pa{
+                padding:1rem 1rem 1rem 2rem;
+            }
+            .participants{
+                background-color: #fff;
+                margin:0rem 1rem 2rem 2rem;
+                min-height: 5rem;
+                .searchBar{
+                    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+                    border-bottom:$homeBorderStyle;
+
+                    .searchBox{
+                        border:0;
+                        width:94%;
+                        height: 100%;
+                        padding-left:0.4rem;
+                        &:focus{
+                            outline:none
+                        }
+                    }
+                }
+            }
+
+        }
+        .rightGrid{
+            display: grid;
+            grid-template-rows: 52px auto 52px 248px;
+            box-sizing: border-box;
+            .re{
+                padding:1rem 1rem 1rem 2rem;
+            }
+            .requests{
+                background-color: #fff;
+                margin:0rem 1rem 1rem 2rem;
+                min-height: 2rem;
+    
+            }
+            .gs{
+                padding: 1rem 1rem 1rem 2rem;
+            }
+            .groupSettings{
+                background-color: #fff;
+                margin:0rem 1rem 0rem 2rem;
+                min-height: 2rem;
+                padding:1rem 2rem 1rem 2rem;
+              
+
+                .clubType{
+                    display: flex;
+                    justify-content:space-between;
+                    align-items: center;
+                    
+                   .ms-Toggle-thumb, .thumb-37{
+                            background-color: #6b446b;
+                        }
+                        .pill-36{
+                            background-color: #b998b9;
+                        }
+                        .pill-41{
+                            border: 0;
+                            background-color: #c0c0c0;
+                        }
+                        .thumb-42{
+                            background-color: #adadad;
+                        }
+                   
+                    
+                    }
+                    .subType{
+                        
+                        .field-54::after, .field-49::after,.field-54::before, .field-49::before{
+                           border-color: #6b446b;
+                        }
+                    }
+                    .mute{
+                        display: flex;
+                        align-items: center;
+                        font-size: small;
+                        padding: 1rem 0rem 1rem 0rem;
+                        .text-62{
+                            display:none;
+                        }
+                       
+                    }
+                     .clubActions{
+
+                        button{
+                            color: #966596;
+                            border-radius: 0.3rem;
+                            border-color: #966596;
+                            background-color: white;
+                            padding: 0.5rem;
+                            margin: 1rem 1rem 1rem 1rem;
+                        }
+                     }          
+               
+            }
+
+        }
+    }
+    .clubBody::-webkit-scrollbar {
+        width: 0.3rem;
+      }
+      
+      .clubBody::-webkit-scrollbar-thumb {
+        border-radius: 0.8rem;
+        background-color: #cccccc;
+      }

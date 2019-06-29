@@ -1,0 +1,399 @@
+.content
+{
+  
+.heading
+{
+    font-size: 1.7em;
+    color: rgb(20, 19, 19);
+    font-weight: 300;
+    padding-bottom: 2em;
+    display: inline-flex;
+    justify-content: space-between;
+    
+  
+}
+.adduser
+{
+      background-color: #76618B;
+      color:white;
+      border-radius: 10%;
+      font-size: 1em;
+      padding: 0.5em;
+      float:right;
+}
+  padding: 2em;
+  
+.buttonbar
+{
+  display: inline-flex;
+ 
+  height: 3.5em;
+  width: 100%;
+}
+
+.dropdown
+{
+    margin-top: 0em;
+    flex:1;
+    border-color: grey;
+    &:focus
+    {
+        outline: none
+    }
+}
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    
+  }
+  
+  .dropdown-content p {
+    float: none;
+    color:grey;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    &:hover
+    {
+        background-color: gray;
+        color: black
+    }
+  }
+  
+  .dropdown-content p:active {
+    background-color: #ddd;
+    color: black;
+  
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+    color:black;
+   
+
+  }
+
+  .dropbtn
+  {
+    display: inline-flex;
+    justify-content: space-between;
+    height: 100%;
+    text-align: left;
+      color: grey;
+      background-color: white;
+      border :0.05px solid rgb(189, 187, 187);
+    width:100%;
+      
+      
+  }
+  .datecont
+  {
+    flex: 1;
+    margin-right:0px; 
+    padding-top: 1em;
+    padding-bottom: 1.52em;
+    text-align: left;
+      color: grey;
+      background-color: white;
+      border :0.05px solid rgb(189, 187, 187);
+  }
+  .date
+  {
+    
+   
+      border: 0px solid white;
+      padding-left: 4%;
+      margin-right: 0%;
+      width:90%;
+      margin-left: 5%;
+  }
+ 
+  .dropdown2
+{
+    flex:1;
+    border-color: grey;
+    &:focus
+    {
+        outline: none
+    }
+}
+  
+  .dropdown-content2 {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: 12%;
+    
+    
+  }
+  
+  .dropdown-content2 p {
+    float: none;
+    color:grey;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    &:hover
+    {
+        background-color: gray;
+        color: black
+    }
+  }
+  
+  .dropdown-content2 p:active 
+  {
+  .dropdown-content2  {
+    background-color: #ddd;
+    color: black;
+   
+  }
+}
+  
+  .dropdown2:hover .dropdown-content2 {
+    display: block;
+    color:black;
+    
+  }
+  
+  .dropbtn2
+  {
+      
+      color: grey;
+      
+      background-color: white;
+      border :0.05px solid rgb(189, 187, 187);
+      display: inline-flex;
+      justify-content: space-between;
+      
+      width: 100%;
+      padding-top:1.5em;
+      padding-bottom: 1.45em; 
+      text-align: left;
+      down
+      {
+        float :right;
+      }
+      
+  }
+  
+
+  down
+  {
+    float: left;
+  }
+  .search
+  {
+      background-color: white;
+      display:inline-block;
+      border :0.05px solid rgb(189, 187, 187);
+      padding-left: 1em;
+      flex: 10;
+      span
+      {
+        color: grey;
+        background-color: white;
+        padding-right: 0.5em;
+        height: 100%;
+        
+      }
+      input
+      {
+          
+          margin-top: 1.42em;
+          margin-bottom: 1.5em;
+          color: grey;
+          border :0px solid white;
+          &:focus
+        {
+        outline: none
+        }
+
+      }
+
+    }
+  .navbar2
+  {
+    justify-content:left;
+    display: inherit;
+    
+  }
+  .reset
+  {
+      color: grey;
+      background-color: white;
+      border :0.05px solid rgb(189, 187, 187);
+      flex: 1;
+      padding-top:1.39em;
+      padding-bottom: 1.3em;
+      
+  }
+  .club
+  {
+    border:1px solid rgb(212, 206, 206);
+    
+    margin-top:2em;
+    margin-right:2em;
+    background-color: white;
+    display:flex;
+    flex-direction:column;
+    width:20em;
+    height: 22em;
+  
+  .title
+  {
+    color: black;
+    font-size: 1.5em;
+    padding-left: 0.5em;
+    
+
+  }
+  .clubhead
+  {
+    
+    color: grey;
+    padding:0.5em;
+
+  }
+  .menu
+  {
+    float:right;
+    height:1.5em;
+    width:1.5em;
+
+  }
+  .groupicon
+  {
+    height: 9em;
+    width:20em;
+    object-fit: scale-down;
+  }
+  .status
+  {
+    font-size: 0.9em;
+    padding:0.5em;
+    color:rgb(36, 34, 34);
+    margin: 0px;
+    background-color: white;
+
+  }
+  .creation
+  {
+    font-size: 0.7em;
+    padding-left:0.5em;
+    color: grey;
+    margin: 0px;
+
+  }
+  .members
+  {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    color:grey;
+    margin:0.5em;
+    margin:1em;
+    vertical-align: center;
+    text
+    {
+      font-size: 0.8em;
+      float :center;
+    }
+    span
+    {
+      float:right;
+    }
+  }
+}
+  .join
+  {
+    
+    padding:0.8em;
+    padding-left: 1.2em;
+    padding-right: 1.2em;
+    border-radius: 12px;
+    background-color:#76618B;
+    color:white;
+    border: 0px;
+
+  }
+  .cancelrequest
+  {
+    
+    padding:0.8em;
+    padding-left: 1.2em;
+    padding-right: 1.2em;
+    border-radius: 12px;
+    background-color:grey;
+    color:rgb(209, 209, 209);
+    
+    
+
+  }
+  .exit
+  {
+    padding:0.8em;
+    padding-left: 1.2em;
+    padding-right: 1.2em;
+    border-radius: 12px;
+    background-color: white;
+    border:0.5px solid rgb(3, 161, 252);
+    color: rgb(3, 161, 252)
+  }
+  .club_tiles
+  {
+    display:flex;
+    flex-wrap: wrap;
+  }
+
+  .menu-content {
+    display: none;
+    position: relative;
+    right:8em;
+    background-color: #f9f9f9;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    width: 9em;
+  }
+  
+  .menu-content p {
+    
+    color:rgb(85, 81, 81);
+    padding: 6px 8px;
+    
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    margin: 0px;
+    &:hover
+    {
+        background-color:rgb(233,238,240);
+        color: black
+    }
+  }
+  
+  .menu-content p:active {
+    background-color:rgb(233,238,240);
+    color: black;
+  
+  }
+  
+  .menu:hover .menu-content {
+    display: block;
+    color:black;
+   
+
+  }
+}
+ 
