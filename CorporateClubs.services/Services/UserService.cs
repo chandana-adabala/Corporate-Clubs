@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CorporateClubs.Services.Models;
 using CorporateClubs.Services.Interfaces;
+using CorporateClubs.Models.Models;
+
 
 namespace CorporateClubs.Services.Services
 {
@@ -77,14 +79,21 @@ namespace CorporateClubs.Services.Services
 
 
         //TO add user in the application
-        public int AddUser(Users user)
+        public int AddUser(FrontEndUsers newUserInfo)
         {
             using (var _context = new ModelContext())
             {
+                Users userModel=new Users();
+                userModel.FirstName = newUserInfo.FirstName;
+                userModel.LastName = newUserInfo.LastName;
+                userModel.MiddleName = newUserInfo.MiddleName;
+                userModel.DisplayName = newUserInfo.DisplayName;
+                userModel.MobileNumber = newUserInfo.MobileNumber;
+                userModel.Email = newUserInfo.Email;
 
-                _context.Users.Add(user);
+                _context.Users.Add(userModel);
                 if (_context.SaveChanges() == 1)
-                    return user.UserID;
+                    return userModel.UserID;
                 return 0;
             }
 

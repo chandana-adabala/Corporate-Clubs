@@ -4,7 +4,8 @@ import {ic_close} from 'react-icons-kit/md/ic_close'
 import { Icon } from 'react-icons-kit'
 import {match,Router,Link} from 'react-router-dom'
 import axios from 'axios';
-import Avatar from 'react-avatar-edit'
+import Avatar from 'react-avatar-edit';
+
 
 
 
@@ -20,6 +21,7 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
         this.onCrop = this.onCrop.bind(this);
         this.onClose = this.onClose.bind(this);
         this.onFileLoad=this.onFileLoad.bind(this);
+        this.b64toBlob=this.b64toBlob.bind(this);
       }
       imageSelectHandler=(ev)=>{
         console.log(ev.target.files[0]);
@@ -29,15 +31,32 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
         
     }
 
+
+//convert base 64 to blob
+ b64toBlob(dataURI) {
+    
+    var byteString = atob(dataURI.split(',')[1]);
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: 'image/jpeg' });
+}
+
+
+
     imageUploadHandler=(ev)=>{
         debugger;
+        var imageBlob:Blob=this.b64toBlob(this.state.preview)
         console.log("image upload");
         
         const fd = new FormData();
-        fd.append('image',this.state.selectedImage);
-        console.log(fd.get('image'),this.state.selectedImage,this.state.selectedImage.name);
+        fd.append('image',imageBlob);
+        // console.log(fd.get('image'),this.state.selectedImage,this.state.selectedImage.name);
         
-        axios.post('http://localhost:3333/api/users/api/UploadImage/4',
+        axios.post('http://localhost:3333/api/users/UploadImage/7',
         fd ,{headers: {'Content-Type': "multipart/form-data"}})
         .then(res=>{
             console.log(res);
@@ -48,18 +67,28 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
       onClose() {
         this.setState({preview: null,name:""})
       }
+
+
       
       onCrop(preview) {
         this.setState({preview})
       }
-      onFileLoad(event)
-      {
-        console.log(event);
-        this.setState({
-            selectedImage:event.target.files[0]
-        });
-          this.setState({name:event.name})
-      }
+
+
+
+    //   onFileLoad(event){
+    //     console.log(event);
+    //     this.setState({
+    //         selectedImage:event.target.files[0]
+    //     });
+    //       this.setState({name:event.name})
+    //   }
+
+    onFileLoad(event)
+    {
+        this.setState({name:event.name})
+    }
+
 
     render()
     {

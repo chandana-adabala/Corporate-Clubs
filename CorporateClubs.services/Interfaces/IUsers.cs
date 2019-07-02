@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using CorporateClubs.Services.Models;
-
+using CorporateClubs.Models.Models;
 namespace CorporateClubs.Services.Interfaces
 {
     public interface IUsers
     {
-        int AddUser(Users user);
+        int AddUser(FrontEndUsers user);
         bool BlockUser(int u_id, int c_id);
         void ChangeRole(int u_id, string role);
         bool Change_Contact_details(int u_id, string MobileNumber, string Email, string Address);

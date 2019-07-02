@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CorporateClubs.Services.Models;
+using CorporateClubs.Models.Models;
 
 namespace CorporateClubs.Services.Services
 {
@@ -32,7 +34,8 @@ namespace CorporateClubs.Services.Services
 
             using (var _context = new ModelContext())
             {
-                var clubs = _context.ClubMembers.Where(c => c.UserID == userID ).Select(c => new {
+                var clubs = _context.ClubMembers.Where(c => c.UserID == userID).Select(c => new
+                {
                     clubid = c.ClubID
                 });
                 foreach (var club in clubs)
@@ -52,11 +55,11 @@ namespace CorporateClubs.Services.Services
 
             using (var _context = new ModelContext())
             {
-                    Club club = _context.Clubs.Single(c => c.ClubID == clubID);
+                Club club = _context.Clubs.Single(c => c.ClubID == clubID);
 
-                    return club;
-                
-                
+                return club;
+
+
 
             }
         }
@@ -65,17 +68,19 @@ namespace CorporateClubs.Services.Services
         public List<Club> GetFavClubsOfUser(int userID)
         {
 
-            List<Club> ClubDetails=new List<Club>();
+            List<Club> ClubDetails = new List<Club>();
 
 
             using (var _context = new ModelContext())
             {
-                var clubs= _context.ClubMembers.Where(c => c.UserID == userID && c.IsFavouriteClub == true).Select(c => new {
+                var clubs = _context.ClubMembers.Where(c => c.UserID == userID && c.IsFavouriteClub == true).Select(c => new
+                {
                     clubid = c.ClubID
                 });
-                foreach( var  club in clubs){
+                foreach (var club in clubs)
+                {
                     Club GetClub = _context.Clubs.Single(c => c.ClubID == club.clubid);
-                    ClubDetails.Add(GetClub);    
+                    ClubDetails.Add(GetClub);
                 }
 
                 return ClubDetails;
@@ -87,7 +92,7 @@ namespace CorporateClubs.Services.Services
         {
             using (var _context = new ModelContext())
             {
-                return _context.ClubMembers.Where(c => c.ClubID == clubID && c.IsRequested == true && c.RowDeletedBy==null).ToList();
+                return _context.ClubMembers.Where(c => c.ClubID == clubID && c.IsRequested == true && c.RowDeletedBy == null).ToList();
             }
         }
         public List<Users> GetNonClubMembers(int clubID)
@@ -95,8 +100,8 @@ namespace CorporateClubs.Services.Services
             List<Users> clubUsers = new List<Users>();
             using (var _context = new ModelContext())
             {
-                var clubMem = _context.ClubMembers.Where(c => c.ClubID == clubID && c.RowDeletedBy == null).Select(u =>new { userid=u.UserID });
-                foreach(var mem in clubMem)
+                var clubMem = _context.ClubMembers.Where(c => c.ClubID == clubID && c.RowDeletedBy == null).Select(u => new { userid = u.UserID });
+                foreach (var mem in clubMem)
                 {
                     Users user = _context.Users.Single(u => u.UserID == mem.userid);
                     clubUsers.Add(user);
@@ -109,7 +114,7 @@ namespace CorporateClubs.Services.Services
         public List<Club> GetInactiveClubs()
         {
             using (var _context = new ModelContext())
-            { return _context.Clubs.Where(c => c.ClubDeactiveBy != null&& c.RowDeletedBy!=null).ToList(); }
+            { return _context.Clubs.Where(c => c.ClubDeactiveBy != null && c.RowDeletedBy != null).ToList(); }
         }
 
 
@@ -137,7 +142,7 @@ namespace CorporateClubs.Services.Services
                 {
                     return 0;
                 }
-               
+
             }
 
         }
@@ -169,7 +174,7 @@ namespace CorporateClubs.Services.Services
                 }
                 catch (Exception e)
                 {
-                    
+
                     return false;
                 }
                 return true;
@@ -182,7 +187,7 @@ namespace CorporateClubs.Services.Services
             {
                 try
                 {
-                    ClubMembers club = _context.ClubMembers.Single(u => u.UserID == addedUserID && u.ClubID == clubID && u.RowDeletedBy==null);
+                    ClubMembers club = _context.ClubMembers.Single(u => u.UserID == addedUserID && u.ClubID == clubID && u.RowDeletedBy == null);
                     club.IsRequested = false;
                     _context.SaveChanges();
 
@@ -235,7 +240,7 @@ namespace CorporateClubs.Services.Services
             }
         }
 
-        public bool DeleteClub(int clubID, int currentUserID,string reason)
+        public bool DeleteClub(int clubID, int currentUserID, string reason)
         {
             using (var _context = new ModelContext())
             {
@@ -267,7 +272,7 @@ namespace CorporateClubs.Services.Services
 
 
 
-        public bool MakeClubActive(int clubID,string reason)
+        public bool MakeClubActive(int clubID, string reason)
         {
             using (var _context = new ModelContext())
             {
@@ -410,7 +415,7 @@ namespace CorporateClubs.Services.Services
             }
         }
 
-        public bool ChangeClubType(string clubType,int clubID, int currentUserID)
+        public bool ChangeClubType(string clubType, int clubID, int currentUserID)
         {
             using (var _context = new ModelContext())
             {
@@ -479,6 +484,69 @@ namespace CorporateClubs.Services.Services
                     return true;
                 }
             }
+        }
+
+
+        public List<ClubMembersList> GetClubMembersListofUser(int userID)
+        {
+            using (var _context = new ModelContext())
+            {
+                try
+                {
+                    var clubMembersList = _context.Clubs.GroupJoin(_context.ClubMembers.Where(c => c.UserID == userID && c.RowDeletedBy != null), c => c.ClubID, m => m.ClubID, (clubs, members) => new { clubs, members }).SelectMany(z => z.members.DefaultIfEmpty(), (club, member) => new
+                    {
+                        club = club.clubs,
+                        member = member,
+                        count = _context.ClubMembers.Where(c => c.ClubID == club.clubs.ClubID).Count()
+
+                    })
+                    .ToList();
+
+                    List<ClubMembersList> modifiedClubMembersList = new List<ClubMembersList>();
+                    foreach (var clubMember in clubMembersList)
+                    {
+                        ClubMembersList modifiedClubMember = new ClubMembersList();
+                        modifiedClubMember.clubs = new FrontEndClub();
+                        modifiedClubMember.members = new FrontEndClubMembers();
+                        modifiedClubMember.clubs.ClubID = clubMember.club.ClubID;
+                        modifiedClubMember.clubs.ClubTitle = clubMember.club.ClubTitle;
+                        modifiedClubMember.clubs.ProfilePic = clubMember.club.ProfilePic;
+                        modifiedClubMember.clubs.ClubType = clubMember.club.ClubType;
+                        modifiedClubMember.clubs.ClubCreatedBy = clubMember.club.ClubCreatedBy;
+                        modifiedClubMember.clubs.CreatedOn = clubMember.club.CreatedOn;
+                        modifiedClubMember.clubs.Description = clubMember.club.Description;
+                        modifiedClubMember.clubs.ClubCreatedBy = clubMember.club.ClubCreatedBy;
+                        modifiedClubMember.clubs.RowDeletedBy = clubMember.club.RowDeletedBy;
+
+
+                        if (clubMember.member != null)
+                        {
+                            modifiedClubMember.members.ClubID = clubMember.member.ClubID;
+                            modifiedClubMember.members.UserID = clubMember.member.UserID;
+                            modifiedClubMember.members.Role = clubMember.member.Role;
+                            modifiedClubMember.members.IsPersonBlock = clubMember.member.IsPersonBlock;
+                            modifiedClubMember.members.IsRequested = clubMember.member.IsRequested;
+                            modifiedClubMember.members.UserID = clubMember.member.UserID;
+                        }
+
+                        else
+                        {
+                            modifiedClubMember.members = null;
+                        }
+
+
+                        modifiedClubMembersList.Add(modifiedClubMember);
+                        
+                    }
+                    return modifiedClubMembersList;
+
+                }
+                catch (Exception E)
+                {
+                    return new List<ClubMembersList>();
+                }
+            }
+
         }
     }
 }

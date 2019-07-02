@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CorporateClubs.Services.Models;
+using CorporateClubs.Models.Models;
 
 namespace CorporateClubs.Services.Interfaces
 {
@@ -29,5 +30,6 @@ namespace CorporateClubs.Services.Interfaces
         bool AcceptRequest(int clubID, int addedUserID, int currentUserID);
         bool RejectRequest(int clubID, int addedUserID, int currentUserID);
         bool ChangeClubType(string clubType,int clubID, int currentUserID);
+        List<ClubMembersList> GetClubMembersListofUser(int userID);
     }
 }

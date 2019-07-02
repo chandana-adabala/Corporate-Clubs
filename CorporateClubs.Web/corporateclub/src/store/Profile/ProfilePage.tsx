@@ -19,7 +19,7 @@ import { FetchProfileDetails } from './Actions'
 import { PayloadType } from './Actions'
 import { connect } from 'react-redux';
 import { getToken } from '../../Configure'
-import { Alert } from 'reactstrap';
+// import { Alert } from 'reactstrap';
 interface IProps {
     userID: number,
     displayName: string,
@@ -89,14 +89,14 @@ class Profile_Head extends React.Component<any, any>{
         console.log(getToken(), "usertoken");
         return (
             <div className="ProfilePage">
-                <div className="alertWrapper">
+                {/* <div className="alertWrapper">
                     <Alert color="success" className="alert" isOpen={this.state.message != '' ? true : false} toggle={this.onDismiss}>
                         {this.state.message}
                     </Alert>
                     <Alert color="danger" className="alert" isOpen={this.state.error != '' ? true : false} toggle={this.onDismiss}>
                         {this.state.error}
                     </Alert>
-                </div>
+                </div> */}
                 <div id="info">
                     <div id="profile" className="component">
                         <Link to="/Profile/ChangeProfilePicture">

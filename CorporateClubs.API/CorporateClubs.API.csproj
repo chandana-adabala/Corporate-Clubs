@@ -45,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CorporateClubs.Models\CorporateClubs.Models.csproj" />
     <ProjectReference Include="..\CorporateClubs.services\CorporateClubs.Services.csproj" />
   </ItemGroup>
 
