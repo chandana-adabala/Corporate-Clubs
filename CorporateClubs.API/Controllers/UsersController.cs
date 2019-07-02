@@ -385,7 +385,7 @@ namespace CorporateClubs.API.Controllers
                     {
                         await image.CopyToAsync(stream);
                     }
-                    _users.ChangeProfilePic(userID, url + name);
+                    _users.ChangeProfilePic(userID, url + '/'+ name);
                 }
 
 

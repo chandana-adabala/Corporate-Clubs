@@ -100,7 +100,7 @@ class Profile_Head extends React.Component<any, any>{
                 <div id="info">
                     <div id="profile" className="component">
                         <Link to="/Profile/ChangeProfilePicture">
-                            <img id="image" src={require('./damon.png')} />
+                            <img id="image" src={this.props.profilePic} />
                         </Link>
                     </div>
                     <div id="name" className="component" >

@@ -5,11 +5,12 @@ import { Icon } from 'react-icons-kit'
 import {gear} from 'react-icons-kit/fa/gear'
 import {chatbubbles} from 'react-icons-kit/ionicons/chatbubbles';
 import {iosBell} from 'react-icons-kit/ionicons/iosBell' 
+import { render } from 'react-dom';
 let size=25;
-const Head: React.FC = () => {
+class Head extends React.Component<any,any> {
     
-    
-  
+    render()
+    {
     return (
     <div className="head">
        
@@ -21,22 +22,26 @@ const Head: React.FC = () => {
 
         </div>
         <div className="rightHead">
-               <Profile/>
+               <Profile UserDisplayName={this.props.UserDisplayName} profilePic={this.props.profilePic}/>
         </div>
       </div>
       );
+    }
   }
 
-  export const Profile: React.FC = () => {
-    var name="name";
-    var source="source"
-    return(
+  export class Profile extends React.Component<any,any>  {
 
+    
+    render()
+    {
+    return(
+   
         <span className="profile">
           <Icon size={size} icon={iosBell} className="notify" />
-          <img src={require('./damon.png')} alt="profile pic" className="profilepic" />
-          <text>{name}</text>
+          <img src={this.props.profilePic} alt="profile pic" className="profilepic" />
+          <text>{this.props.UserDisplayName}</text>
         </span>
     );
+    }
   } 
   export default Head;

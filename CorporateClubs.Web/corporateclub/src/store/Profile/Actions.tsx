@@ -1,6 +1,7 @@
 import IUsers from '../../models/IUsers'
 import IClubs from '../../models/IClubs';
 import {getToken} from '../../Configure'
+const url="http://localhost:3333/"
 export enum ActionsTypes {
     FetchDetailsStarted = "FetchDetailsStarted",
     FetchProfileDetails = "FetchProfileDetails",
@@ -99,7 +100,7 @@ export function FetchProfileDetails() {
         console.log("fetch call");
         debugger;
         const headers = { 'Authorization': 'Bearer ' + getToken() };
-        return fetch('http://localhost:64412/api/users/getuserbyid',{headers:headers})
+        return fetch(url+'api/users/getuserbytoken',{headers:headers})
             .then(data => data.json())
             .then(data => {
                 debugger;
@@ -125,7 +126,7 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
                 debugger;
                 console.log("fetch call");
                 console.log(JSON.stringify(user));
-                return fetch('http://localhost:64412/api/users/changecontactdetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken()} })
+                return fetch(url+'api/users/changecontactdetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken()} })
                     .then(response => {
                         debugger;
                         if (!response.ok) {
@@ -141,7 +142,7 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
                 debugger;
                 console.log("fetch call");
                 console.log(JSON.stringify(user));
-                return fetch('http://localhost:64412/api/users/ChangePersonalDetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken()} })
+                return fetch(url+'api/users/ChangePersonalDetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken()} })
                     .then(response => {
                         debugger;
                         if (!response.ok) {
@@ -157,7 +158,7 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
                 debugger;
                 console.log("fetch call");
                 console.log(JSON.stringify(user));
-                return fetch('http://localhost:64412/api/users/ChangeProfessionalSummary', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken() } })
+                return fetch(url+'api/users/ChangeProfessionalSummary', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken() } })
                     .then(response => {
                         debugger;
                         if (!response.ok) {
@@ -176,7 +177,7 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
 export function FetchFavouriteClubDetails(dispatch) {
     return (dispatch) => {
         console.log("fetch call");
-        return fetch('https://localhost:44377/api/getallclubsofusers/2/2')
+        return fetch(url+'api/getallclubsofusers/2/2')
             .then(data => data.json())
             .then(data => {
                 if (data.message === "Not Found") {
