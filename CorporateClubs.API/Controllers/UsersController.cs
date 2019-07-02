@@ -4,18 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CorporateClubs.services.Models;
-using CorporateClubs.Services.DBModels;
+using CorporateClubs.Services.Models;
 using CorporateClubs.Services.Services;
 using CorporateClubs.Services.Interfaces;
 using System.Net.Http;
 using Microsoft.AspNetCore.Cors;
 using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
+using CorporateClubs.Models.Models;
 
 namespace CorporateClubs.API.Controllers
 {
-
     [Authorize]
     [EnableCors("allowmyorgin")]
     [Route("api/[controller]")]
@@ -24,13 +24,16 @@ namespace CorporateClubs.API.Controllers
     {
         private readonly IUsers _users;
         private readonly IClubs _clubs;
-        //private readonly IHttpContextAccessor _httpContextAccessor;
-        public UsersController(IUsers users,IClubs clubs)
+        private IHostingEnvironment _env;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public UsersController(IUsers users, IClubs clubs, IHostingEnvironment env)
         {
             _users = users;
             _clubs = clubs;
+            _env = env;
 
         }
+
 
         // GET: api/Users/GetAllUsersByClub/clubID
 
@@ -38,46 +41,68 @@ namespace CorporateClubs.API.Controllers
         [Route("getallusersbyclub/{clubID:int}")]
         public ActionResult<List<ClubMembers>> GetAllUsersByClub(int clubID)
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsUser(requestedUser.UserID))
+            try
             {
-                return _users.GetAllUsersByClub(clubID);
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
+                if (_users.IsUser(requestedUser.UserID))
+                {
+                    return _users.GetAllUsersByClub(clubID);
+                }
+                return Unauthorized();
             }
-            return Unauthorized();
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
+
 
         // GET: api/Users/GetAllRequestedUsers/clubID
         [HttpGet]
         [Route("getallrequestedusers/{clubID:int}")]
         public ActionResult<List<ClubMembers>> GetAllRequestedUsers(int clubID)
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsUser(requestedUser.UserID))
+            try
             {
-                if (_users.GetAllRequestedUsers(clubID).Count() != 0)
-                    return _users.GetAllRequestedUsers(clubID);
-                return NoContent();
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
+                if (_users.IsUser(requestedUser.UserID))
+                {
+                    if (_users.GetAllRequestedUsers(clubID).Count() != 0)
+                        return _users.GetAllRequestedUsers(clubID);
+                    return NoContent();
+                }
+                return Unauthorized();
             }
-            return Unauthorized();
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         // GET: api/Users/GetAllUsers
         [HttpGet]
-        [Route("getallusers")]
-        public ActionResult<List<Users>> GetAllUsers()
+        [Route("getallusers/{requestID:int}")]
+        public ActionResult<List<Users>> GetAllUsers(int requestID)
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsUser(requestedUser.UserID))
+            try
             {
-                if (_users.GetAllUsers().Count() != 0)
-                    return _users.GetAllUsers();
-                return NotFound();
+                if (_users.IsUser(requestID))
+                {
+                    if (_users.GetAllUsers().Count() != 0)
+                        return _users.GetAllUsers();
+                    return NotFound();
+                }
+                return Unauthorized();
             }
-            return Unauthorized();
+
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
+
 
         // GET: api/Users/Delete/userID
         [HttpPut]
@@ -86,14 +111,23 @@ namespace CorporateClubs.API.Controllers
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsAdmin(requestedUser.UserID))
+            try
             {
-                if (_users.DeleteUser(idReason.userID, requestedUser.UserID, idReason.reason))
-                    return Ok();
-                return NotFound();
+                if (_users.IsAdmin(requestedUser.UserID))
+                {
+                    if (_users.DeleteUser(idReason.userID, requestedUser.UserID, idReason.reason))
+                        return Ok();
+                    return NotFound();
 
+                }
+                return Unauthorized();
             }
-            return Unauthorized();
+
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+
         }
 
         // GET: api/Users/DeactiveUser/userID
@@ -103,14 +137,22 @@ namespace CorporateClubs.API.Controllers
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsAdmin(requestedUser.UserID))
+            try
             {
-                if (_users.DeactiveUser(idReason.userID,idReason.reason))
-                    return Ok();
-                return NotFound();
+                if (_users.IsAdmin(requestedUser.UserID))
+                {
+                    if (_users.DeactiveUser(idReason.userID, idReason.reason))
+                        return Ok();
+                    return NotFound();
+                }
+                return Unauthorized();
             }
-            return Unauthorized();
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
+
 
 
         [HttpPost]
@@ -119,54 +161,78 @@ namespace CorporateClubs.API.Controllers
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsAdmin(requestedUser.UserID))
+            try
             {
-                int userID = _users.AddUser(userDetails.user);
-                foreach(int i in userDetails.clubs)
+                if (_users.IsAdmin(requestedUser.UserID))
                 {
-                    _clubs.Addmember(i, userID, requestedUser.UserID);
+                    int userID = _users.AddUser(userDetails.user);
+                    foreach (int i in userDetails.clubs)
+                    {
+                        _clubs.Addmember(i, userID, requestedUser.UserID);
+                    }
+                    if (userID != 0)
+                        return userID.ToString();
+                    else
+                        BadRequest();
                 }
-                if (userID != 0)
-                    return userID.ToString();
-                else
-                    BadRequest();
+                return Unauthorized();
             }
-            return Unauthorized();
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
+
 
 
         [HttpPut]
         [Route("changepersonaldetails")]
         public ActionResult ChangePersonalDetails([FromBody]Users user)
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsUser(requestedUser.UserID) && requestedUser.UserID == user.UserID)
+            try
             {
-                if (_users.Change_Personal_Details(user.UserID, user.FirstName, user.LastName, user.Gender, user.MartialStatus, user.About, user.MiddleName, user.DOB, user.BloodGroup) == true)
-                    return Ok();
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
+                if (_users.IsUser(requestedUser.UserID) && requestedUser.UserID == user.UserID)
+                {
+                    if (_users.Change_Personal_Details(user.UserID, user.FirstName, user.LastName, user.Gender, user.MartialStatus, user.About, user.MiddleName, user.DOB, user.BloodGroup) == true)
+                        return Ok();
+                    return BadRequest();
+                }
+                else
+                    return Unauthorized();
+            }
+            catch (Exception e)
+            {
                 return BadRequest();
             }
-            else
-                return Unauthorized();
         }
+
 
 
         [HttpPut]
         [Route("changecontactdetails")]
         public ActionResult ChangeContactDetails([FromBody] Users user)
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsUser(requestedUser.UserID) && requestedUser.UserID == user.UserID)
+
+            try
             {
-                if (_users.Change_Contact_details(user.UserID, user.MobileNumber, user.Email, user.Address) == true)
-                    return Ok();
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
+                if (_users.IsUser(requestedUser.UserID) && requestedUser.UserID == user.UserID)
+                {
+                    if (_users.Change_Contact_details(user.UserID, user.MobileNumber, user.Email, user.Address) == true)
+                        return Ok();
+                    return BadRequest();
+                }
+
+                else
+                    return Unauthorized();
+            }
+            catch (Exception e)
+            {
                 return BadRequest();
             }
-
-            else
-                return Unauthorized();
         }
 
 
@@ -174,36 +240,53 @@ namespace CorporateClubs.API.Controllers
         [Route("changeprofessionalsummary")]
         public ActionResult ChangeProfessionalSummary([FromBody] Users user)
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsUser(requestedUser.UserID) && requestedUser.UserID == user.UserID)
+
+            try
             {
-                if (_users.Change_professional_Summary(user.UserID, user.ProfSum) == true)
-                    return Ok();
-                else
-                    return BadRequest();
+
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
+                if (_users.IsUser(requestedUser.UserID) && requestedUser.UserID == user.UserID)
+                {
+                    if (_users.Change_professional_Summary(user.UserID, user.ProfSum) == true)
+                        return Ok();
+                    else
+                        return BadRequest();
+                }
+                return Unauthorized();
             }
-            return Unauthorized();
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
 
         [HttpPut]
         [Route("blockuser/{userID:int}/{clubID:int}")]
-        public ActionResult BlockUser( int userID, int clubID)
+        public ActionResult BlockUser(int userID, int clubID)
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsAdmin(requestedUser.UserID))
+            try
             {
-                if (_users.BlockUser(userID, clubID) == true)
-                    return Ok();
-                else
-                    return BadRequest();
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
+                if (_users.IsAdmin(requestedUser.UserID))
+                {
+                    if (_users.BlockUser(userID, clubID) == true)
+                        return Ok();
+                    else
+                        return BadRequest();
+                }
+
+
+                return Unauthorized();
             }
-
-
-            return Unauthorized();
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
+
 
 
 
@@ -211,80 +294,139 @@ namespace CorporateClubs.API.Controllers
         [Route("reactivateuser")]
         public ActionResult ReactivateUser(userTypechangeReason idReason)
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsAdmin(requestedUser.UserID))
-                if (_users.ReactiveUser(idReason.userID,idReason.reason) == true)
 
-                    return Ok();
-                else
-                    return BadRequest();
+            try
+            {
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
+                if (_users.IsAdmin(requestedUser.UserID))
+                    if (_users.ReactiveUser(idReason.userID, idReason.reason) == true)
+
+                        return Ok();
+                    else
+                        return BadRequest();
 
 
-            return Unauthorized();
+                return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut]
         [Route("unblockuser{userID:int}/{clubID:int}")]
-        public ActionResult UnBlockUser( int userID, int clubID)
+        public ActionResult UnBlockUser(int userID, int clubID)
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsAdmin(requestedUser.UserID))
-                if (_users.UnblockUser(userID, clubID) == true)
-                    return Ok();
-                else
-                    return BadRequest();
+            try
+            {
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
+                if (_users.IsAdmin(requestedUser.UserID))
+                    if (_users.UnblockUser(userID, clubID) == true)
+                        return Ok();
+                    else
+                        return BadRequest();
 
 
-            return Unauthorized();
+                return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+
+
+        [HttpGet]
+        [Route("getuserbyid/{userID:int}")]
+        public ActionResult<Users> GetUserById(int userID)
+        {
+            try
+            {
+                Users User = _users.GetUserById(userID);
+                if (User != null)
+                    return User;
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+
+
+        }
+
+
+
+
+        [HttpPost]
+        [Route("UploadImage/{userID:int}")]
+        public async Task<string> UploadImage(IFormFile image, int userID)
+        {
+            var webRoot = _env.WebRootPath;
+
+
+
+            try
+            {
+
+                if (image.Length > 0)
+                {
+                    var url = "http://localhost:3333/images";
+                    var fileType = '.' + image.ContentType.Split('/')[1];
+                    var name = "user" + userID + fileType;
+                    var file1 = System.IO.Path.Combine(webRoot, name);
+                    using (var stream = new FileStream(file1, FileMode.Create))
+                    {
+                        await image.CopyToAsync(stream);
+                    }
+                    _users.ChangeProfilePic(userID, url + name);
+                }
+
+
+                //    var name = img.FileName;
+                //
+
+            }
+            catch (Exception e)
+            {
+                return $"Error: {e.Message}";
+            }
+
+            return "File uploaded!";
         }
 
 
         [HttpGet]
-        [Route("getuserbyid")]
-        public ActionResult<Users> GetUserById()
+        [Route("getuserbytoken")]
+        public ActionResult<Users> GetUserByToken()
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users User = _users.GetUserByEmailId(uniqueId);
-            if (User != null)
-                return User;
-            return BadRequest();
+            try
+            {
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users user = _users.GetUserByEmailId(uniqueId);
+
+                if (User != null)
+                    return user;
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
 
 
         }
-        
+
+
+
+
     }
 }
 
 
 
-        //[HttpPost]
-        //[Route("UploadFiles/{userID:int}")]
-        //public  bool Upload(int userID)
-        //*/*/
-        //    try
-        //    {
 
-
-        //    var s = _httpContextAccessor.HttpContext.Request.GetBufferlessInputStream(true);
-        //    var fileuploadPath = ConfigurationManager.AppSettings["FileUploadLocation"];
-
-        //    var provider = new MultipartFormDataStreamProvider(fileuploadPath);
-        //    var content = new StreamContent(HttpContext.Current.Request.GetBufferlessInputStream(true));
-        //    foreach (var header in Request.Content.Headers)
-        //    {
-        //        content.Headers.TryAddWithoutValidation(header.Key, header.Value);
-        //    }
-
-        //    await content.ReadAsMultipartAsync(provider);
-        //  return true;
-        //}
-        //catch (Exception)
-        //{
-        //    return false;
-        //}
-
-//    }
-//    }
-//}

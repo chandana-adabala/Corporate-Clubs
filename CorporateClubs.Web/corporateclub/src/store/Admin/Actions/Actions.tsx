@@ -229,7 +229,7 @@ export const FetchClubs = UserID=>{
     debugger;
     return function(dispatch){
         console.log("fetch call");
-        return fetch('http://localhost:64412/api/clubs/getInactiveClubs/'+UserID)
+        return fetch('http://localhost:3333/api/clubs/getInactiveClubs/'+UserID)
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -248,7 +248,7 @@ export const fetchAllClubs = UserID=>{
     debugger;
     return function(dispatch){
         console.log("fetch call");
-        return fetch('http://localhost:64412/api/clubs/getallclubs/'+UserID)
+        return fetch('http://localhost:3333/api/clubs/getallclubs/'+UserID)
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -268,7 +268,7 @@ export const FetchUsers =()=>{
     return function(dispatch){
         debugger;
         console.log("fetch call");
-        return fetch('http://localhost:64412/api/Users/GetAllUsers/2')
+        return fetch('http://localhost:3333/api/Users/GetAllUsers/2')
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -291,7 +291,7 @@ export const deleteClub =(clubID,reason)=>{
         debugger;
            var jsonObj={clubID:clubID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch('http://localhost:64412/api/clubs/deleteclub/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
+        return fetch('http://localhost:3333/api/clubs/deleteclub/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -313,7 +313,7 @@ export const reactiveClub =(clubID,reason)=>{
         debugger;
            var jsonObj={clubID:clubID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch('http://localhost:64412/api/clubs/makeclubactive/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
+        return fetch('http://localhost:3333/api/clubs/makeclubactive/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
         .then(data => data.json())
         .then(data =>{
             if(data.status !=200){
@@ -336,7 +336,7 @@ export const activateUser=(userID,reason)=>
         debugger;
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch('http://localhost:64412/api/users/reactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
+        return fetch('http://localhost:3333/api/users/reactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -358,7 +358,7 @@ export const deactivateUser=(userID,reason)=>
         debugger;
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch('http://localhost:64412/api/users/deactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
+        return fetch('http://localhost:3333/api/users/deactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -378,7 +378,7 @@ export const deleteUser=(userID,reason)=>
         debugger;
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch('http://localhost:64412/api/users/deleteuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
+        return fetch('http://localhost:3333/api/users/deleteuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -399,7 +399,7 @@ export function addUser(user,clubs,invitation)
     return function(dispatch){
         debugger;
          console.log(JSON.stringify(user));
-        return fetch('http://localhost:64412/api/users/adduser/2',{method:"post",body:JSON.stringify(user_details),headers:{'Content-Type': 'application/json'}})
+        return fetch('http://localhost:3333/api/users/adduser/2',{method:"post",body:JSON.stringify(user_details),headers:{'Content-Type': 'application/json'}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("user added failed");

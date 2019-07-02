@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using CorporateClubs.Services.DBModels;
-using static CorporateClubs.Services.Services.ClubsService;
-using CorporateClubs.services.Models;
+using CorporateClubs.Services.Models;
+using CorporateClubs.Models.Models;
 
 namespace CorporateClubs.Services.Interfaces
 {
@@ -15,6 +14,7 @@ namespace CorporateClubs.Services.Interfaces
         List<Club> GetAllClubsOfUser(int userID);
         Club GetClubById(int clubID);
         List<ClubMembers> GetAllReqMembers(int clubID);
+        List<Users> GetNonClubMembers(int clubID);
         List<Club> GetFavClubsOfUser(int clubID);
         List<Club> GetInactiveClubs();
         bool IsClubPrivate(int clubID);
@@ -31,6 +31,5 @@ namespace CorporateClubs.Services.Interfaces
         bool RejectRequest(int clubID, int addedUserID, int currentUserID);
         bool ChangeClubType(string clubType,int clubID, int currentUserID);
         List<ClubMembersList> GetClubMembersListofUser(int userID);
-        bool AddUserToPublicClub(int clubID, int UserID);
     }
 }

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using CorporateClubs.services.Models;
-using CorporateClubs.Services.DBModels;
-
-
+using CorporateClubs.Services.Models;
+using CorporateClubs.Models.Models;
 namespace CorporateClubs.Services.Interfaces
 {
     public interface IUsers
     {
-        int AddUser(Users user);
+        int AddUser(FrontEndUsers user);
         bool BlockUser(int u_id, int c_id);
         void ChangeRole(int u_id, string role);
         bool Change_Contact_details(int u_id, string MobileNumber, string Email, string Address);
@@ -19,11 +17,13 @@ namespace CorporateClubs.Services.Interfaces
         List<ClubMembers> GetAllRequestedUsers(int u_id);
         List<Users> GetAllUsers();
         List<ClubMembers> GetAllUsersByClub(int c_id);
-        Users GetUserByEmailId(string emailID);
+        Users GetUserById(int u_id);
         bool IsAdmin(int u_id);
         bool IsDeleted(int u_id);
         bool IsUser(int u_id);
         bool ReactiveUser(int u_id,string reason);
+        void ChangeProfilePic(int userID, string url);
         bool UnblockUser(int u_id, int c_id);
+        Users GetUserByEmailId(string emailID);
     }
 }

@@ -1,12 +1,13 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace CorporateClubs.Services.DBModels
+namespace CorporateClubs.Services.Models
 {
     public class ModelContext:DbContext
     {
@@ -18,7 +19,11 @@ namespace CorporateClubs.Services.DBModels
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=Intdev-pc;Database=VisionCorporateClubs;User ID=Intern;Password=P@ssw0rd;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.services\\appsettings.json")
+            .Build();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("CorporateClubsDB"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -5,8 +5,8 @@ import {ic_refresh} from 'react-icons-kit/md/ic_refresh';
 import {search} from 'react-icons-kit/fa/search';
 import './Connections.scss'
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
-// import "react-datepicker/dist/react-datepicker.css";
-// import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 import User from './User';
 import {connect} from 'react-redux';
 class Connections extends React.Component<any,any>{
@@ -49,7 +49,7 @@ class Connections extends React.Component<any,any>{
                   
                   </span>
                   <span className="datecont">
-                  {/* <DatePicker placeholderText='Date Created' className="date"/> */}
+                  <DatePicker placeholderText='Date Created' className="date"/>
                   </span>
                     
                   <span className="search">

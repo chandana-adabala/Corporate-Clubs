@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CorporateClubs.Services.DBModels;
-using CorporateClubs.services.Models;
+using CorporateClubs.Services.Models;
 using CorporateClubs.Services.Interfaces;
+using CorporateClubs.Models.Models;
+
 
 namespace CorporateClubs.Services.Services
 {
@@ -78,14 +79,21 @@ namespace CorporateClubs.Services.Services
 
 
         //TO add user in the application
-        public int AddUser(Users user)
+        public int AddUser(FrontEndUsers newUserInfo)
         {
             using (var _context = new ModelContext())
             {
+                Users userModel=new Users();
+                userModel.FirstName = newUserInfo.FirstName;
+                userModel.LastName = newUserInfo.LastName;
+                userModel.MiddleName = newUserInfo.MiddleName;
+                userModel.DisplayName = newUserInfo.DisplayName;
+                userModel.MobileNumber = newUserInfo.MobileNumber;
+                userModel.Email = newUserInfo.Email;
 
-                _context.Users.Add(user);
+                _context.Users.Add(userModel);
                 if (_context.SaveChanges() == 1)
-                    return user.UserID;
+                    return userModel.UserID;
                 return 0;
             }
 
@@ -125,7 +133,7 @@ namespace CorporateClubs.Services.Services
                 Users user = _context.Users.Single(u => u.UserID == u_id);
                 user.MobileNumber = MobileNumber;
                 user.Email = Email;
-                user.Address = Address;
+                //user.Address=Address
                 if (_context.SaveChanges() == 1)
                     return true;
                 return false;
@@ -239,6 +247,39 @@ namespace CorporateClubs.Services.Services
             }
         }
 
+        public Users GetUserById(int u_id)
+        {
+            using (var _context = new ModelContext())
+            {
+                try
+                {
+
+                    return _context.Users.Single(u => u.UserID == u_id && u.RowDeletedBy == null && u.IsActive == true);
+                }
+                catch(Exception e)
+                {
+                    return null;
+                }
+            }
+        }
+
+        public void ChangeProfilePic(int userID,string url)
+        {
+            using(var _context = new ModelContext())
+            {
+                try
+                {
+                    Users user = _context.Users.Single(u => u.UserID == userID && u.RowDeletedBy == null && u.IsActive == true);
+                    user.ProfilePic = url;
+                    _context.SaveChanges();
+                }
+                catch(Exception e)
+                {
+                    
+                }
+            }
+        }
+
         public Users GetUserByEmailId(string emailID)
         {
             using (var _context = new ModelContext())
@@ -247,7 +288,6 @@ namespace CorporateClubs.Services.Services
                 return _context.Users.Single(u => u.Email == emailID && u.RowDeletedBy == null && u.IsActive == true);
             }
         }
-
     }
 
 

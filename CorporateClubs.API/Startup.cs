@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using CorporateClubs.Services.DBModels;
+using CorporateClubs.Services.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -21,6 +21,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using CorporateClubs.Services.Interfaces;
 using CorporateClubs.Services.Services;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace CorporateClubs.API
 {
@@ -30,8 +32,9 @@ namespace CorporateClubs.API
         {
             Configuration = configuration;
         }
+      
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -41,9 +44,10 @@ namespace CorporateClubs.API
 
             //services.AddDbContextPool<ModelContext>(opts=> 
             //opts.UseSqlServer(Configuration.GetConnectionString("CorporateClubsDB")));
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IClubs, ClubsService>();
             services.AddSingleton<IUsers, UserService>();
+            services.AddDirectoryBrowser();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors(c =>
             {
@@ -68,6 +72,7 @@ namespace CorporateClubs.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -81,9 +86,21 @@ namespace CorporateClubs.API
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseCors("allowmyorgin");
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
+                RequestPath = new PathString("/images")
+            });
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
+                RequestPath = new PathString("/images")
+            });
             app.UseMvc();
         }
     }
 }
-
-

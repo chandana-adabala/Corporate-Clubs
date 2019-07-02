@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CorporateClubs.API.Controllers
 {
+    
+   
 
-    [Authorize]
-    [EnableCors("allowmyorgin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
