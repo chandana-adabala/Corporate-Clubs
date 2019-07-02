@@ -192,7 +192,8 @@ export const addNewMembersError=(error:string)=>{
 export const fetchFavClubs = UserID=>{
     return function(dispatch){
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/clubs/getallfavclubsofuser/4/4')
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/getallfavclubsofuser/',{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -211,7 +212,8 @@ export const fetchFavClubs = UserID=>{
 export const fetchMyClubs = UserID=>{
     return function(dispatch){
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/clubs/getallclubsofusers/4/4')
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/getallclubsofusers/',{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -229,7 +231,8 @@ export const fetchMyClubs = UserID=>{
 export const fetchMyClubInfo = clubID=>{
     return function(dispatch){
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/clubs/getclubbyid/4/'+clubID)
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/getclubbyid/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -270,7 +273,7 @@ export const fetchAllUsers = ()=>{
     return function(dispatch){
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
-        return fetch('http://localhost:3333/api/users/getallusers/4')
+        return fetch('http://localhost:3333/api/users/getallusers/',{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -289,7 +292,7 @@ export const fetchClubRequestedMembers = clubID=>{
     return function(dispatch){
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
-        return fetch('http://localhost:3333/api/clubs/getallrequestedmembers/4/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
+        return fetch('http://localhost:3333/api/clubs/getallrequestedmembers/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -306,7 +309,8 @@ export const fetchClubRequestedMembers = clubID=>{
 }
 export const fetchNonClubMembers = clubID=>{
     return function(dispatch){
-        return fetch('http://localhost:3333/api/clubs/getnonclubmembers/4/'+clubID)
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/getnonclubmembers/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -323,8 +327,8 @@ export const fetchNonClubMembers = clubID=>{
 
 export const acceptRequest = (clubID,userID,currentUserID=4)=>{
     return function(dispatch){
-      
-        return fetch('http://localhost:3333/api/clubs/acceptrequest/'+currentUserID+'/'+clubID+'/'+userID,{method:'post'})
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/acceptrequest/'+clubID+'/'+userID,{method:'post',headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
            // debugger;
             if (!response.ok) {
@@ -339,8 +343,8 @@ export const acceptRequest = (clubID,userID,currentUserID=4)=>{
 
 export const rejectRequest = (clubID,userID,currentUserID=4)=>{
     return function(dispatch){
-      
-        return fetch('http://localhost:3333/api/clubs/rejectrequest/'+currentUserID+'/'+clubID+'/'+userID,{method:'post'})
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/rejectrequest/'+clubID+'/'+userID,{method:'post',headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
             //debugger;
             if (!response.ok) {
@@ -355,8 +359,8 @@ export const rejectRequest = (clubID,userID,currentUserID=4)=>{
 
 export const changeClubType=(clubType,clubID,currentUserID=4)=>{
     return function(dispatch){
-
-        return fetch('http://localhost:3333/api/clubs/changeclubtype/'+currentUserID+'/'+clubID+'/'+clubType,{method:'put'})
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/changeclubtype/'+clubID+'/'+clubType,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response => {
             if(!response.ok){
                 throw new Error("change failed");
@@ -368,9 +372,10 @@ export const changeClubType=(clubType,clubID,currentUserID=4)=>{
     }
 }
 
-export const muteNunmuteClub=(clubID,currentUserId=4)=>{
+export const muteNunmuteClub=(clubID)=>{
     return function(dispatch){
-        return fetch('http://localhost:3333/api/clubs/makeclubmuteUnmute/'+currentUserId+'/'+clubID,{method:'put'})
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/makeclubmuteUnmute/'+clubID,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response=>{
             if(!response.ok){
                 throw new Error("change failed");
@@ -388,7 +393,8 @@ export const addNewMembers=(clubID,userList,requestID)=>{
         Members:userList
     }
         return function(dispatch){
-            return fetch('http://localhost:3333/api/clubs/addmembers/'+requestID,{method:'post',body:JSON.stringify(addUser),headers:{'Content-Type': 'application/json'}})
+            const headers = { 'Authorization': 'Bearer ' + getToken() };
+            return fetch('http://localhost:3333/api/clubs/addmembers/',{method:'post',body:JSON.stringify(addUser),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
             .then(reponse=>{
                 if(!reponse.ok){
                     throw new Error("Add Failed");

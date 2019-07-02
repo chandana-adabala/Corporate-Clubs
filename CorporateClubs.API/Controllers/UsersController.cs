@@ -83,12 +83,14 @@ namespace CorporateClubs.API.Controllers
 
         // GET: api/Users/GetAllUsers
         [HttpGet]
-        [Route("getallusers/{requestID:int}")]
-        public ActionResult<List<Users>> GetAllUsers(int requestID)
+        [Route("getallusers/")]
+        public ActionResult<List<Users>> GetAllUsers()
         {
             try
             {
-                if (_users.IsUser(requestID))
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
+                if (_users.IsUser(requestedUser.UserID))
                 {
                     if (_users.GetAllUsers().Count() != 0)
                         return _users.GetAllUsers();

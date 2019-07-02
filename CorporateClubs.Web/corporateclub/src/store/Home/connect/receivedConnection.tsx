@@ -3,7 +3,7 @@ import {Icon} from 'react-icons-kit';
 import {library} from 'react-icons-kit/icomoon/library';
 import {ic_mail} from 'react-icons-kit/md/ic_mail';
 import {phone} from 'react-icons-kit/icomoon/phone'
-export default class receivedConnection extends React.Component<any,any>{
+export default class ReceivedConnection extends React.Component<any,any>{
 
     render(){
         return(

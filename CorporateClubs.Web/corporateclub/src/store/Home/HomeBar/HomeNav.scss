@@ -1,3 +1,4 @@
+
 .home-nav-options
 {
     margin-left: 1.5em;
@@ -15,9 +16,15 @@
 {
    
     display:flex;
-    padding-top:1em;
-  background-color: #f7f7f7;
+    padding:1rem;
+    background-color: #f7f7f7;
     color: rgb(128,128,128);
+    a{
+      text-decoration:none;
+    }
     
 }
+
+  
+
 

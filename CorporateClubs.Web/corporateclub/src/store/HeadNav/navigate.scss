@@ -13,9 +13,13 @@ $color:(
     padding-top: 3.2em;
     display:flex;
     flex-flow:row;
+    
   nav
   {
       width:100%;
+      a{
+        text-decoration: none;
+      }
   }
     .options{
         width:100%;

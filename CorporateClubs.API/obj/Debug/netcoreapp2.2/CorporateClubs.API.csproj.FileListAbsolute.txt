@@ -32,3 +32,5 @@ C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.
 C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.API\obj\Debug\netcoreapp2.2\CorporateClubs.API.csproj.CopyComplete
 C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.API\obj\Debug\netcoreapp2.2\CorporateClubs.API.dll
 C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.API\obj\Debug\netcoreapp2.2\CorporateClubs.API.pdb
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.API\bin\Debug\netcoreapp2.2\CorporateClubs.Models.dll
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.API\bin\Debug\netcoreapp2.2\CorporateClubs.Models.pdb

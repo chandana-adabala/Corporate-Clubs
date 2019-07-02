@@ -49,14 +49,14 @@ namespace CorporateClubs.API.Controllers
         }
 
         [HttpGet]
-        [Route("getallclubsofusers/{userID:int}")]
-        public ActionResult<List<Club>> GetAllClubsofusers(int userID)
+        [Route("getallclubsofusers/")]
+        public ActionResult<List<Club>> GetAllClubsofusers()
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
             try
             {  if(_users.IsUser(requestedUser.UserID) == true)
-                return _clubs.GetAllClubsOfUser(userID);
+                return _clubs.GetAllClubsOfUser(requestedUser.UserID);
                 else
                  return Unauthorized();
             }
@@ -86,7 +86,7 @@ namespace CorporateClubs.API.Controllers
         }
 
         [HttpGet]
-        [Route("getallfavclubsofuser/{userID:int}")]
+        [Route("getallfavclubsofuser/")]
         public ActionResult<List<Club>> GetFavClubsofUser(int userID)
         {
             var uniqueId = HttpContext.User.Identity.Name;
@@ -94,7 +94,7 @@ namespace CorporateClubs.API.Controllers
             try
             {
                 if (_users.IsUser(requestedUser.UserID) == true)
-                    return _clubs.GetFavClubsOfUser(userID);
+                    return _clubs.GetFavClubsOfUser(requestedUser.UserID);
                 else
                 return Unauthorized();
             }

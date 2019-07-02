@@ -20,3 +20,6 @@ C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.
 C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Services.runtimeconfig.dev.json
 C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Services.dll
 C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Services.pdb
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Models.dll
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Models.pdb
+C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.csproj.CopyComplete

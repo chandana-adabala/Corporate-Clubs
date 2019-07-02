@@ -12,7 +12,7 @@ import { fetchFavClubs, fetchMyClubs } from './actions/clubAction';
 import IClubs from '../../models/IClubs';
 import HomeNav from './HomeBar/HomeNav';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
-import Conversation from './ClubInfo/Conversation/Conversation'
+import Conversation from './connect/Conversation/Conversation'
 
 
 class MyThreads extends React.Component<any,any>{
