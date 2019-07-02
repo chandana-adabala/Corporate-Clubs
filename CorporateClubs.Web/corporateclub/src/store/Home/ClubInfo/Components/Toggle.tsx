@@ -3,24 +3,43 @@ import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { Link } from 'office-ui-fabric-react/lib/Link';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
-//import './Toggle.scss';
-import './Toggle.scss'
+
 
 export default class MyToggle extends React.Component<any,any> {
+  constructor(props){
+    super(props);
+    this.state={
+      checked:this.props.checked
+    }
+  }
+componentWillReceiveProps(){
+  console.log(this.state.checked,this.props.checked);
+  
+  this.setState({
+      checked:this.props.checked
+  });
+}
+
   public render(): JSX.Element {
+   
     return (
-      <span >
+     
+      <div >
         <Toggle 
-          defaultChecked={true}
+          defaultChecked={this.state.checked}
           label="Enabled and checked"
-          onText="Public Club"
-          offText="Private Club"
+          onText="On"
+          offText="Off"
           onFocus={() => console.log('onFocus called')}
           onBlur={() => console.log('onBlur called')}
-          onChange={() => console.log('onBlur called')}
+          onChange={(ev, checked: boolean|undefined) =>{ 
+                   if(checked){
+                   
+                   }          
+        }}
         />
        
-      </span>
+      </div>
     );
   }
 

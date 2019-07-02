@@ -9,7 +9,7 @@ export default class User extends React.Component<any,{}>{
         return(
             <div className="user">
                 <div className="profilePic"> 
-                        <img src={require("../../a2.jpg")} ></img>
+                        <img src={this.props.user.profilePic} ></img>
                 </div>
                 <div className="userName">
                         {this.props.user.displayName}   {this.props.cuser.role=='Admin'?(<Icon size={14} icon={shield} style={{ color: 'gray' }} />):(<span></span>)} 

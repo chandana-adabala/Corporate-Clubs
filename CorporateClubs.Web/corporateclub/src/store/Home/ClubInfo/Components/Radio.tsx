@@ -7,7 +7,7 @@ interface IChoiceGroupBasicExampleState {
     imageKey: string;
   }
   
-  export default class MyRadio extends React.Component<{}, IChoiceGroupBasicExampleState> {
+  export default class MyRadio extends React.Component<any, IChoiceGroupBasicExampleState> {
     constructor(props: {}) {
       super(props);
   
@@ -15,8 +15,10 @@ interface IChoiceGroupBasicExampleState {
         imageKey: ''
       };
     }
-  
+    
+    
     public render() {
+      console.log(this.props.onChange,'change',this.props.hide,"hide");
       return (
         <div>
           <ChoiceGroup
@@ -34,9 +36,10 @@ interface IChoiceGroupBasicExampleState {
               },
             
             ]}
-            onChange={() => console.log('onBlur called')}
+            onChange={this.props.onChange}
             label="Pick one"
             required={true}
+            hidden={this.props.hide}
           />
         </div>
       );

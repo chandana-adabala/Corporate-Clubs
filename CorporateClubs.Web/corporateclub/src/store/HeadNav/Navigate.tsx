@@ -6,7 +6,9 @@ import {addressBook} from 'react-icons-kit/icomoon/addressBook';
 import {library} from 'react-icons-kit/icomoon/library';
 import {user_circle} from 'react-icons-kit/ikons/user_circle'
 import { Link } from 'react-router-dom';
-const Navigate: React.FC = () =>{
+class Navigate extends React.Component<any,any> {
+    render()
+    {
     return(
         <div className="nav">
             <nav >
@@ -35,6 +37,7 @@ const Navigate: React.FC = () =>{
             </nav>
         </div>
     );
+    }
 }
 
 

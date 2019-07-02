@@ -28,7 +28,7 @@ $homeBorderStyle: 0.08rem solid #dad9d9;
     }
 
     .homeBody{
-        grid-template-columns: 32% 68% auto;
+        grid-template-columns: 32% 68%;
         box-sizing: border-box;
         border: $homeBorderStyle;
         display: grid;
@@ -41,7 +41,7 @@ $homeBorderStyle: 0.08rem solid #dad9d9;
         .homeClubs{
             border: $homeBorderStyle;
             display: grid;
-            grid-template-rows: 46px 32px auto 32px auto;
+            grid-template-rows: 3rem 2rem 16.5rem 2rem 16.5rem;
             box-sizing: border-box;
             overflow-y:auto;
             max-height:44rem;
@@ -82,7 +82,7 @@ $homeBorderStyle: 0.08rem solid #dad9d9;
         .homeArena{
           border: $homeBorderStyle;
           border-left: 0;
-          
+          height: 40rem;
          
         }
        

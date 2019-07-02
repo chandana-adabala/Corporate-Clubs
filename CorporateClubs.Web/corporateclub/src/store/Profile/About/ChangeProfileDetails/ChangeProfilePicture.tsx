@@ -5,6 +5,7 @@ import { Icon } from 'react-icons-kit'
 import {match,Router,Link} from 'react-router-dom'
 import axios from 'axios';
 import Avatar from 'react-avatar-edit';
+ import {getToken} from '../../../../Configure'
 
 
 
@@ -48,16 +49,15 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
 
 
     imageUploadHandler=(ev)=>{
-        debugger;
+        
         var imageBlob:Blob=this.b64toBlob(this.state.preview)
         console.log("image upload");
         
         const fd = new FormData();
         fd.append('image',imageBlob);
         // console.log(fd.get('image'),this.state.selectedImage,this.state.selectedImage.name);
-        
-        axios.post('http://localhost:3333/api/users/UploadImage/7',
-        fd ,{headers: {'Content-Type': "multipart/form-data"}})
+        axios.post('http://localhost:3333/api/users/UploadImage/2',
+        fd ,{headers: {'Content-Type': "multipart/form-data", 'Authorization': 'Bearer ' + getToken()}})
         .then(res=>{
             console.log(res);
         })
@@ -188,7 +188,7 @@ export class ChangeProfilePicture extends React.Component<Iprops,any>{
     }
 
     imageUploadHandler=(ev)=>{
-        debugger;
+        ;
         console.log("image upload");
         
         const fd = new FormData();

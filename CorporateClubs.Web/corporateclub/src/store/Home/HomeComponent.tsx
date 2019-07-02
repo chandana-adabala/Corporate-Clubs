@@ -10,7 +10,9 @@ import {connect} from 'react-redux';
 import Istate from './reducers/homeReducer';
 import { fetchFavClubs, fetchMyClubs } from './actions/clubAction';
 import IClubs from '../../models/IClubs';
-
+import HomeNav from './HomeBar/HomeNav';
+import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
+import Conversation from './ClubInfo/Conversation/Conversation'
 initializeIcons();
 
 
@@ -20,12 +22,15 @@ class Home extends React.Component<any,any> {
         super(props);
         this.state={
             searchTerm:'',
-            currentClubs:this.props.myclubs
+            currentClubs:this.props.myclubs,
+            isClubHide:this.props.isClubHide
         };
      this.onInputChange = this.onInputChange.bind(this);
     }
     onInputChange(event){
-        let searchClub = (this.props.myclubs).filter(club=>club.clubTitle.includes((event.target.value).toLowerCase()));
+        
+        
+        let searchClub = (this.props.myclubs).filter(club=>club.clubTitle.toLowerCase().includes((event.target.value).toLowerCase()));
         this.setState({
             searchTerm:event.target.value,
             currentClubs:searchClub
@@ -40,11 +45,24 @@ class Home extends React.Component<any,any> {
     
     }
 
+    hideClubInfo=()=>{
+            this.setState({
+                    isClubHide:true
+            });
+    }
+    showClubInfo=()=>{
+        this.setState({
+            isClubHide:false
+        });
+    }
+
     render(){
        console.log('my',this.props.myclubs,this.props.favclubs);
        
         return(
             <div className="homeContainer">
+                <HomeNav/>
+               
                     <div className="homeBar">
                         My Clubs
                         <button className="createBtn">Create New</button>
@@ -65,7 +83,7 @@ class Home extends React.Component<any,any> {
                              
                                 {(this.props.favclubs!="") ?(
                                     this.props.favclubs.map(club=>(
-                                        <Club club={club} key={club.clubID}/>
+                                        <Club club={club} key={club.clubID} show={this.showClubInfo}/>
                                             ))):(<h4>no fav clubs</h4>)}
                                 
                                    
@@ -74,21 +92,19 @@ class Home extends React.Component<any,any> {
                                     CLUBS
                                 </div>
                                 <div className="clubs">
-                            {/* {this.props.myclubs!=""?(
-                                    this.props.myclubs.map(club=>(
-                                        <Club club={club} key={club.clubID}/>
-                                            ))):(<h4>no clubs</h4>)} */}
-                                            {this.state.currentClubs!=""?(
+                                    {this.state.currentClubs!=""?(
                                     this.state.currentClubs.map(club=>(
-                                        <Club club={club} key={club.clubID}/>
+                                        <Club club={club} key={club.clubID} show={this.showClubInfo}/>
                                             ))):(this.props.myclubs!=""?(
                                                 this.props.myclubs.map(club=>(
-                                                    <Club club={club} key={club.clubID}/>
+                                                    <Club club={club} key={club.clubID} show={this.showClubInfo}/>
                                                         ))):(<h4>no clubs</h4>))} 
                                 </div>
                     </div>
                     <div className="homeArena">
-                    <ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} users={this.props.users}/>
+                        <Conversation/>
+                    {this.state.isClubHide==false?(<ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} nUsers={this.props.nUsers} users={this.props.users} hide={this.hideClubInfo} currentUser={2}/>)
+                                                :(<span></span>)}
                     
                     </div>
                 </div> 
@@ -117,8 +133,12 @@ function mapStateToProps(state){
             : state.homeReducer.cUsers,
         rUsers
             : state.homeReducer.rUsers,
+        nUsers
+            : state.homeReducer.nUsers,
         users
-            : state.homeReducer.users
+            : state.homeReducer.users,
+        isClubHide
+            : state.homeReducer.hide
      }
      
 

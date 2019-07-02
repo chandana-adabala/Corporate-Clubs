@@ -8,6 +8,7 @@ export interface Istate {
     club:IClubs
     cUsers:IUsers[],
     rUsers:IUsers[],
+    nUsers:IUsers[],
     users:IUsers[]
 }
 
@@ -29,7 +30,8 @@ const initialState:Istate ={
          rowDeletedBy:1, },
     cUsers:[],
     rUsers:[],
-    users:[]
+    users:[],
+    nUsers:[]
 
     
 }
@@ -53,12 +55,13 @@ export default function homeReducer(state=initialState,action:any){
                 console.log("fetch club info success",action);
                 return{
                    ...state,
-                    club:action.payload
+                    club:action.payload,
+                    hide:action.hide,
                 }
         case ActionTypes.CLUBMEMBERS_FETCH_SUCCESS:
                         console.log("fetch club mem success",action);
                         return{
-                           ...state,
+                           ...state, 
                             cUsers:action.payload
                 }
         case ActionTypes.REQCLUBMEM_FETCH_SUCCESS:
@@ -67,12 +70,27 @@ export default function homeReducer(state=initialState,action:any){
                            ...state,
                             rUsers:action.payload
                 }
+        case ActionTypes.NONCLUBMEM_FETCH_SUCCESS:
+                    console.log("fetch non club mem success",action);
+                    return{
+                       ...state,
+                        nUsers:action.payload
+            }
         case ActionTypes.AllUSERS_FETCH_SUCCESS:
                         console.log("fetch all users success",action);
                         return{
                            ...state,
                             users:action.payload
                 }
+       case ActionTypes.CHANGE_CLUB_TYPE_SUCCESS:
+                        return{
+                            ...state,
+                          
+                        }
+        case ActionTypes.MUTE_N_UNMUTE_CLUB:
+                        return{
+                            ...state,
+                        }
         default:
             return state;
     }
