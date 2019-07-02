@@ -102,7 +102,7 @@ class Home extends React.Component<any,any> {
                                 </div>
                     </div>
                     <div className="homeArena">
-                        <Conversation/>
+                        {/* <Conversation/> */}
                     {this.state.isClubHide==false?(<ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} nUsers={this.props.nUsers} users={this.props.users} hide={this.hideClubInfo} currentUser={2}/>)
                                                 :(<span></span>)}
                     

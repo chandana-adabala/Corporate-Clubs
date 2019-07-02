@@ -2,7 +2,7 @@ import IUsers from '../../../models/IUsers'
 import IClubs from '../../../models/IClubs'
 import IClubMembers from '../../../models/IClubMembers'
 import { type } from 'os';
-
+import {getToken} from '../../../Configure'
 
 export enum ActionTypes{
     FAVCLUBS_FETCH_SUCCESS = 'FAVCLUBS_FETCH_SUCCESS',
@@ -250,7 +250,8 @@ export const fetchMyClubInfo = clubID=>{
 export const fetchClubMembers = clubID=>{
     return function(dispatch){
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/users/getallusersbyclub/4/'+clubID)
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/users/getallusersbyclub/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -268,6 +269,7 @@ export const fetchClubMembers = clubID=>{
 export const fetchAllUsers = ()=>{
     return function(dispatch){
         console.log("fetch call");
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/users/getallusers/4')
         .then(data => data.json())
         .then(data =>{
@@ -286,7 +288,8 @@ export const fetchAllUsers = ()=>{
 export const fetchClubRequestedMembers = clubID=>{
     return function(dispatch){
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/clubs/getallrequestedmembers/4/'+clubID)
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/getallrequestedmembers/4/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){

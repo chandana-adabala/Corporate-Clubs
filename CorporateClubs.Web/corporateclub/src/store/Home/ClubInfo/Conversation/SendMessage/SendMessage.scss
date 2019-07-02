@@ -1,5 +1,6 @@
 .sendMessage{
     display: grid;
+    justify-items: end;
     grid-template-rows: 2rem auto;
     float:right;
     padding:1rem;

@@ -14,6 +14,8 @@
     "office-ui-fabric-react": "^7.0.2",
     "react": "^16.8.6",
     "react-adal": "^0.4.23",
+    "react-avatar-edit": "^0.8.3",
+    "react-avatar-editor": "^11.0.7",
     "react-bootstrap-dropdown-menu": "^1.1.15",
     "react-datepicker": "^2.6.0",
     "react-dom": "^16.8.6",

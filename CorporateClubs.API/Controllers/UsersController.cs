@@ -88,60 +88,60 @@ namespace CorporateClubs.API.Controllers
 
 
         // GET: api/Users/Delete/userID
-        [HttpPut]
-        [Route("deleteuser")]
-        public ActionResult DeleteUser(userTypechangeReason idReason)
-        {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsAdmin(requestedUser.UserID))
-            {
-                if (_users.DeleteUser(idReason.userID, requestedUser.UserID, idReason.reason))
-                    return Ok();
-                return NotFound();
+        //[HttpPut]
+        //[Route("deleteuser")]
+        //public ActionResult DeleteUser(userTypechangeReason idReason)
+        //{
+        //    var uniqueId = HttpContext.User.Identity.Name;
+        //    Users requestedUser = _users.GetUserByEmailId(uniqueId);
+        //    if (_users.IsAdmin(requestedUser.UserID))
+        //    {
+        //        if (_users.DeleteUser(idReason.userID, requestedUser.UserID, idReason.reason))
+        //            return Ok();
+        //        return NotFound();
 
-            }
-            return Unauthorized();
-        }
+        //    }
+        //    return Unauthorized();
+        //}
 
         // GET: api/Users/DeactiveUser/userID
-        [HttpPut]
-        [Route("deactivateuser")]
-        public ActionResult DeactiveUser(userTypechangeReason idReason)
-        {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsAdmin(requestedUser.UserID))
-            {
-                if (_users.DeactiveUser(idReason.userID, idReason.reason))
-                    return Ok();
-                return NotFound();
-            }
-            return Unauthorized();
-        }
+        //[HttpPut]
+        //[Route("deactivateuser")]
+        //public ActionResult DeactiveUser(userTypechangeReason idReason)
+        //{
+        //    var uniqueId = HttpContext.User.Identity.Name;
+        //    Users requestedUser = _users.GetUserByEmailId(uniqueId);
+        //    if (_users.IsAdmin(requestedUser.UserID))
+        //    {
+        //        if (_users.DeactiveUser(idReason.userID, idReason.reason))
+        //            return Ok();
+        //        return NotFound();
+        //    }
+        //    return Unauthorized();
+        //}
 
 
 
-        [HttpPost]
-        [Route("AddUser")]
-        public ActionResult<String> AddUser([FromBody]NewUser userDetails)
-        {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsAdmin(requestedUser.UserID))
-            {
-                int userID = _users.AddUser(userDetails.user);
-                foreach (int i in userDetails.clubs)
-                {
-                    _clubs.Addmember(i, userID, requestedUser.UserID);
-                }
-                if (userID != 0)
-                    return userID.ToString();
-                else
-                    BadRequest();
-            }
-            return Unauthorized();
-        }
+        //[HttpPost]
+        //[Route("AddUser")]
+        //public ActionResult<String> AddUser([FromBody]NewUser userDetails)
+        //{
+        //    var uniqueId = HttpContext.User.Identity.Name;
+        //    Users requestedUser = _users.GetUserByEmailId(uniqueId);
+        //    if (_users.IsAdmin(requestedUser.UserID))
+        //    {
+        //        int userID = _users.AddUser(userDetails.user);
+        //        foreach (int i in userDetails.clubs)
+        //        {
+        //            _clubs.Addmember(i, userID, requestedUser.UserID);
+        //        }
+        //        if (userID != 0)
+        //            return userID.ToString();
+        //        else
+        //            BadRequest();
+        //    }
+        //    return Unauthorized();
+        //}
 
 
 
@@ -219,22 +219,22 @@ namespace CorporateClubs.API.Controllers
 
 
 
-        [HttpPut]
-        [Route("reactivateuser")]
-        public ActionResult ReactivateUser(userTypechangeReason idReason)
-        {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
-            if (_users.IsAdmin(requestedUser.UserID))
-                if (_users.ReactiveUser(idReason.userID, idReason.reason) == true)
+        //[HttpPut]
+        //[Route("reactivateuser")]
+        //public ActionResult ReactivateUser(userTypechangeReason idReason)
+        //{
+        //    var uniqueId = HttpContext.User.Identity.Name;
+        //    Users requestedUser = _users.GetUserByEmailId(uniqueId);
+        //    if (_users.IsAdmin(requestedUser.UserID))
+        //        if (_users.ReactiveUser(idReason.userID, idReason.reason) == true)
 
-                    return Ok();
-                else
-                    return BadRequest();
+        //            return Ok();
+        //        else
+        //            return BadRequest();
 
 
-            return Unauthorized();
-        }
+        //    return Unauthorized();
+        //}
 
         [HttpPut]
         [Route("unblockuser{userID:int}/{clubID:int}")]
