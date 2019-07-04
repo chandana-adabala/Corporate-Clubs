@@ -6,11 +6,11 @@ import { Icon } from 'react-icons-kit'
 import { ic_close } from 'react-icons-kit/md/ic_close'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
-import AddUser from '../Admin/AddUser';
-import { FetchUsers } from './Actions/ClubActions'
-import './RoundBox.scss'
-import { addClub } from './Actions/ClubActions'
-import INewClub from '../../models/INewClub'
+import AddUser from '../../Admin/UsersList/AddUser';
+import { FetchUsers } from '../Actions/ClubActions'
+import '../RoundBox.scss'
+import { addClub } from '../Actions/ClubActions'
+import INewClub from '../../../models/INewClub'
 import AvatarEditor from 'react-avatar-editor'
 import axios from 'axios';
 

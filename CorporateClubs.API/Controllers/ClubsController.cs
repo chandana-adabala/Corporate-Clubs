@@ -49,14 +49,14 @@ namespace CorporateClubs.API.Controllers
         }
 
         [HttpGet]
-        [Route("getallclubsofusers/{userID:int}")]
-        public ActionResult<List<Club>> GetAllClubsofusers(int userID)
+        [Route("getallclubsofusers")]
+        public ActionResult<List<Club>> GetAllClubsofusers()
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
             try
             {  if(_users.IsUser(requestedUser.UserID) == true)
-                return _clubs.GetAllClubsOfUser(userID);
+                return _clubs.GetAllClubsOfUser(requestedUser.UserID);
                 else
                  return Unauthorized();
             }
@@ -67,15 +67,15 @@ namespace CorporateClubs.API.Controllers
         }
 
         [HttpGet]
-        [Route("getclubbyid/{userID:int}")]
-        public ActionResult<Club> GetClubByID(int userID)
+        [Route("getclubbyid")]
+        public ActionResult<Club> GetClubByID()
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
             try
             {
                 if (_users.IsUser(requestedUser.UserID) == true)
-                    return _clubs.GetClubById(userID);
+                    return _clubs.GetClubById(requestedUser.UserID);
                 else
                     return Unauthorized();
             }
@@ -86,15 +86,15 @@ namespace CorporateClubs.API.Controllers
         }
 
         [HttpGet]
-        [Route("getallfavclubsofuser/{userID:int}")]
-        public ActionResult<List<Club>> GetFavClubsofUser(int userID)
+        [Route("getallfavclubsofuser")]
+        public ActionResult<List<Club>> GetFavClubsofUser()
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
             try
             {
                 if (_users.IsUser(requestedUser.UserID) == true)
-                    return _clubs.GetFavClubsOfUser(userID);
+                    return _clubs.GetFavClubsOfUser(requestedUser.UserID);
                 else
                 return Unauthorized();
             }
@@ -444,13 +444,13 @@ namespace CorporateClubs.API.Controllers
             }
         }
 
-     
 
-       
+
+
 
         [HttpPut]
         [Route("updateclub")]
-        public ActionResult UpdateClub(int clubID, int userID, [FromBody]Club c)
+        public ActionResult UpdateClub( [FromBody]Club clubDetails)
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
@@ -458,7 +458,7 @@ namespace CorporateClubs.API.Controllers
             {
                 if (_users.IsUser(requestedUser.UserID) == true)
                 {
-                    if (_clubs.UpdateClub(c.ClubID, c.ClubTitle, c.Description, c.ProfilePic)==true)
+                    if (_clubs.UpdateClub(clubDetails.ClubID, clubDetails.ClubTitle, clubDetails.Description, clubDetails.ProfilePic)==true)
                         return Ok();
                     return BadRequest();
                 }
@@ -499,8 +499,8 @@ namespace CorporateClubs.API.Controllers
         }
 
         [HttpGet]
-        [Route("getclubmemberslist/{userID:int}")]
-        public ActionResult<List<ClubMembersList>> GetClubMembersList(int userID)
+        [Route("getclubmemberslist")]
+        public ActionResult<List<ClubMembersList>> GetClubMembersList()
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
@@ -508,7 +508,7 @@ namespace CorporateClubs.API.Controllers
             {
                 if (_users.IsUser(requestedUser.UserID) == true)
                 {
-                    return _clubs.GetClubMembersListofUser(userID);
+                    return _clubs.GetClubMembersListofUser(requestedUser.UserID);
                 }
                 return Unauthorized();
             }

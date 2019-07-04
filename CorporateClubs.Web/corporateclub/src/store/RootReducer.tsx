@@ -4,8 +4,9 @@ import ProfilePageReducer from './Profile/Reducers'
 import {AdminPageReducer} from './Admin/Reducers/AdminReducer'
 import  {ClubReducer} from './Clubs/Reducers/ClubReducers'
 import  AppReducer from '../App/AppReducer/AppReducer'
+import ConnectionsReducer from '../store/Connections/Reducers/Reducers'
 export default combineReducers(
     {
-        AppReducer,homeReducer,ProfilePageReducer,AdminPageReducer,ClubReducer
+        AppReducer,homeReducer,ProfilePageReducer,AdminPageReducer,ClubReducer,ConnectionsReducer
     }
 )

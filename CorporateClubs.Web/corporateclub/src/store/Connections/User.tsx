@@ -18,25 +18,25 @@ class User extends React.Component<any,any>{
         return(
                 <div className="User">
                     <div className="profile-pic">
-                    <img src={require('../HeadNav/damon.png')}/>
+                    <img src={this.props.profilePic}/>
                     </div>
                     <div className="det">
                         <div className="headuser">
-                        <h4>Rakesh Misra</h4>
-                    <p>Always and forever</p>
+                        <h4>{this.props.displayName}</h4>
+                    <p>{this.props.about}</p>
                     </div>
                     
                     <div className="sub-head">
                         <Icon icon={library}/>
-                        <text>22 in mutual</text>
+                        <text>{this.props.mutualClubs} in mutual</text>
                     </div>
                     <div className="sub-head">
                         <Icon icon={ic_mail}/>
-                        <text>susri@tlkhyj.fglllllll</text>
+                        <text>{this.props.email}</text>
                     </div>
                     <div className="sub-head">
                         <Icon icon={phone}/>
-                        <text>+91-9494966699</text>
+                        <text>{this.props.mobileNumber}</text>
                     </div>
                     </div>
                     

@@ -4,7 +4,7 @@ import { Icon } from 'react-icons-kit'
 import { ic_close } from 'react-icons-kit/md/ic_close'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { activateUser, deactivateUser } from './Actions/Actions';
+import { activateUser, deactivateUser } from '../Actions/Actions';
 import { getNativeProps } from '@uifabric/utilities';
 
 interface Iprops {

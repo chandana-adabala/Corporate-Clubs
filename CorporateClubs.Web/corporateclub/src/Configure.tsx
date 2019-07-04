@@ -14,3 +14,8 @@ export const authContext = new AuthenticationContext(adalConfig);
 export const getToken = () => {
  return authContext.getCachedToken(authContext.config.clientId);
 };
+
+export const logoutFromApp=()=>
+{
+  return authContext.logOut()
+}

@@ -83,12 +83,14 @@ namespace CorporateClubs.API.Controllers
 
         // GET: api/Users/GetAllUsers
         [HttpGet]
-        [Route("getallusers/{requestID:int}")]
-        public ActionResult<List<Users>> GetAllUsers(int requestID)
+        [Route("getallusers")]
+        public ActionResult<List<Users>> GetAllUsers()
         {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
             try
             {
-                if (_users.IsUser(requestID))
+                if (_users.IsUser(requestedUser.UserID))
                 {
                     if (_users.GetAllUsers().Count() != 0)
                         return _users.GetAllUsers();
@@ -364,26 +366,25 @@ namespace CorporateClubs.API.Controllers
 
         [HttpPost]
         [Route("UploadImage/{userID:int}")]
-        public async Task<string> UploadImage(IFormFile image, int userID)
+        public async Task<string> UploadImage(IFormFile image)
         {
             var webRoot = _env.WebRootPath;
-
-
-
             try
             {
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
 
                 if (image.Length > 0)
                 {
                     var url = "http://localhost:3333/images";
                     var fileType = '.' + image.ContentType.Split('/')[1];
-                    var name = "user" + userID + fileType;
+                    var name = "user" + requestedUser.UserID + fileType;
                     var file1 = System.IO.Path.Combine(webRoot, name);
                     using (var stream = new FileStream(file1, FileMode.Create))
                     {
                         await image.CopyToAsync(stream);
                     }
-                    _users.ChangeProfilePic(userID, url + '/'+ name);
+                    _users.ChangeProfilePic(requestedUser.UserID, url + '/'+ name);
                 }
 
 

@@ -29,8 +29,20 @@
  
   height: 3.5em;
   width: 100%;
-  padding-left: 1%;
+ 
 }
+.filter
+  {
+    padding-left:2rem;
+    height:3.5em;
+    display:flex;
+    justify-content: left;
+    align-items: center;
+    background-color:#f8f9fb;
+    border :0.05px solid rgb(189, 187, 187);
+    
+
+  }
 
 .dropdown
 {
@@ -117,6 +129,7 @@
  
   .dropdown2
 {
+    position:relative;
     flex:1;
     border-color: grey;
     &:focus
@@ -132,7 +145,7 @@
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    left: 12%;
+    
     
     
   }
@@ -170,7 +183,7 @@
   {
       
       color: grey;
-      
+      height: 100%;
       background-color: white;
       border :0.05px solid rgb(189, 187, 187);
       display: inline-flex;
@@ -242,7 +255,6 @@
   {
     display:flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     
     .User
     {
@@ -258,10 +270,10 @@
         height: 100%;;
         img 
         {
-          height: 3.5em;
-          width: 3.5em;
+          height: 4em;
+          width: 4em;
           
-          border-radius: 50%;
+         
         }
 
       }
@@ -272,16 +284,14 @@
       .headuser 
       {
         
-        margin-bottom:20%;
+        margin-bottom:20px;
         
         h4 
         {
           margin-bottom: 0%;
-          margin-top: 15%;
           font-family: Arial, Helvetica, sans-serif;
           margin-left:15%;
           font-weight: 200;
-          width: 100%;
         }  
         p 
             {

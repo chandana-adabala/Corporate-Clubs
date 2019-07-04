@@ -1,0 +1,138 @@
+.modal {
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        border-radius: 0.8rem;
+        background-color: #cccccc;
+      }
+
+      
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    .modal-content {
+        display: flex;
+        background-color: #fefefe;
+        margin: auto;
+        border: 1px solid #888;
+        width: 30%;
+        flex-direction: column;
+        .header
+        {
+            .newConnectionHeading
+            {
+                font-size: 22px
+            }
+            padding:20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height:3rem;
+            background-color: #f4f5f8
+        }
+        .suggestionSearch
+        {
+            padding:15px 20px 15px 20px;
+            background-color: white;
+            display:inline-block;
+            border :0.05px solid rgb(189, 187, 187);
+            padding-left: 1em;
+            
+            span
+            {
+              color: grey;
+              background-color: white;
+              padding-right: 0.5em;
+              
+            }
+            input
+            {
+                color: grey;
+                border :0px solid white;
+                &:focus
+              {
+              outline: none
+              }
+      
+            }
+      
+          }
+          .suggestedHeading
+          {
+            padding:5px 20px 10px 5px;
+            padding:20px;
+            background-color: #eaeef1;
+            border :0.05px solid rgb(189, 187, 187);
+            text{
+                font-weight: 600
+            }
+          }
+          .suggestedUsersContent
+          {
+              max-height:500px;
+              overflow-y: scroll;
+              display: flex;
+              flex-direction: column;
+
+              ul::-webkit-scrollbar {
+                width: 0.3rem;
+              }
+              
+              ul::-webkit-scrollbar-thumb {
+                border-radius: 0.8rem;
+                background-color: #cccccc;
+              }
+             
+          }
+      }
+  }
+  .suggestedUser
+  {
+    padding:10px;
+    display: flex;
+    flex-direction: row;
+    border-bottom :1px dashed rgb(189, 187, 187);
+    border-top:1px dashed rgb(189, 187, 187);
+
+   
+      
+      .profilePic
+      {
+          padding-right:8px;
+          .profilePicture
+          {
+              height: 2.5rem;
+              width:2.5rem
+          }
+      }
+      .userDetails
+      {
+        flex-basis: 27vw;
+          .suggestedUserName
+          {
+              padding:5px 0px 5px 0px;
+              display:block;
+              color:black
+          }
+          .mutualDetails
+          {
+            padding:5px 0px 5px 0px;
+              display: block;
+              color:gray
+          }
+      }
+      
+
+  }
+  

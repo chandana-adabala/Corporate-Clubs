@@ -47,6 +47,7 @@ namespace CorporateClubs.API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IClubs, ClubsService>();
             services.AddSingleton<IUsers, UserService>();
+            services.AddSingleton<IConnections, ConnectionService>();
             services.AddDirectoryBrowser();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors(c =>

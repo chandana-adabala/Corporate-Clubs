@@ -5,7 +5,7 @@ import {user} from 'react-icons-kit/icomoon/user';
 import { Interface } from 'readline';
 import { number } from 'prop-types';
 import {connect} from 'react-redux'
-import { FetchRequests,makeAndCancelRequest,removeUser,addUserToPublicClub } from './Actions/ClubActions';
+import { makeAndCancelRequest,removeUser,addUserToPublicClub } from './Actions/ClubActions';
 
 
 
@@ -74,28 +74,28 @@ debugger;
 class Joinbtn extends React.Component<any,any>{
     render(){
         return(
-        <button className="join" onClick={()=>this.props.dispatch(addUserToPublicClub(this.props.userID,this.props.clubID,this.props.userID))}>Join</button>
+        <button className="join" onClick={()=>this.props.dispatch(addUserToPublicClub(this.props.userID,this.props.clubID))}>Join</button>
     )
     }
 }
 class CancelRequest extends React.Component<any,any>{
     render(){
     return(
-        <button className="cancelrequest" onClick={()=>this.props.dispatch(makeAndCancelRequest(this.props.userID,this.props.clubID,this.props.userID))}>Cancel Request</button>
+        <button className="cancelrequest" onClick={()=>this.props.dispatch(makeAndCancelRequest(this.props.userID,this.props.clubID))}>Cancel Request</button>
     )
     }
 }
 class RequestJoinbtn extends React.Component<any,any>{
     render(){
     return(
-        <button className="join" onClick={()=>{debugger;this.props.dispatch(makeAndCancelRequest(this.props.userID,this.props.clubID,this.props.userID))}}>Request Join</button>
+        <button className="join" onClick={()=>{debugger;this.props.dispatch(makeAndCancelRequest(this.props.userID,this.props.clubID))}}>Request Join</button>
     )
     }
 }
 class Exitbtn extends React.Component<any,any>{
     render(){
         return(
-        <button className="exit" onClick={()=>this.props.dispatch(removeUser(this.props.userID,this.props.clubID,this.props.userID))}>Exit Club</button>
+        <button className="exit" onClick={()=>this.props.dispatch(removeUser(this.props.userID,this.props.clubID))}>Exit Club</button>
     )
     }
 }

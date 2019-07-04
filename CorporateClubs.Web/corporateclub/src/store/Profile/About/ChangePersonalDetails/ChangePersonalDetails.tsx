@@ -133,7 +133,7 @@ class ChangePersonalDetails extends React.Component<any,any>{
                         <input type="text" name="bloodGroup" value={this.state.bloodGroup} onChange={this.handleChange}/>
                         </label>
                         <div className="buttons">
-                                <button className="addclub" onClick={this.handleSubmit}>Change</button>
+                                <button className="addclub" onClick={this.handleSubmit}><Link to="/Profile">confirm</Link></button>
                                 <button className="cancelbutton" ><Link to="/Profile">Cancel</Link></button>
                         </div>
 
