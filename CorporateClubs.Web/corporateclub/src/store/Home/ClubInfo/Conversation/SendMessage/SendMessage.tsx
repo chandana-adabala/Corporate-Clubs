@@ -1,12 +1,13 @@
 import React from 'react'
 import './SendMessage.scss'
 
-export default class SendMessage extends React.Component{
+export default class SendMessage extends React.Component<any,any>{
     render(){
+        console.log("sendmessage",this.props.message);
         return(
             <div className='sendMessage'>
                 <div className='messageHeader'>
-                        <div className="time">12:00PM</div>
+                        <div className="time">{this.props.message.postedOn}</div>
                         <div className="displayname">Technovert</div>
                         <img src={require('../../../../Clubs/bike.jpeg')}/>
                         
@@ -14,7 +15,7 @@ export default class SendMessage extends React.Component{
                 <div className='messageBody'>
                     
                         <div className='message'>
-                            hi....... 
+                            {this.props.message.message}
                         </div>
                         <div className="attachments">
                         </div>                        

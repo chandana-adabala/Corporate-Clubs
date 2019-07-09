@@ -12,7 +12,7 @@ const IntialState: PayLoad =
 
 }
 export function ClubReducer(State = IntialState, Action: ActionReturnType): PayLoad {
-    debugger;
+  
     switch (Action.type) {
         case Actions.DISPLAY_CLUBS:
             State.clubs = Action.payload.clubs

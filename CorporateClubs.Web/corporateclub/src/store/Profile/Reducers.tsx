@@ -19,7 +19,6 @@ const IntialState:PayloadType=
 
 export default function ProfilePageReducer(State=IntialState,Action:ActionReturnType):PayloadType
 {
-    debugger;
     switch(Action.type)
     {
         case ActionsTypes.FetchProfileDetails:

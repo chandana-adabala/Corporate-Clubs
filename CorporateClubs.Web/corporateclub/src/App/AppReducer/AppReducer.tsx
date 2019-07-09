@@ -10,7 +10,6 @@ const IntialState:PayloadType=
 
 export default function AppPageReducer(State=IntialState,Action:ActionReturnType):PayloadType
 {
-    debugger;
     switch(Action.type)
     {
         case ActionTypes.USER_EXIST:

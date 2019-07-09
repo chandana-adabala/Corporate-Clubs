@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CorporateClubs.Services.Models;
 using CorporateClubs.Models.Models;
 
 namespace CorporateClubs.Services.Services

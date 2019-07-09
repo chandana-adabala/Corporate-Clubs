@@ -1,6 +1,7 @@
 import {ActionTypes} from '../actions/clubAction';
 import IClubs from '../../../models/IClubs';
 import IUsers from '../../../models/IUsers';
+import IConversation from '../../../models/IConversation';
 
 export interface Istate {
     myclubs:IClubs[],
@@ -9,7 +10,8 @@ export interface Istate {
     cUsers:IUsers[],
     rUsers:IUsers[],
     nUsers:IUsers[],
-    users:IUsers[]
+    users:IUsers[],
+    messages:IConversation[]
 }
 
 const initialState:Istate ={
@@ -31,7 +33,8 @@ const initialState:Istate ={
     cUsers:[],
     rUsers:[],
     users:[],
-    nUsers:[]
+    nUsers:[],
+    messages:[]
 
     
 }
@@ -52,6 +55,7 @@ export default function homeReducer(state=initialState,action:any){
                     myclubs:action.payload
                 }
         case ActionTypes.CLUBINFO_FETCH_SUCCESS:
+            debugger;
                 console.log("fetch club info success",action);
                 return{
                    ...state,
@@ -91,6 +95,15 @@ export default function homeReducer(state=initialState,action:any){
                         return{
                             ...state,
                         }
+        case ActionTypes.FETCH_MESSAGES_SUCCESS:
+            debugger;
+                        console.log("fetch all messages success");
+                        return{
+                            ...state,
+                           messages:action.payload
+                        }
+                        
+                        
         default:
             return state;
     }

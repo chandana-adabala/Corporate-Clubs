@@ -126,10 +126,8 @@ class ClubInfo extends React.Component<any, any>{
     }
 
     componentWillUpdate() {
-   
-        
         this.uA = this.props.cUsers.map(cUser => this.props.users.filter(user => cUser.userID == user.userID)[0]);
-      
+   
     }
     componentWillReceiveProps(){
         debugger;
@@ -144,7 +142,7 @@ class ClubInfo extends React.Component<any, any>{
     
     render() {
   // debugger;
-console.log("non user",this.state.nonUsers);
+console.log("state....",this.state);
 
 
         return (

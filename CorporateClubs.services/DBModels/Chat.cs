@@ -10,9 +10,8 @@ namespace CorporateClubs.Services.Models
     public class Conversation
     {
         [Key]
-        [Timestamp]
         [Column(Order =1)]
-        public byte[] Timestamp { get; set; }
+        public DateTimeOffset PostedOn { get; set; }
 
         [Key]
         [Column(Order = 2)]
@@ -27,11 +26,11 @@ namespace CorporateClubs.Services.Models
         [Url(ErrorMessage ="Invalid Field")]
         public string Attachment { get; set; }
 
-        public DateTime RowCreatedOn { get; set; }//2-11-2019 12:00:02AM
+        public DateTime? RowCreatedOn { get; set; }//2-11-2019 12:00:02AM
         public int? RowCreatedBy { get; set; }// existing user id
-        public DateTime RowModifiedOn { get; set; }//2-11-2019 12:00:02AM
+        public DateTime? RowModifiedOn { get; set; }//2-11-2019 12:00:02AM
         public int? RowModifiedBy { get; set; }// existing user id
-        public DateTime RowDeletedOn { get; set; }//2-11-2019 12:00:02AM
+        public DateTime? RowDeletedOn { get; set; }//2-11-2019 12:00:02AM
         public int? RowDeletedBy { get; set; }// existing user id
 
     }

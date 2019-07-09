@@ -4,14 +4,16 @@ using CorporateClubs.Services.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CorporateClubs.services.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    partial class ModelContextModelSnapshot : ModelSnapshot
+    [Migration("20190702083729_makingOPtionalAttributed")]
+    partial class makingOPtionalAttributed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,11 +56,11 @@ namespace CorporateClubs.services.Migrations
 
                     b.Property<int?>("RowDeletedBy");
 
-                    b.Property<DateTime?>("RowDeletedOn");
+                    b.Property<DateTime>("RowDeletedOn");
 
                     b.Property<int?>("RowModifiedBy");
 
-                    b.Property<DateTime?>("RowModifiedOn");
+                    b.Property<DateTime>("RowModifiedOn");
 
                     b.HasKey("ClubID");
 
@@ -102,11 +104,11 @@ namespace CorporateClubs.services.Migrations
 
                     b.Property<int?>("RowDeletedBy");
 
-                    b.Property<DateTime?>("RowDeletedOn");
+                    b.Property<DateTime>("RowDeletedOn");
 
                     b.Property<int?>("RowModifiedBy");
 
-                    b.Property<DateTime?>("RowModifiedOn");
+                    b.Property<DateTime>("RowModifiedOn");
 
                     b.HasKey("ClubID", "UserID");
 
@@ -139,7 +141,7 @@ namespace CorporateClubs.services.Migrations
 
                     b.Property<int?>("RowCreatedBy");
 
-                    b.Property<DateTime>("RowCreatedOn");
+                    b.Property<DateTime?>("RowCreatedOn");
 
                     b.Property<int?>("RowDeletedBy");
 
@@ -164,7 +166,8 @@ namespace CorporateClubs.services.Migrations
 
             modelBuilder.Entity("CorporateClubs.Services.Models.Conversation", b =>
                 {
-                    b.Property<DateTimeOffset>("PostedOn")
+                    b.Property<byte[]>("Timestamp")
+                        .IsConcurrencyToken()
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("ClubID");
@@ -178,19 +181,19 @@ namespace CorporateClubs.services.Migrations
 
                     b.Property<int?>("RowCreatedBy");
 
-                    b.Property<DateTime?>("RowCreatedOn");
+                    b.Property<DateTime>("RowCreatedOn");
 
                     b.Property<int?>("RowDeletedBy");
 
-                    b.Property<DateTime?>("RowDeletedOn");
+                    b.Property<DateTime>("RowDeletedOn");
 
                     b.Property<int?>("RowModifiedBy");
 
-                    b.Property<DateTime?>("RowModifiedOn");
+                    b.Property<DateTime>("RowModifiedOn");
 
-                    b.HasKey("PostedOn", "ClubID", "UserID");
+                    b.HasKey("Timestamp", "ClubID", "UserID");
 
-                    b.HasAlternateKey("ClubID", "PostedOn", "UserID");
+                    b.HasAlternateKey("ClubID", "Timestamp", "UserID");
 
                     b.HasIndex("RowCreatedBy");
 
@@ -271,11 +274,7 @@ namespace CorporateClubs.services.Migrations
 
                     b.Property<int?>("RowDeletedBy");
 
-                    b.Property<DateTime?>("RowDeletedOn");
-
                     b.Property<int?>("RowModifiedBy");
-
-                    b.Property<DateTime?>("RowModifiedOn");
 
                     b.HasKey("UserID");
 

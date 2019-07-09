@@ -19,10 +19,10 @@ import { connect } from 'react-redux';
 import MyThreads from '../store/Home/MyThreads';
 import Forbidden from '../store/ForbiddenPage/Forbidden'
 import {GetLoggedUserDetails} from './AppActions/AppActions'
+import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
 
  class App extends React.Component<any,any> {
-
-
+  
 
    componentWillMount(){
    this.props.dispatch(GetLoggedUserDetails());
@@ -65,7 +65,6 @@ else{
 
 function mapStatetoProps(state)
 {
-  debugger;
   return {
        LoggedUser:state.AppReducer.LoggedUser,
        error:state.AppReducer.error

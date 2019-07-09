@@ -12,7 +12,6 @@ const IntialState:PayLoad=
 }
 export function AdminPageReducer(State=IntialState,Action:ActionReturnType):PayLoad
 {
-    debugger;
     switch(Action.type)
     {
         case Actions.DETAILS_OF_CLUB:

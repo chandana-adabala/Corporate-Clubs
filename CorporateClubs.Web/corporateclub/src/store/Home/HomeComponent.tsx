@@ -23,7 +23,8 @@ class Home extends React.Component<any,any> {
         this.state={
             searchTerm:'',
             currentClubs:this.props.myclubs,
-            isClubHide:this.props.isClubHide
+            isClubHide:this.props.isClubHide,
+            isChatHide:true
         };
      this.onInputChange = this.onInputChange.bind(this);
     }
@@ -37,28 +38,35 @@ class Home extends React.Component<any,any> {
         });
     }
     componentDidMount(){
-        console.log('mounting success');
-        // debugger;
-        this.props.dispatch(fetchFavClubs(1));
-        this.props.dispatch(fetchMyClubs(1));
+        this.props.dispatch(fetchFavClubs(this.props.LoggedUser.userId));
+        this.props.dispatch(fetchMyClubs(this.props.LoggedUser.userId));
         
     
+    }
+    showChat=()=>{
+        debugger;
+        this.setState({
+            isClubHide:true,
+            isChatHide:false
+    });
     }
 
     hideClubInfo=()=>{
             this.setState({
-                    isClubHide:true
+                    isClubHide:true,
+                    isChatHide:false
             });
     }
     showClubInfo=()=>{
         this.setState({
-            isClubHide:false
+            isClubHide:false,
+            isChatHide:true
         });
     }
 
     render(){
-       console.log('my',this.props.myclubs,this.props.favclubs);
-       
+      debugger;
+        
         return(
             <div className="homeContainer">
                 <HomeNav/>
@@ -83,7 +91,7 @@ class Home extends React.Component<any,any> {
                              
                                 {(this.props.favclubs!="") ?(
                                     this.props.favclubs.map(club=>(
-                                        <Club club={club} key={club.clubID} show={this.showClubInfo}/>
+                                        <Club club={club} key={club.clubID} openChat={this.showChat}/>
                                             ))):(<h4>no fav clubs</h4>)}
                                 
                                    
@@ -94,17 +102,21 @@ class Home extends React.Component<any,any> {
                                 <div className="clubs">
                                     {this.state.currentClubs!=""?(
                                     this.state.currentClubs.map(club=>(
-                                        <Club club={club} key={club.clubID} show={this.showClubInfo}/>
+                                        <Club club={club} key={club.clubID} openChat={this.showChat}/>
                                             ))):(this.props.myclubs!=""?(
                                                 this.props.myclubs.map(club=>(
-                                                    <Club club={club} key={club.clubID} show={this.showClubInfo}/>
+                                                    <Club club={club} key={club.clubID} openChat={this.showChat}/>
                                                         ))):(<h4>no clubs</h4>))} 
                                 </div>
                     </div>
                     <div className="homeArena">
-                        {/* <Conversation/> */}
-                    {this.state.isClubHide==false?(<ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} nUsers={this.props.nUsers} users={this.props.users} hide={this.hideClubInfo} currentUser={2}/>)
-                                                :(<span></span>)}
+                        {this.state.isChatHide==false?(<Conversation club={this.props.club} messages={this.props.messages} show={this.showClubInfo} loggedUser={this.props.LoggedUser}/>)
+                                                    :(
+                                                    this.state.isClubHide==false?
+                                                    (<ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} nUsers={this.props.nUsers} users={this.props.users} hide={this.hideClubInfo}/>)
+                                                    :(<span>choose a club</span>))
+                           }
+                  
                     
                     </div>
                 </div> 
@@ -120,8 +132,7 @@ class Home extends React.Component<any,any> {
 
 
 function mapStateToProps(state){
-     
-     console.log('mapstattoprops',state.homeReducer);
+ debugger;
      return{
          myclubs
             : state.homeReducer.myclubs,
@@ -138,7 +149,11 @@ function mapStateToProps(state){
         users
             : state.homeReducer.users,
         isClubHide
-            : state.homeReducer.hide
+            : state.homeReducer.hide,
+        LoggedUser
+            :state.AppReducer.LoggedUser,
+        messages
+            :state.homeReducer.messages
      }
      
 

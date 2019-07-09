@@ -2,33 +2,22 @@ import React from 'react'
 import './ReceivedMessage.scss'
 
 
-export default class ReceivedMessage extends React.Component{
+export default class ReceivedMessage extends React.Component<any,any>{
     render(){
+        console.log("received message",this.props.message);
+        
         return(
             <div className='receivedMessage'>
                 <div className='messageHeader'>
-                        <div className="time">12:00PM</div>
-                        <div className="displayname">Technovert</div>
+                        <div className="time">{this.props.message.postedOn}</div>
+                        <div className="displayname">{}</div>
                         <img src={require('../../../../Clubs/bike.jpeg')}/>
                         
                 </div>
                 <div className='messageBody'>
                     
                         <div className='message'>
-                            hi....... hello
-                            klllll hi....... hello
-                            klllll hi....... hello
-                            klllllhi....... hello
-                            klllll hi....... hello
-                            klllll hi....... hello
-                            klllll
-                            hi....... hello
-                            klllll hi....... hello
-                            klllll hi....... hello
-                            klllllhi....... hello
-                            klllll hi....... hello
-                            klllll hi....... hello
-                            klllll
+                                {this.props.message.message}
                         </div>
                         <div className="attachments">
                         </div>                        

@@ -23,6 +23,7 @@ using CorporateClubs.Services.Interfaces;
 using CorporateClubs.Services.Services;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using CorporateClubs.API.Hubs;
 
 namespace CorporateClubs.API
 {
@@ -44,16 +45,19 @@ namespace CorporateClubs.API
 
             //services.AddDbContextPool<ModelContext>(opts=> 
             //opts.UseSqlServer(Configuration.GetConnectionString("CorporateClubsDB")));
+            services.AddCors(c =>
+            {
+                c.AddPolicy("allowmyorgin", options => options.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader());
+
+            });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IClubs, ClubsService>();
             services.AddSingleton<IUsers, UserService>();
+            services.AddSingleton<IConversation, ConversationService>();
+            services.AddSignalR();
             services.AddDirectoryBrowser();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddCors(c =>
-            {
-                c.AddPolicy("allowmyorgin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-          });
+          
 
 
             services
@@ -99,6 +103,10 @@ namespace CorporateClubs.API
                 FileProvider = new PhysicalFileProvider(
            Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
                 RequestPath = new PathString("/images")
+            });
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ConversationHub>("/conversationhub");
             });
             app.UseMvc();
         }
