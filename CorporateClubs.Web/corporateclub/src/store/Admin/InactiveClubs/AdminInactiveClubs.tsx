@@ -7,7 +7,7 @@ import { search } from 'react-icons-kit/fa/search';
 import { ic_refresh } from 'react-icons-kit/md/ic_refresh';
 //import { DropdownMenu, MenuItem } from 'react-bootstrap-dropdown-menu';
 import { ic_more_vert } from 'react-icons-kit/md/ic_more_vert';
-import AddUser from '../AddUser';
+import AddUser from '../UsersList/AddUser';
 import { createStore } from 'redux';
 import { Route } from 'react-router';
 import { Link } from 'react-router-dom';

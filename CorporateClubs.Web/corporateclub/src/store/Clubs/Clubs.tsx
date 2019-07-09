@@ -4,15 +4,15 @@ import {caretDown} from 'react-icons-kit/fa/caretDown';
 import {ic_refresh} from 'react-icons-kit/md/ic_refresh';
 import {search} from 'react-icons-kit/fa/search';
 import './Clubs.scss';
-import AddClubs from './AddClubs';
+import AddClubs from './AddClubs/AddClubs';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import Club from './Club';
-import { FetchClubs } from './Actions/ClubActions';
+import EmptyClubs from "./EmptyClub/EmptyClubs";
 import {FetchUsers,FetchMembers} from './Actions/ClubActions'
 import {connect} from 'react-redux';
-import { FetchRequests,FetchClubMembersList} from './Actions/ClubActions';
+import {FetchClubMembersList} from './Actions/ClubActions';
 class Clubs extends React.Component<any,any>{
   componentDidMount()
   {   
@@ -21,7 +21,9 @@ class Clubs extends React.Component<any,any>{
       
   }
   render() {
+    
     return(
+      this.props.clubMembersList==[]?<EmptyClubs/>:
         <div className="content">
             <div >
              

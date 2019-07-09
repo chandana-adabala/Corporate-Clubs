@@ -18,10 +18,12 @@ class Navigate extends React.Component<any,any> {
                     <div className="label">My Home</div> 
                 </div>
                 </Link>
+                <Link to='/Connections'>
                 <div className="options">
                     <div className="home"><Icon size={20} icon={addressBook} className="icon"/></div>
                     <div className="label">Connection</div> 
                 </div>
+                </Link>
                 <Link to="/Clubs">
                 <div className="options">
                     <div className="home"><Icon size={20} icon={library} className="icon"/></div>

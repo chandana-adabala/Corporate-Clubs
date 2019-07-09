@@ -6,6 +6,9 @@ import {gear} from 'react-icons-kit/fa/gear'
 import {chatbubbles} from 'react-icons-kit/ionicons/chatbubbles';
 import {iosBell} from 'react-icons-kit/ionicons/iosBell' 
 import { render } from 'react-dom';
+import {Link} from 'react-router-dom';
+import {logoutFromApp} from '../../Configure'
+import { Button } from 'office-ui-fabric-react/lib/Button';
 let size=25;
 class Head extends React.Component<any,any> {
     
@@ -24,6 +27,7 @@ class Head extends React.Component<any,any> {
         <div className="rightHead">
                <Profile UserDisplayName={this.props.UserDisplayName} profilePic={this.props.profilePic}/>
         </div>
+          
       </div>
       );
     }
@@ -38,8 +42,14 @@ class Head extends React.Component<any,any> {
    
         <span className="profile">
           <Icon size={size} icon={iosBell} className="notify" />
-          <img src={this.props.profilePic} alt="profile pic" className="profilepic" />
+          <Link to="/profile">  <img src={this.props.profilePic} alt="profile pic" className="profilepic" />   </Link>
           <text>{this.props.UserDisplayName}</text>
+
+          <span className="dropdown-content">
+              <p>View Profile</p>
+              <p>Logout</p>
+            </span>
+         
         </span>
     );
     }

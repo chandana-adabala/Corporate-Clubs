@@ -174,5 +174,24 @@ namespace CorporateClubs.Models.Models
         public int? RowDeletedBy { get; set; }// existing user id
 
     }
+    public class FrontEndContacts
+    {
+        public int UserID { get; set; }// Existing user id
+        public int ConnectedUserID { get; set; }// Existing user id
+        public DateTime ConnectedDate { get; set; }//2-11-2019 12:00:02AM
+        public bool IsFavourite { get; set; }// 1 or 0
+        public bool IsBlock { get; set; }// 1 or 0
+        public bool IsRequested { get; set; }// 1 or 0
+        public bool IsMute { get; set; }// 1 or 0
+        public string ProfilePic { get; set; }//..
+        public string Email { get; set; }//abc@outlook.com
+        public string MobileNumber { get; set; }//+917988967890
+        public int MutualClubs { get; set; } //number
+        public int MutualFriends { get; set; }//number
+        public string DisplayName { get; set; }//giraffi_2
+        public string About { get; set; }// I am happy
+        public string Role { get; set; }// Admin,User
+        public bool IsActive { get; set; }// 1 or 0
+    }
 }
 

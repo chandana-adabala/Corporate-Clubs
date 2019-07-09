@@ -114,7 +114,7 @@ namespace CorporateClubs.Services.Services
         public List<Club> GetInactiveClubs()
         {
             using (var _context = new ModelContext())
-            { return _context.Clubs.Where(c => c.ClubDeactiveBy != null && c.RowDeletedBy != null).ToList(); }
+            { return _context.Clubs.Where(c => c.ClubDeactiveBy != null && c.RowDeletedBy == null).ToList(); }
         }
 
 

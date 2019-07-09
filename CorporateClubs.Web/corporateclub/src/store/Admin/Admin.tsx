@@ -1,6 +1,6 @@
 import React from 'react';
 import './Admin.scss';
-import User from './AdminUser';
+import User from './UsersList/AdminUser';
 import InactiveClubs from './InactiveClubs/AdminInactiveClubs'
 import { Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom';

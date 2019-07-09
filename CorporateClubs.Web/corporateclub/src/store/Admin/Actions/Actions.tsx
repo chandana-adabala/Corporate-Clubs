@@ -1,8 +1,12 @@
 import IUsers from '../../../models/IUsers'
 import IClubs from '../../../models/IClubs'
 import IClubMembers from '../../../models/IClubMembers'
+import {getToken} from '../../../Configure'
 import { type } from 'os';
 
+
+
+const url="http://localhost:3333/";
 export enum Actions
 {
     SORT_BY_CLUB_TYPE='SORT_BY_CLUB_TYPE',
@@ -227,9 +231,10 @@ function detailsOfAllClub(payload:IClubs[])
 
 export const FetchClubs = UserID=>{
     debugger;
+    const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/clubs/getInactiveClubs/'+UserID)
+        return fetch(url+'api/clubs/getInactiveClubs/',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -246,9 +251,10 @@ export const FetchClubs = UserID=>{
 
 export const fetchAllClubs = UserID=>{
     debugger;
+    const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/clubs/getallclubs/'+UserID)
+        return fetch(url+'api/clubs/getallclubs/',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -265,10 +271,11 @@ export const fetchAllClubs = UserID=>{
 
 export const FetchUsers =()=>{
     debugger;
+    const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         debugger;
         console.log("fetch call");
-        return fetch('http://localhost:3333/api/Users/GetAllUsers/2')
+        return fetch(url+'api/Users/GetAllUsers',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -291,7 +298,7 @@ export const deleteClub =(clubID,reason)=>{
         debugger;
            var jsonObj={clubID:clubID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch('http://localhost:3333/api/clubs/deleteclub/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
+        return fetch(url+'api/clubs/deleteclub/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -313,7 +320,7 @@ export const reactiveClub =(clubID,reason)=>{
         debugger;
            var jsonObj={clubID:clubID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch('http://localhost:3333/api/clubs/makeclubactive/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
+        return fetch(url+'api/clubs/makeclubactive',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.status !=200){
@@ -336,7 +343,7 @@ export const activateUser=(userID,reason)=>
         debugger;
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch('http://localhost:3333/api/users/reactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
+        return fetch(url+'api/users/reactivateuser',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -358,7 +365,7 @@ export const deactivateUser=(userID,reason)=>
         debugger;
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch('http://localhost:3333/api/users/deactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
+        return fetch(url+'api/users/deactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -378,7 +385,7 @@ export const deleteUser=(userID,reason)=>
         debugger;
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch('http://localhost:3333/api/users/deleteuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
+        return fetch(url+'api/users/deleteuser',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -399,7 +406,7 @@ export function addUser(user,clubs,invitation)
     return function(dispatch){
         debugger;
          console.log(JSON.stringify(user));
-        return fetch('http://localhost:3333/api/users/adduser/2',{method:"post",body:JSON.stringify(user_details),headers:{'Content-Type': 'application/json'}})
+        return fetch(url+'api/users/adduser',{method:"post",body:JSON.stringify(user_details),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("user added failed");

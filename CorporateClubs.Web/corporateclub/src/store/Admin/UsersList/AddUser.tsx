@@ -5,11 +5,11 @@ import { ic_close } from 'react-icons-kit/md/ic_close'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { ReactComponent } from '*.svg';
 import { connect } from 'react-redux';
-import IUsers from '../../models/IUsers'
-import { addUser } from './Actions/Actions'
+import IUsers from '../../../models/IUsers'
+import { addUser } from '../Actions/Actions'
 import { caretDown } from 'react-icons-kit/fa/caretDown'
-import { fetchAllClubs } from './Actions/Actions'
-import './RoundBox.scss'
+import { fetchAllClubs } from '../Actions/Actions'
+import '../RoundBox.scss'
 class AddUser extends React.Component<any, any>{
     constructor(props) {
         super(props);

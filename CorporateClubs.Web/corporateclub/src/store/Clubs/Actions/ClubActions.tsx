@@ -4,6 +4,8 @@ import IClubMembers from '../../../models/IClubMembers'
 import Club from '../Club';
 import IClubMembersList from '../../../models/IClubMembersList'
 import INewClub from '../../../models/INewClub'
+import {getToken} from '../../../Configure'
+const url="http://localhost:3333/"
 export enum Actions
 {
     ADD_CLUB='ADD_CLUB',
@@ -204,30 +206,14 @@ function clubAdded(payload:string):ActionReturnType
 }
 
 
-export const FetchClubs = UserID=>{
-    debugger;
-    return function(dispatch){
-        console.log("fetch call");
-        return fetch('http://localhost:64412/api/clubs/getallclubs/'+UserID)
-        .then(data => data.json())
-        .then(data =>{
-            if(data.message === "Not Found"){
-                throw new Error("User Not Found!");
-            }else{
-                console.log(data);
-                dispatch(DisplayClubs(data));
-            }
-        })
-        .catch(error=>dispatch(FetchFailed(error)))
 
-    }
-}
 export const FetchUsers =()=>{
     debugger;
+    const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         debugger;
         console.log("fetch call");
-        return fetch('http://localhost:64412/api/Users/GetAllUsers/2')
+        return fetch(url+'api/Users/GetAllUsers',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -243,10 +229,11 @@ export const FetchUsers =()=>{
 }
 export const FetchMembers =()=>{
     debugger;
+    const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         debugger;
         console.log("fetch call");
-        return fetch('http://localhost:64412/api/clubs/getallclubsofusers/2/2')
+        return fetch(url+'api/clubs/getallclubsofusers',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -260,33 +247,15 @@ export const FetchMembers =()=>{
 
     }
 }
-export const FetchRequests =ClubID=>{
-    debugger;
-    return function(dispatch){
-        debugger;
-        console.log("fetch call");
-        return fetch('http://localhost:64412/api/clubs/getallrequestedmembers/2/'+ClubID)
-        .then(data => data.json())
-        .then(data =>{
-            if(data.message === "Not Found"){
-                throw new Error("Request Not Found!");
-            }else{
-                console.log(data);
-            
-                dispatch(RequestsOfClub(data));
-            }
-        })
-        .catch(error=>dispatch(FetchFailed(error)))
 
-    }
-}
 
 export const FetchClubMembersList =()=>{
     debugger;
     return function(dispatch){
         debugger;
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
         console.log("fetch call");
-        return fetch('http://localhost:64412/api/clubs/getclubmemberslist/2')
+        return fetch(url+'api/clubs/getclubmemberslist',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
@@ -301,12 +270,12 @@ export const FetchClubMembersList =()=>{
     }
 }
 
-export const makeAndCancelRequest=(requestID,clubID,userID)=>
+export const makeAndCancelRequest=(clubID,userID)=>
 {
     debugger;
     return function(dispatch){
         debugger;
-        return fetch('http://localhost:64412/api/clubs/MakeNCancelRequest/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
+        return fetch(url+'api/clubs/MakeNCancelRequest/'+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -320,12 +289,12 @@ export const makeAndCancelRequest=(requestID,clubID,userID)=>
 }
 
 
-export const removeUser=(requestID,clubID,userID)=>
+export const removeUser=(clubID,userID)=>
 {
     debugger;
     return function(dispatch){
         debugger;
-        return fetch('http://localhost:64412/api/clubs/removeuser/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
+        return fetch(url+'api/clubs/removeuser/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -338,13 +307,12 @@ export const removeUser=(requestID,clubID,userID)=>
     }
 }
 
-export const addUserToPublicClub=(requestID,clubID,userID)=>
+export const addUserToPublicClub=(clubID,userID)=>
 {
     debugger;
-    console.log('http://localhost:64412/api/clubs/addUserToPublicClub/'+requestID+'/'+clubID+'/'+userID, "HERo")
     return function(dispatch){
         debugger;
-        return fetch('http://localhost:64412/api/clubs/addUserToPublicClub/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
+        return fetch(url+'api/clubs/addUserToPublicClub/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -363,7 +331,7 @@ export function addClub(user,newClub:INewClub)
     return function(dispatch){
         debugger;
          console.log(JSON.stringify(user));
-        return fetch('http://localhost:64412/api/clubs/addclub/'+user,{method:"post",body:JSON.stringify(newClub),headers:{'Content-Type': 'application/json'}})
+        return fetch(url+'api/clubs/addclub/'+user,{method:"post",body:JSON.stringify(newClub),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("user added failed");
