@@ -4,13 +4,27 @@ import User from './UsersList/AdminUser';
 import InactiveClubs from './InactiveClubs/AdminInactiveClubs'
 import { Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
-const AdminNav: React.FC = () => {
-    let displayPage:Number=1;
+import { render } from 'react-dom';
+class AdminNav extends  React.Component<any,any> {
+    constructor(props)
+    {
+        super(props)
+        this.state={activeButtons:{users:true,inactiveClubs:false}}
+        this.onClickChangeButtonToActive=this.onClickChangeButtonToActive.bind(this);
+    }
+    onClickChangeButtonToActive(event)
+    {
+        debugger;
+          var activeButtons={users:false,inactiveClubs:false}
+          activeButtons[event.currentTarget.id]=true;
+          this.setState({activeButtons:activeButtons})
+    }
+    render(){
     return(
         <div className="Admin1">
             <nav className="admin-nav">
-                <Link to='/Admin' className="admin-nav-options">Users</Link>
-                <Link to='/Admin/InactiveClubs' className="admin-nav-options">Inactive Clubs</Link>
+                <Link onClick={this.onClickChangeButtonToActive} id="users" to='/Admin' className={this.state.activeButtons.users?"admin-nav-options-active":"admin-nav-options"}>Users</Link>
+                <Link onClick={this.onClickChangeButtonToActive} id="inactiveClubs" to='/Admin/InactiveClubs' className={this.state.activeButtons.inactiveClubs?"admin-nav-options-active":"admin-nav-options"}>Inactive Clubs</Link>
                 
             </nav>
             <Switch>
@@ -19,6 +33,7 @@ const AdminNav: React.FC = () => {
             </Switch>
         </div>
     );
+    }
 
     
 }

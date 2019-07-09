@@ -5,6 +5,11 @@ $color:(
    
 );
 .nav{
+
+    
+    a{
+        text-decoration: none;
+        }
     background-color: map-get($color, bg );
     height: 100%;
     width: 6em;
@@ -18,6 +23,9 @@ $color:(
       width:100%;
   }
     .options{
+        a{
+        text-decoration: none;
+        }
         width:100%;
         
             padding:0.7em 0em 0.7em 0em;
@@ -36,6 +44,25 @@ $color:(
                 }
             }
     }
+
+    .optionsActive
+    {
+       
+        width:100%;
+        
+        padding:0.7em 0em 0.7em 0em;
+        
+        background-color: map-get($color,hover );
+        .home
+        {
+            color: white
+        }
+        .label
+        {
+            color: white;
+         
+        }
+    }
       .home, .label
       {
         font-size: 0.8em;
@@ -53,41 +80,3 @@ $color:(
     
     
 }
-// .home{
-//     color:map-get($color , content );
-  
-   
-    
-   
-    
-// }
-// .icon
-// {
-    
-   
-// }
-// .label
-// {
-//     font-size: 0.8em;
-//     margin: 0em;
-//     text-align: center;
-//     color: map-get($color , content );
-// }
-// .options
-// {
-//     padding-top: 1em;
-//     padding-bottom: 1em;
-//     &:hover
-//     {
-//         background-color: map-get($color,hover );
-//         .home
-//         {
-//             color: white
-//         }
-//         .label
-//         {
-//             color: white
-//         }
-//     }
-    
-// }

@@ -19,6 +19,9 @@ import MyThreads from '../store/Home/MyThreads';
 import Forbidden from '../store/ForbiddenPage/Forbidden'
 import {GetLoggedUserDetails} from './AppActions/AppActions'
 import Connections from '../store/Connections/Connections'
+import {withRouter} from 'react-router-dom';
+
+
 
  class App extends React.Component<any,any> {
 
@@ -29,8 +32,9 @@ import Connections from '../store/Connections/Connections'
   }
 
  
-
+ 
   render(){
+  let NavigatewithLocation = withRouter(props => <Navigate {...props}/>);
     debugger;
 if(this.props.error!=''){
   return(<Forbidden/>);
@@ -40,7 +44,7 @@ else{
     <div className="app">
       <Router>
           <div className="commonNav">
-        <Navigate/>
+        <NavigatewithLocation/>
         <Head  UserDisplayName={this.props.LoggedUser.displayName} profilePic={this.props.LoggedUser.profilePic}/>
         </div>
       

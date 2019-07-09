@@ -44,11 +44,6 @@ class Head extends React.Component<any,any> {
           <Icon size={size} icon={iosBell} className="notify" />
           <Link to="/profile">  <img src={this.props.profilePic} alt="profile pic" className="profilepic" />   </Link>
           <text>{this.props.UserDisplayName}</text>
-
-          <span className="dropdown-content">
-              <p>View Profile</p>
-              <p>Logout</p>
-            </span>
          
         </span>
     );
