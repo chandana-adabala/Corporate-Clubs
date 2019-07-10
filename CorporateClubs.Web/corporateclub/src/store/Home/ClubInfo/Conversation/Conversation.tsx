@@ -16,62 +16,30 @@ import { fetchMyClubInfo,fetchMessagesOfClub } from '../../actions/clubAction';
 import * as signalR from "@aspnet/signalr";
 
 class Conversation extends React.Component<any,any>{
-    connection: signalR.HubConnection;
+    
     constructor(props){
     
         super(props);
         debugger;
         this.state={
-            messages:[],
+            messages:this.props.messages,
             isMessageSend:false,
-            message:""
+            message:"",
+            
         }
-       this.connection = new signalR.HubConnectionBuilder()
-                                                .withUrl("http://localhost:3333/conversationhub", {
-                                                    skipNegotiation: true,
-                                                    transport: signalR.HttpTransportType.WebSockets
-                                                  })
-                                                .configureLogging(signalR.LogLevel.Trace)
-                                                .build();
-        //this.connection.start().catch(err => document.write(err));
+       
         
     }
+
  
     componentDidMount(){
     debugger;
-      this.setState({
-        messages:this.props.messages
-      });
+  
       
-        this.connection.start().then(() => {
-            this.connection.invoke("AddToGroup",this.props.club.clubID).catch(err => console.error(err.toString()));
-        });
-     
-    }
-    componentWillReceiveProps(){
-        debugger;
-        this.setState({
-            messages:this.props.messages
-          });
-    }
-     showGroupInfo=()=>{
-         debugger;
-        this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
-        this.props.show();
-     }
-     saveMessage=(event: React.ChangeEvent<HTMLInputElement>)=>{
-            this.setState({
-                message:event.target.value,
-
-            });
-     }
-     sendMessage=(event)=>{
-        debugger;
-        this.connection.start().then(() => {
-            this.connection.invoke("SendMessageToClub",this.props.club.clubID,this.props.loggedUser.userID,this.state.message);
-        });
-         //this.connection.invoke("SendMessageToClub",this.props.club.clubID,this.props.loggedUser.userID,this.state.message);
-         this.connection.on(
+        this.props.connection.invoke("AddToGroup",this.props.club.clubID).catch(err => console.log("ADDTOGROUPUNSUCCESS",err.toString()));
+   
+        
+        this.props.connection.on(
            
             "ReceiveMessage",
             (user, message, postedAt) => {
@@ -86,6 +54,57 @@ class Conversation extends React.Component<any,any>{
               });
             }
           );
+          this.props.connection.on(
+           
+            "Disconnected",
+            (e) => {
+                debugger;
+                this.state.connection.start();
+            }
+          );
+         
+        }
+        
+     
+    
+    
+    componentDidUpdate(prevProps) {
+        debugger;
+        
+        if (this.props.club.clubID !== prevProps.club.clubID) {
+         
+           
+                this.props.connection.invoke("AddToGroup",this.props.club.clubID).catch(err => console.log("ADDTOGROUPUNSUCCESS",err.toString()));
+                
+        }
+        if(this.props.messages!==prevProps.messages){
+            this.setState({
+                messages:this.props.messages
+            });
+  
+        }
+        
+      }
+     showGroupInfo=()=>{
+         debugger;
+        this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
+        this.props.show();
+     }
+     saveMessage=(event: React.ChangeEvent<HTMLInputElement>)=>{
+            this.setState({
+                message:event.target.value,
+
+            });
+     }
+     
+     sendMessage=(event)=>{
+        debugger;
+
+            this.props.connection.invoke("SendMessageToClub",this.props.club.clubID,this.props.loggedUser.userID,this.state.message)
+                                    .catch(err => console.error(err.toString()));
+          
+      
+        
         
      }
      render(){

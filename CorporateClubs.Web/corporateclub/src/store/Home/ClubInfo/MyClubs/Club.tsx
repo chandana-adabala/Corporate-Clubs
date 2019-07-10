@@ -11,12 +11,12 @@ class Club extends React.Component<any, any>{
         super(props);
         this.onClubClick = this.onClubClick.bind(this);
     }
-    async onClubClick(event) {
+  onClubClick(event) {
         debugger;
-        await this.props.dispatch(fetchMessagesOfClub(this.props.club.clubID));
-        await this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
+        this.props.dispatch(fetchMessagesOfClub(this.props.club.clubID));
+        this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
 
-        await this.props.openChat();
+        this.props.openChat();
     }
     render() {
         return (

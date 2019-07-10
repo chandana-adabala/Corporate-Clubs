@@ -13,6 +13,8 @@ import IClubs from '../../models/IClubs';
 import HomeNav from './HomeBar/HomeNav';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 import Conversation from './ClubInfo/Conversation/Conversation'
+import * as signalR from "@aspnet/signalr";
+
 initializeIcons();
 
 
@@ -20,13 +22,22 @@ initializeIcons();
 class Home extends React.Component<any,any> {
     constructor(props){
         super(props);
+        const connection = new signalR.HubConnectionBuilder()
+        .withUrl("http://localhost:3333/conversationhub", {
+            skipNegotiation: true,
+            transport: signalR.HttpTransportType.WebSockets
+          })
+        .configureLogging(signalR.LogLevel.Trace)
+        .build();
         this.state={
             searchTerm:'',
             currentClubs:this.props.myclubs,
             isClubHide:this.props.isClubHide,
-            isChatHide:true
+            isChatHide:true,
+            connection:connection
         };
      this.onInputChange = this.onInputChange.bind(this);
+
     }
     onInputChange(event){
         
@@ -40,8 +51,11 @@ class Home extends React.Component<any,any> {
     componentDidMount(){
         this.props.dispatch(fetchFavClubs(this.props.LoggedUser.userId));
         this.props.dispatch(fetchMyClubs(this.props.LoggedUser.userId));
-        
-    
+       
+
+    this.state.connection
+      .start({ withCredentials: false })
+      .catch(err => console.error(err.toString()));
     }
     showChat=()=>{
         debugger;
@@ -110,7 +124,7 @@ class Home extends React.Component<any,any> {
                                 </div>
                     </div>
                     <div className="homeArena">
-                        {this.state.isChatHide==false?(<Conversation club={this.props.club} messages={this.props.messages} show={this.showClubInfo} loggedUser={this.props.LoggedUser}/>)
+                        {this.state.isChatHide==false?(<Conversation connection={this.state.connection} club={this.props.club} messages={this.props.messages} show={this.showClubInfo} loggedUser={this.props.LoggedUser}/>)
                                                     :(
                                                     this.state.isClubHide==false?
                                                     (<ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} nUsers={this.props.nUsers} users={this.props.users} hide={this.hideClubInfo}/>)
