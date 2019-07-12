@@ -9,6 +9,7 @@ using CorporateClubs.Services.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using CorporateClubs.Services.Interfaces;
+using CorporateClubs.Models.Models;
 
 namespace CorporateClubs.API.Controllers
 {
@@ -30,7 +31,7 @@ namespace CorporateClubs.API.Controllers
 
         [HttpGet]
         [Route("getallmessagesofclub/{clubID:int}")]
-        public ActionResult<List<Conversation>> GetAllMessagesOfClub(int clubID)
+        public ActionResult<List<MessageSenderInfo>> GetAllMessagesOfClub(int clubID)
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);

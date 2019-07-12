@@ -1,5 +1,4 @@
 import React from 'react';
-import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import {initializeIcons} from 'office-ui-fabric-react/lib/Icons';
 import {search} from 'react-icons-kit/icomoon/search'
 import './Home.scss';
@@ -7,11 +6,8 @@ import ClubInfo from './ClubInfo/ClubInfo';
 import { Icon } from 'react-icons-kit';
 import Club from './ClubInfo/MyClubs/Club';
 import {connect} from 'react-redux';
-import Istate from './reducers/homeReducer';
-import { fetchFavClubs, fetchMyClubs } from './actions/clubAction';
-import IClubs from '../../models/IClubs';
+import { fetchFavClubs, fetchMyClubs } from './actions/homeActions';
 import HomeNav from './HomeBar/HomeNav';
-import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 import Conversation from './ClubInfo/Conversation/Conversation'
 import * as signalR from "@aspnet/signalr";
 
@@ -22,6 +18,7 @@ initializeIcons();
 class Home extends React.Component<any,any> {
     constructor(props){
         super(props);
+        //establishing signalr connection
         const connection = new signalR.HubConnectionBuilder()
         .withUrl("http://localhost:3333/conversationhub", {
             skipNegotiation: true,
@@ -33,45 +30,49 @@ class Home extends React.Component<any,any> {
             searchTerm:'',
             currentClubs:this.props.myclubs,
             isClubHide:this.props.isClubHide,
-            isChatHide:true,
+            isChatHide:false,
             connection:connection
         };
-     this.onInputChange = this.onInputChange.bind(this);
+  
 
     }
-    onInputChange(event){
+
+   
+    componentDidMount(){
+            this.props.dispatch(fetchFavClubs(this.props.LoggedUser.userId));
+            this.props.dispatch(fetchMyClubs(this.props.LoggedUser.userId));
         
-        
+            //starting signalr connection
+            this.state.connection
+            .start({ withCredentials: false })
+            .catch(err => console.error(err.toString()));
+     }
+    showChat=()=>{
+            debugger;
+            this.setState({
+                isClubHide:true,
+                isChatHide:false
+        });
+    }
+
+
+     //searching clubs
+     onInputChange=(event)=>{
         let searchClub = (this.props.myclubs).filter(club=>club.clubTitle.toLowerCase().includes((event.target.value).toLowerCase()));
         this.setState({
             searchTerm:event.target.value,
             currentClubs:searchClub
         });
     }
-    componentDidMount(){
-        this.props.dispatch(fetchFavClubs(this.props.LoggedUser.userId));
-        this.props.dispatch(fetchMyClubs(this.props.LoggedUser.userId));
-       
-
-    this.state.connection
-      .start({ withCredentials: false })
-      .catch(err => console.error(err.toString()));
-    }
-    showChat=()=>{
-        debugger;
-        this.setState({
-            isClubHide:true,
-            isChatHide:false
-    });
-    }
-
     hideClubInfo=()=>{
+        debugger;
             this.setState({
                     isClubHide:true,
                     isChatHide:false
             });
     }
     showClubInfo=()=>{
+        debugger;
         this.setState({
             isClubHide:false,
             isChatHide:true
@@ -90,9 +91,7 @@ class Home extends React.Component<any,any> {
                         <button className="createBtn">Create New</button>
                     </div>
                     <div className="homeBody">
-
-                    
-                    <div className="homeClubs">
+                        <div className="homeClubs">
                    
                                 <div style={{ color: '#e3e5e6' }} className="searchBar">
                                     <Icon size={14} icon={search}/>
@@ -103,10 +102,10 @@ class Home extends React.Component<any,any> {
                                 </div>
                                 <div className="favClubs">
                              
-                                {(this.props.favclubs!="") ?(
-                                    this.props.favclubs.map(club=>(
-                                        <Club club={club} key={club.clubID} openChat={this.showChat}/>
-                                            ))):(<h4>no fav clubs</h4>)}
+                                    {(this.props.favclubs!="") ?(
+                                        this.props.favclubs.map(club=>(
+                                            <Club club={club} key={club.clubID} openChat={this.showChat}/>
+                                                ))):(<h4>no fav clubs</h4>)}
                                 
                                    
                                 </div>
@@ -130,12 +129,10 @@ class Home extends React.Component<any,any> {
                                                     (<ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} nUsers={this.props.nUsers} users={this.props.users} hide={this.hideClubInfo}/>)
                                                     :(<span>choose a club</span>))
                            }
-                  
-                    
                     </div>
                 </div> 
 
-                    </div>
+        </div>
     
         );
    

@@ -14,7 +14,7 @@ import Profile_Head from '../store/Profile/ProfilePage'
 import Connections from '../store/Connections/Connections'
 import Nav from '../store/HeadNav/Navigate';
 import {getToken} from '../Configure';
-import { fetchFavClubs } from '../store/Home/actions/clubAction';
+import { fetchFavClubs } from '../store/Home/actions/homeActions';
 import { connect } from 'react-redux';
 import MyThreads from '../store/Home/MyThreads';
 import Forbidden from '../store/ForbiddenPage/Forbidden'

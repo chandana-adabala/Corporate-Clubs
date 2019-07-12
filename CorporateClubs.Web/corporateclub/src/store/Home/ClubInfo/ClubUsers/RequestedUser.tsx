@@ -6,7 +6,7 @@ import {shield} from 'react-icons-kit/entypo/shield'
 import {check} from 'react-icons-kit/metrize/check'
 import {cross} from 'react-icons-kit/metrize/cross'
 import { connect } from 'react-redux';
-import { acceptRequest, rejectRequest, fetchMyClubInfo } from '../../actions/clubAction';
+import { acceptRequest, rejectRequest, fetchMyClubInfo } from '../../actions/homeActions';
 class RequestedUser extends React.Component<any,{}>{
     constructor(props){
         super(props);

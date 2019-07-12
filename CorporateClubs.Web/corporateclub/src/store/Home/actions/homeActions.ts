@@ -5,6 +5,7 @@ import { type } from 'os';
 import {getToken} from '../../../Configure'
 import IConversation from '../../../models/IConversation';
 
+//Action Types
 export enum ActionTypes{
     FAVCLUBS_FETCH_SUCCESS = 'FAVCLUBS_FETCH_SUCCESS',
     FAVCLUBS_FETCH_BEGIN = 'FAVCLUBS_FETCH_BEGIN',
@@ -63,7 +64,7 @@ export const fetchMyClubsError =(error:string)=>({
     type: ActionTypes.MYCLUBS_FETCH_ERROR,
     payload:{error}
 })
-export const fetchClubInfoSuccess =(clubs:IClubs,hide=false)=>{
+export const fetchClubInfoSuccess =(clubs:IClubs,hide=true)=>{
     console.log("fetchsuccessAC",clubs);
     return{
         type:ActionTypes.CLUBINFO_FETCH_SUCCESS,
@@ -198,8 +199,10 @@ export const fetchMessageError = (error:string)=>{
         payload:{error}
     }
 }
-// Thunk Action Creators
 
+
+
+// Thunk Action Creators
 export const fetchFavClubs = UserID=>{
     return function(dispatch){
         console.log("fetch call");

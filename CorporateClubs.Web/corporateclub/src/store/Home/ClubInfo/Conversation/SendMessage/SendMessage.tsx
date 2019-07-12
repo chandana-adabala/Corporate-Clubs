@@ -7,9 +7,9 @@ export default class SendMessage extends React.Component<any,any>{
         return(
             <div className='sendMessage'>
                 <div className='messageHeader'>
-                        <div className="time">{this.props.message.postedOn}</div>
-                        <div className="displayname">Technovert</div>
-                        <img src={require('../../../../Clubs/bike.jpeg')}/>
+                        <div className="time">{this.props.time}</div>
+                        <div className="displayname">{this.props.message.userName}</div>
+                        <img src={this.props.message.profilePic}/>
                         
                 </div>
                 <div className='messageBody'>

@@ -2,7 +2,7 @@ import {ActionReturnType,ActionsTypes} from './Actions'
 import {PayloadType} from './Actions'
 import {DefaultUser} from '../../models/IUsers'
 import {DefaultClub} from '../../models/IClubs'
-import { ActionTypes } from '../Home/actions/clubAction';
+import { ActionTypes } from '../Home/actions/homeActions';
 const IntialState:PayloadType=
 {
     User:DefaultUser,

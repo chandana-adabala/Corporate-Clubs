@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using MySql.Data.EntityFrameworkCore.DataAnnotations;
 
 namespace CorporateClubs.Services.Models
 {
@@ -21,7 +22,8 @@ namespace CorporateClubs.Services.Models
         [Column(Order = 3)]
         public int ClubID { get; set; }
     
-        [Column(TypeName = "text")]
+        
+        [MySqlCharset("utf8")]
         public string Message { get; set; }
         [Url(ErrorMessage ="Invalid Field")]
         public string Attachment { get; set; }

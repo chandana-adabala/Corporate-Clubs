@@ -1,4 +1,4 @@
-import {ActionTypes} from '../actions/clubAction';
+import {ActionTypes} from '../actions/homeActions';
 import IClubs from '../../../models/IClubs';
 import IUsers from '../../../models/IUsers';
 import IConversation from '../../../models/IConversation';
@@ -21,7 +21,7 @@ const initialState:Istate ={
     club:{ clubID:1,
          clubTitle:'',
         profilePic:'',
-        clubCreatedBy:'',
+        clubCreatedBy:1,
         clubType:'',
         clubDeactiveBy:1,
          reason:'',

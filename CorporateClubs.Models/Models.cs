@@ -12,9 +12,22 @@ namespace CorporateClubs.Models.Models
         public int count { get; set; }
     }
 
+    //conversation models
+
+    public class MessageSenderInfo
+    {
+        public int userID;
+        public int clubID;
+        public string message;
+        public DateTimeOffset postedOn;
+        public string userName;
+        public string profilePic;
+    }
+
+
+
+
     //user modals
-
-
 
 
     public class userTypechangeReason

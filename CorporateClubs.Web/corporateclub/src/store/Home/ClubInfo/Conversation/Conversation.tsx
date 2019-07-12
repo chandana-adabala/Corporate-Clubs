@@ -12,42 +12,83 @@ import {ic_info} from 'react-icons-kit/md/ic_info'
 import SendMessage from './SendMessage/SendMessage';
 import {connect} from 'react-redux';
 import ReceivedMessage from './ReceivedMessage/ReceivedMessage';
-import { fetchMyClubInfo,fetchMessagesOfClub } from '../../actions/clubAction';
-import * as signalR from "@aspnet/signalr";
-
+import { fetchMyClubInfo} from '../../actions/homeActions';
+import EmojiPicker from 'emoji-picker-react';
+import jsemoji from 'emoji-js'
+import 'emoji-mart/css/emoji-mart.css'
+import { Picker } from 'emoji-mart'
+import Files from 'react-files'
+import 'emoji-dictionary'
+import ScrollToBottom from 'react-scroll-to-bottom';
+import {ic_cancel} from 'react-icons-kit/md/ic_cancel'
+import {filesEmpty} from 'react-icons-kit/icomoon/filesEmpty'
+import {ic_insert_drive_file} from 'react-icons-kit/md/ic_insert_drive_file'
 class Conversation extends React.Component<any,any>{
-    
+    emoji: any;
+  
     constructor(props){
     
         super(props);
         debugger;
+        this.emoji = require("emoji-dictionary");
         this.state={
             messages:this.props.messages,
             isMessageSend:false,
             message:"",
+            showEmoji:false,
+            files:[]
             
         }
        
         
     }
 
+   // message arrived at
+   timeDifference=(current, previous)=> {
+        var msPerMinute = 60 * 1000;
+        var msPerHour = msPerMinute * 60;
+        var msPerDay = msPerHour * 24;
+        var msPerMonth = msPerDay * 30;
+        var msPerYear = msPerDay * 365;
+        
+        var elapsed = current - previous;
+        
+        if (elapsed < msPerMinute) {
+             return Math.round(elapsed/1000) + ' seconds ago';   
+        }
+        
+        else if (elapsed < msPerHour) {
+             return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+        }
+        
+        else if (elapsed < msPerDay ) {
+             return Math.round(elapsed/msPerHour ) + ' hours ago';   
+        }
+    
+        else if (elapsed < msPerMonth) {
+             return Math.round(elapsed/msPerDay) + ' days ago';   
+        }
+        else{
+            return previous.toDateString();
+        }
+        
+      
+    }
  
     componentDidMount(){
-    debugger;
-  
-      
-        this.props.connection.invoke("AddToGroup",this.props.club.clubID).catch(err => console.log("ADDTOGROUPUNSUCCESS",err.toString()));
-   
-        
+debugger;
+        //signalr client side methods invoked from server side
         this.props.connection.on(
-           
+            
             "ReceiveMessage",
-            (user, message, postedAt) => {
+            (userID,displayName,profilePic ,message, postedAt) => {
                 debugger;
            
               this.setState({
                 messages:[...this.state.messages,{
-                    userID:user,
+                    userID:userID,
+                    userName:displayName,
+                    profilePic:profilePic,
                     message:message,
                     postedOn:postedAt
                 }]
@@ -73,7 +114,7 @@ class Conversation extends React.Component<any,any>{
         
         if (this.props.club.clubID !== prevProps.club.clubID) {
          
-           
+                 this.props.connection.invoke("RemoveFromGroup",prevProps.club.clubID).catch(err => console.log("REMOVEGROUPUNSUCCESS",err.toString()));
                 this.props.connection.invoke("AddToGroup",this.props.club.clubID).catch(err => console.log("ADDTOGROUPUNSUCCESS",err.toString()));
                 
         }
@@ -85,11 +126,14 @@ class Conversation extends React.Component<any,any>{
         }
         
       }
+
+
      showGroupInfo=()=>{
          debugger;
         this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
         this.props.show();
      }
+
      saveMessage=(event: React.ChangeEvent<HTMLInputElement>)=>{
             this.setState({
                 message:event.target.value,
@@ -98,15 +142,65 @@ class Conversation extends React.Component<any,any>{
      }
      
      sendMessage=(event)=>{
-        debugger;
-
-            this.props.connection.invoke("SendMessageToClub",this.props.club.clubID,this.props.loggedUser.userID,this.state.message)
+         debugger;
+            this.props.connection.invoke("SendMessageToClub",this.props.club.clubID,this.props.loggedUser.userID,
+                                                                        this.props.loggedUser.displayName,
+                                                                        this.props.loggedUser.profilePic,
+                                                                        this.state.message,
+                                                                        this.state.files)
                                     .catch(err => console.error(err.toString()));
-          
-      
-        
-        
+            this.setState({
+                message:"",
+                showEmoji:false
+            });
      }
+     showEmojis=()=>{
+         this.setState({
+             showEmoji:!this.state.showEmoji
+         })
+     }
+     handleEmojiClick=(e)=>{
+         debugger;
+            
+            this.setState({
+                    message:this.state.message+e.native
+            });
+     }
+     maxSelectFile=(event)=>{
+        let files = event.target.files // create file object
+            if (files.length > 3) { 
+               const msg = 'Only 3 images can be uploaded at a time'
+               event.target.value = null // discard selected file
+               console.log(msg)
+              return false;
+     
+          }
+        return true;
+     
+     }
+     onFilesChange =(event)=> {
+         debugger;
+        console.log(event.target.files[0]);
+        if(this.maxSelectFile(event)){ 
+            this.setState({
+            files: [...this.state.files,...event.target.files]
+            })
+       
+        } 
+    }
+     
+      onFilesError=(error, file) =>{
+        console.log('error code ' + error.code + ': ' + error.message)
+      }
+      removeAttachment=(file)=>{
+          debugger;
+                this.setState({
+                    files:this.state.files.filter(a=>a.name!=file.name)
+                });
+           
+                
+      }
+
      render(){
          debugger;
          
@@ -125,37 +219,65 @@ class Conversation extends React.Component<any,any>{
                           </div>
                     </nav>
                  </div>
+                 <ScrollToBottom>
                  <div className="chatDisplayArea">
                  {/* {this.props.messages.map(message=>message.userID==this.props.loggedUser.userID?
                                                     (<SendMessage message={message}></SendMessage>)
                                                     :(<ReceivedMessage message={message}></ReceivedMessage>))} */}
                        {this.state.messages==[]?(this.props.messages.map(message=>message.userID==this.props.loggedUser.userID?
-                                                    (<SendMessage message={message}></SendMessage>)
-                                                    :(<ReceivedMessage message={message}></ReceivedMessage>)))
+                                                    (<SendMessage message={message} time={this.timeDifference(new Date(),new Date(message.postedAt))}></SendMessage>)
+                                                    :(<ReceivedMessage message={message} time={this.timeDifference(new Date(),new Date(message.postedOn))}></ReceivedMessage>)))
                                                 :(this.state.messages.map(message=>message.userID==this.props.loggedUser.userID?
-                                                    (<SendMessage message={message}></SendMessage>)
-                                                    :(<ReceivedMessage message={message}></ReceivedMessage>))
+                                                    (<SendMessage message={message} time={this.timeDifference(new Date(),new Date(message.postedOn))}></SendMessage>)
+                                                    :(<ReceivedMessage message={message} time={this.timeDifference(new Date(),new Date(message.postedOn))}></ReceivedMessage>))
                                                 )
                                                     
                         }
                                                 
-                                               
+                                                                     
                        
                        
                  </div>
+                 </ScrollToBottom>
                  <div className="chatArea">
                     <div className="messageArea">
+                   
+
                             <input type="text" className="message" placeholder="Type a message here" value={this.state.message} onChange={this.saveMessage}/>
                             <div className="messageOptions">
-                                <Icon size={24} icon={ic_attach_file} style={{ color: 'gray' }} />
-                                <Icon size={32} icon={smileO} style={{ color: '#B2E269' }} />
+                            {/* <Files
+                                ref='files'
+                                className='files-dropzone-list'
+                                onChange={this.onFilesChange}
+                                onError={this.onFilesError}
+                                accepts={['image/png', '.pdf', 'audio/*']}
+                                multiple
+                                maxFiles={3}
+                                maxFileSize={10000000}
+                                minFileSize={0}
+                                clickable
+                   
+                                >
+                                                        <Icon size={24} icon={ic_attach_file} style={{ color: 'gray' }} />
+                                </Files> */}
+                                <label>
+                                    <input type='file' multiple style={{display:'none'}} onChange={this.onFilesChange}/>
+                                            <Icon size={24} icon={ic_attach_file} style={{ color: 'gray' }} />
+                                </label>
+                                <Icon size={32} icon={smileO} style={{ color: '#B2E269' }} onClick={this.showEmojis}/>
                                 <Icon size={32} icon={ic_send} style={{ color: 'gray' }} onClick={this.sendMessage}/>
+                                {this.state.showEmoji==true?(<Picker onSelect={this.handleEmojiClick} style={{position:'absolute',zIndex:1,margin:'-15rem'}}/>):(<span></span>)}   
                             </div>
                             
 
                     </div>
                     <div className="attachmentArea">
-
+                            {this.state.files.map(file=>(<span className="attachments">
+                                                                
+                                                                <Icon size={24} icon={ic_insert_drive_file} style={{ color: 'white',backgroundColor:'#a961a9',marginRight:'1rem' ,borderRadius:'50%',padding:'4px'}}/>
+                                                                {file.name}
+                                                                <Icon size={24} icon={ic_cancel} style={{ color: 'gray',marginLeft:'1rem' }}  onClick={this.removeAttachment.bind(this, file)}/>
+                                                                </span>))}
                     </div>
                  </div>
              </div>

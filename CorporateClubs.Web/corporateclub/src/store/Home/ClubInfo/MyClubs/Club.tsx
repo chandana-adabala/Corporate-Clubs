@@ -1,9 +1,7 @@
 import React from 'react';
 import './Club.scss';
-import { fetchFavClubs, fetchMyClubInfo, fetchMessagesOfClub, fetchClubInfoError } from '../../actions/clubAction';
+import { fetchFavClubs, fetchMyClubInfo, fetchMessagesOfClub, fetchClubInfoError } from '../../actions/homeActions';
 import { connect } from 'react-redux';
-import IClubs from '../../../../models/IClubs'
-import { string } from 'prop-types';
 
 
 class Club extends React.Component<any, any>{
@@ -11,13 +9,15 @@ class Club extends React.Component<any, any>{
         super(props);
         this.onClubClick = this.onClubClick.bind(this);
     }
-  onClubClick(event) {
+
+   onClubClick(event) {
         debugger;
         this.props.dispatch(fetchMessagesOfClub(this.props.club.clubID));
         this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
-
         this.props.openChat();
     }
+
+
     render() {
         return (
             <div className="club" onClick={this.onClubClick}>
