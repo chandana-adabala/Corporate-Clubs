@@ -19,7 +19,7 @@ const initialState:Istate ={
     club:{ clubID:1,
          clubTitle:'',
         profilePic:'',
-        clubCreatedBy:'',
+        clubCreatedBy:1,
         clubType:'',
         clubDeactiveBy:1,
          reason:'',

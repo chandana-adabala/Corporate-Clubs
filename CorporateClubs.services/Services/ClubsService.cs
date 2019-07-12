@@ -493,7 +493,7 @@ namespace CorporateClubs.Services.Services
             {
                 try
                 {
-                    var clubMembersList = _context.Clubs.GroupJoin(_context.ClubMembers.Where(c => c.UserID == userID && c.RowDeletedBy != null), c => c.ClubID, m => m.ClubID, (clubs, members) => new { clubs, members }).SelectMany(z => z.members.DefaultIfEmpty(), (club, member) => new
+                    var clubMembersList = _context.Clubs.GroupJoin(_context.ClubMembers.Where(c => c.UserID == userID && c.RowDeletedBy == null), c => c.ClubID, m => m.ClubID, (clubs, members) => new { clubs, members }).SelectMany(z => z.members.DefaultIfEmpty(), (club, member) => new
                     {
                         club = club.clubs,
                         member = member,
@@ -517,6 +517,8 @@ namespace CorporateClubs.Services.Services
                         modifiedClubMember.clubs.Description = clubMember.club.Description;
                         modifiedClubMember.clubs.ClubCreatedBy = clubMember.club.ClubCreatedBy;
                         modifiedClubMember.clubs.RowDeletedBy = clubMember.club.RowDeletedBy;
+                        modifiedClubMember.clubs.ClubDeactiveBy = clubMember.club.ClubDeactiveBy;
+                        modifiedClubMember.count = clubMember.count;
 
 
                         if (clubMember.member != null)

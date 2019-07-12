@@ -12,16 +12,117 @@ import Club from './Club';
 import EmptyClubs from "./EmptyClub/EmptyClubs";
 import {FetchUsers,FetchMembers} from './Actions/ClubActions'
 import {connect} from 'react-redux';
-import {FetchClubMembersList} from './Actions/ClubActions';
+import {FetchClubMembersList,filterClub} from './Actions/ClubActions';
+import {Box} from './Box/Box'
+
 class Clubs extends React.Component<any,any>{
+
+
+  constructor(props)
+  {
+      super(props);
+      this.state={clubType:[],status:[],date:null,searchBar:""}
+      this.addClubTypeProperty=this.addClubTypeProperty.bind(this);
+      this.addStatusTypeProperty=this.addStatusTypeProperty.bind(this);
+      this.removeClubTypeProperty=this.removeClubTypeProperty.bind(this);
+      this.removeStatusTypeProperty=this.removeStatusTypeProperty.bind(this);
+      this.onDateChange=this.onDateChange.bind(this);
+      this.onSearchchange=this.onSearchchange.bind(this);
+      this.handleReset=this.handleReset.bind(this);
+
+  }
+//for filtration
+
+onlyUnique(value, index, self)
+ {
+  debugger;
+  console.log(self.indexOf(value));
+  return self.indexOf(value) === index;
+}
+
+
+addClubTypeProperty(event)
+{
+debugger;
+var status=this.state.status;
+var clubType=this.state.clubType;
+var date=this.state.date;
+var searchBar=this.state.searchBar
+clubType.push(event.target.textContent);
+clubType=clubType.filter(this.onlyUnique)
+this.props.dispatch(filterClub(clubType,status,date,searchBar,this.props.clubMembersList));
+this.setState({clubType:clubType})
+}
+
+
+addStatusTypeProperty(event)
+{
+  var status=this.state.status;
+  var clubType=this.state.clubType;
+  var date=this.state.date;
+  var searchBar=this.state.searchBar
+  status.push(event.target.textContent);
+  status=status.filter(this.onlyUnique)
+  this.props.dispatch(filterClub(clubType,status,date,searchBar,this.props.clubMembersList));
+  this.setState({status:status})
+}
+
+removeStatusTypeProperty(event)
+{
+  var status=this.state.status;
+  var clubType=this.state.clubType;
+  var date=this.state.date;
+  var searchBar=this.state.searchBar
+  status=this.state.status.filter(value=>value!=(event.currentTarget.id));
+  this.props.dispatch(filterClub(clubType,status,date,searchBar,this.props.clubMembersList));
+  this.setState({status:status});
+}
+removeClubTypeProperty(event)
+{
+  var status=this.state.status;
+  var clubType=this.state.clubType;
+  var date=this.state.date;
+  var searchBar=this.state.searchBar
+  clubType=this.state.clubType.filter(value=>value!=(event.currentTarget.id));
+  this.props.dispatch(filterClub(clubType,status,date,searchBar,this.props.clubMembersList));
+  this.setState({clubType:clubType});
+}
+onDateChange(date)
+{
+  var status=this.state.status;
+  var clubType=this.state.clubType;
+  var searchBar=this.state.searchBar;
+  this.props.dispatch(filterClub(clubType,status,date,searchBar,this.props.clubMembersList));
+  this.setState({date:date})
+}
+
+onSearchchange(event)
+{
+  var status=this.state.status;
+  var clubType=this.state.clubType;
+  var searchBar=this.state.searchBar;
+  var date=this.state.date;
+  searchBar=event.target.value.toLowerCase();
+  this.props.dispatch(filterClub(clubType,status,date,searchBar,this.props.clubMembersList));
+  this.setState({searchBar:searchBar});
+}
+handleReset()
+{
+  var status=[];
+  var clubType=[];
+  var searchBar="";
+  var date=null;
+  this.props.dispatch(filterClub(clubType,status,date,searchBar,this.props.clubMembersList));
+  this.setState({date:date,searchBar:searchBar,clubType:clubType,status:status})
+
+}
   componentDidMount()
   {   
     this.props.dispatch(FetchUsers());
-      this.props.dispatch(FetchClubMembersList());
-      
+    this.props.dispatch(FetchClubMembersList());     
   }
+
   render() {
-    
     return(
       this.props.clubMembersList==[]?<EmptyClubs/>:
         <div className="content">
@@ -42,9 +143,9 @@ class Clubs extends React.Component<any,any>{
                      <Icon icon={caretDown} size={15} className="down"/> 
                     </button>
                     <span className="dropdown-content">
-                      <p>Public Open</p>
-                      <p>Public Closed</p>
-                      <p>Private</p>
+                      <p onClick={this.addClubTypeProperty}>Public-Open Club</p>
+                      <p onClick={this.addClubTypeProperty}>Public-Closed Club</p>
+                      <p onClick={this.addClubTypeProperty}>Private Club</p>
                   </span>
                   </span> 
 
@@ -55,31 +156,33 @@ class Clubs extends React.Component<any,any>{
                     </button>
                     </span>
                     <span className="dropdown-content2">
-                      <p>Active</p>
-                      <p>Inactive</p>
-                      <p>Invited</p>
-                      <p>Not Invited</p>
+                      <p onClick={this.addStatusTypeProperty}>Active</p>
+                      <p onClick={this.addStatusTypeProperty}>Inactive</p>
                   </span>
                   
                   </span>
                   <span className="datecont">
-                  <DatePicker placeholderText='Date Created' className="date"/>
+                  <DatePicker placeholderText='Date Created' selected={this.state.date} className="date" onChange={this.onDateChange}/>
                   </span>
                     <Switch>
                     <Route path="/Clubs/addclubs" component={AddClubs} />
                     </Switch>
                   <span className="search">
                    <span><Icon icon={search} size={20}/></span>   
-                      <input type="text" placeholder="Search"/>
+                      <input type="text" placeholder="Search" onChange={this.onSearchchange} value={this.state.searchBar}/>
                   </span>
-                  <button className="reset">
+                  <button className="reset" onClick={this.handleReset}>
                     <Icon icon={ic_refresh} size={20}/>Reset
                   </button>
             </div>
+            <div className="filter">
+            {this.state.clubType.map(value=><Box name={value} close={this.removeClubTypeProperty}/>)}
+            {this.state.status.map(value=><Box name={value} close={this.removeStatusTypeProperty}/>)}
+          </div>
   
 </div>
       <div className="club_tiles">  
-      {this.props.clubMembersList.map((clubMember)=>
+      {this.props.filteredClubMembersList.map((clubMember)=>
       {
       return <Club  clubMember={clubMember} users={this.props.users}/> }
       )}
@@ -96,7 +199,8 @@ function mapStateToProps(State)
        clubs:State.ClubReducer.clubs,
       users:State.ClubReducer.users,
       members:State.ClubReducer.members,
-      clubMembersList:State.ClubReducer.clubMembersList
+      clubMembersList:State.ClubReducer.clubMembersList,
+      filteredClubMembersList:State.ClubReducer.filteredClubMembersList
     }
   }
 export default connect(mapStateToProps)(Clubs);

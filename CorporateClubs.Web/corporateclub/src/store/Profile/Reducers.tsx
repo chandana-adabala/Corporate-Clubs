@@ -11,6 +11,7 @@ const IntialState:PayloadType=
     message:"",
     error:"",
     IsLoading:false,
+    Users:[]
 
 
 
@@ -32,7 +33,7 @@ export default function ProfilePageReducer(State=IntialState,Action:ActionReturn
             State.IsLoading=false
             return {...State}
 
-        case ActionsTypes.FetchClubDetails:
+        case ActionsTypes.FetchFavouriteClubs:
                 State.FavClubs=Action.Payload.FavClubs
                 State.IsLoading=false
                 return {...State}
@@ -50,7 +51,9 @@ export default function ProfilePageReducer(State=IntialState,Action:ActionReturn
             State.error="updation failed"
             return {...State}
        // case ActionTypes.RemoveMessages:
-
+        case ActionsTypes.FetchAllUsers:
+            State.Users=Action.Payload.Users
+            return {...State}
             
         default:
             return State

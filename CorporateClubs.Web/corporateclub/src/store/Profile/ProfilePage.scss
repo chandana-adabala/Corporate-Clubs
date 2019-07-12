@@ -76,7 +76,9 @@ width:250px;
     height:50px;
     border: 0.5px solid rgb(223,226,230);
     border-collapse: collapse;
-
+    .options
+    {
+        display: inline;
     a
     {
         display:inline;
@@ -99,6 +101,25 @@ width:250px;
 
         
     }
+}
+     .optionsActive
+    {
+        display: inline;
+    a
+    {
+        display:inline;
+        margin:40px; 
+        color:grey;
+        text-decoration: none;
+        position:relative;
+        top:20px;
+        color:black;
+        border-bottom: solid;
+        border-bottom-color:#2AA9CB
+
+    }
+}
+
 }
 #details
  {

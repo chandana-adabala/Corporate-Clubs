@@ -84,7 +84,7 @@ class About extends React.Component<any, Istate>{
                             <h5>Display Name</h5>
                             <h4>{this.props.displayName}</h4>
                             <h5>Date of Birth</h5>
-                            <h4>07/11/1997</h4>
+                            <h4>{new Date(this.props.dOB).toDateString()}</h4>
                             <h5>Blood Group</h5>
                             <h4>{this.props.bloodGroup}</h4>
                         </div>

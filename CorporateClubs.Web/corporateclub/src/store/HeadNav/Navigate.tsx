@@ -6,6 +6,7 @@ import {addressBook} from 'react-icons-kit/icomoon/addressBook';
 import {library} from 'react-icons-kit/icomoon/library';
 import {user_circle} from 'react-icons-kit/ikons/user_circle'
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux'
 class Navigate extends React.Component<any,any> {
 
     constructor(props)
@@ -52,19 +53,25 @@ class Navigate extends React.Component<any,any> {
                     <div className="label">Clubs</div> 
                 </div>
                 </Link>
-                <Link to="/Admin">
+                {this.props.LoggedUserRole=='Admin'?
+                (<Link to="/Admin">
                 <div className={this.state.activeButtons["admin"]?"optionsActive":"options"}  id="admin" >
                     <div className="home"><Icon size={20} icon={user_circle} className="icon"/></div>
                     <div className="label">Admin</div> 
                 </div>
-                </Link>
+                </Link>):<span></span>}
             </nav>
         </div>
     );
     }
 }
 
-
-export default Navigate;
+function mapStateToProps(state)
+{
+    return{
+    LoggedUserRole:state.AppReducer.LoggedUser.role
+    }
+}
+export default connect(mapStateToProps)(Navigate);
 
 
