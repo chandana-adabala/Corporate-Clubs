@@ -2,6 +2,7 @@ import React from 'react';
 import './AddUser.scss';
 import { Icon } from 'react-icons-kit'
 import { ic_close } from 'react-icons-kit/md/ic_close'
+import { ic_cancel } from 'react-icons-kit/md/ic_cancel'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { ReactComponent } from '*.svg';
 import { connect } from 'react-redux';
@@ -9,6 +10,7 @@ import IUsers from '../../../models/IUsers'
 import { addUser } from '../Actions/Actions'
 import { caretDown } from 'react-icons-kit/fa/caretDown'
 import { fetchAllClubs } from '../Actions/Actions'
+import {library} from 'react-icons-kit/icomoon/library'
 import '../RoundBox.scss'
 class AddUser extends React.Component<any, any>{
     constructor(props) {
@@ -120,7 +122,7 @@ this.setState({clubSelection:event.target.value,displayClubs:displayClubs})
 
             <div className="AddUser" >
                 <header className="adduser_head">
-                    <text>Add New Club</text>
+                    <text>Add New User</text>
                     <Link to="/Admin">
                         <Icon icon={ic_close} size={30} />
                     </Link>
@@ -190,8 +192,11 @@ class RoundBox extends React.Component<any, any>
   render() {
     return (
       <span className="roundBox" >
+          <span className="clubIcon">
+          <Icon icon={library} size={20} style={{color:'#ffffff'}}/>
+          </span>
         <span>{this.props.name}</span>
-        <span onClick={this.props.close} id={this.props.id}><Icon size={'1rem'} icon={ic_close}/></span>
+        <span onClick={this.props.close} id={this.props.id}><Icon size={'1rem'} icon={ic_cancel} style={{color:"#a4aab2"}}/></span>
       </span>
     )
   }
