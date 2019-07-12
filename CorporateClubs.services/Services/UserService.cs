@@ -284,8 +284,14 @@ namespace CorporateClubs.Services.Services
         {
             using (var _context = new ModelContext())
             {
-
-                return _context.Users.Single(u => u.Email == emailID && u.RowDeletedBy == null && u.IsActive == true);
+                try
+                {
+                    return _context.Users.Single(u => u.Email == emailID && u.RowDeletedBy == null && u.IsActive == true);
+                }
+                catch(Exception e)
+                {
+                    return new Users();
+                }
             }
         }
     }

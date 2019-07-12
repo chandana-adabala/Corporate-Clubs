@@ -29,7 +29,9 @@ export enum Actions
     FETCH_CLUB_MEMBERS_LIST='FETCH_CLUB_MEMBERS_LIST',
     REQUEST_CHANGED='REQUEST_CHANGED',
     USER_DELETED='USER_DELETED',
-    USER_ADDED='USER_ADDED'
+    USER_ADDED='USER_ADDED',
+    DEACTIVATE_CLUB_SUCCESS='DEACTIVATE_CLUB_SUCCESS',
+    FILTRATION_SUCCESS='FILTRATION_SUCCESS'
 
 }
 export interface PayLoad
@@ -42,6 +44,7 @@ export interface PayLoad
     isLoading?:Boolean
     clubMembersList?:IClubMembersList[],
     message?:string
+    filteredClubMembersList?:IClubMembersList[]
 
 
 }
@@ -56,96 +59,16 @@ export interface ActionReturnType
     type:Actions,
     payload:PayLoad,
 }
-function AddClub(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.ADD_CLUB,
-        payload:payload,
-    }
-}
-function SortByClubType(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.SORT_BY_CLUB_TYPE,
-        payload:payload,
-    }
-}
-function SortByStatus(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.SORT_BY_STATUS,
-        payload:payload,
-    }
-}
-function SortByDate(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.SORT_BY_DATE,
-        payload:payload,
-    }
-}
-function SearchClubs(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.SEARCH_CLUBS,
-        payload:payload,
-    }
-}
-function ResetClubs(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.RESET_CLUBS,
-        payload:payload,
-    }
-}
-function DisplayClubs(payload:IClubs[]):ActionReturnType{
-    return{
-        type:Actions.DISPLAY_CLUBS,
-        payload:{clubs:payload},
-    }
-}
-function ReportClub(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.REPORT_CLUB,
-        payload:payload,
-    }
-}
-function DeactivateClub(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.DEACTIVATE_CLUB,
-        payload:payload,
-    }
-}
-function ReactivateClub(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.REACTIVATE_CLUB,
-        payload:payload,
-    }
-}
-function RequestJoin(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.REQUEST_JOIN,
-        payload:payload,
-    }
-}
-function CancelRequest(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.CANCEL_REQUEST,
-        payload:payload,
-    }
-}
-function Join(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.JOIN,
-        payload:payload,
-    }
-}
+
+
+
 function FetchFailed(payload:PayLoad):ActionReturnType{
     return{
         type:Actions.FETCH_FAILED,
         payload:payload,
     }
 }
-function FetchStarted(payload:PayLoad):ActionReturnType{
-    return{
-        type:Actions.FETCH_STARTED,
-        payload:payload,
-    }
-}
+
 function DetailsOfUser(payload:IUsers[]):ActionReturnType{
     return{
         type:Actions.DETAILS_OF_USER,
@@ -158,10 +81,10 @@ function DetailsOfMembers(payload:IClubMembers[]):ActionReturnType{
         payload:{members:payload},
     }
 }
-function RequestsOfClub(payload:IClubMembers[]):ActionReturnType{
+function deactivateSuccess(payload:string):ActionReturnType{
     return{
         type:Actions.REQUESTS_OF_CLUB,
-        payload:{requests:payload},
+        payload:{message:payload},
     }
 }
 
@@ -205,6 +128,13 @@ function clubAdded(payload:string):ActionReturnType
     }
 }
 
+function filtrationSuccess(payload:IClubMembersList[]):ActionReturnType
+{
+    return{
+        type:Actions.FILTRATION_SUCCESS,
+        payload:{filteredClubMembersList:payload}
+    }
+}
 
 
 export const FetchUsers =()=>{
@@ -342,4 +272,79 @@ export function addClub(user,newClub:INewClub)
         })
         .catch(error=>dispatch(FetchFailed(error)))
     }
+}
+
+export function deactivateClub(clubID:number,reason:string)
+{
+    debugger;
+    return function(dispatch){
+        debugger;
+        return fetch(url+'api/clubs/makeclubdeactive/'+clubID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(response =>{
+            if(!response.ok){
+                throw new Error("FetchFailed!");
+            }else{
+                console.log(response.status);
+                dispatch(deactivateSuccess(response.statusText));
+            }
+        })
+        .catch(error=>dispatch(FetchFailed(error)))
+    }
+}
+
+
+export function filterClub(clubType:string[],status:string[],date:Date|null,searchBar:string,clubs)
+{
+    return function(dispatch)
+    {
+   function  myFilter(clubRow)
+    {
+         var i=0,j=0;
+         if(clubRow.clubs.clubDeactiveBy==null)
+         clubRow.clubs.clubDeactiveBy="Inactive";
+         else
+         clubRow.clubs.clubDeactiveBy="Active";
+         if(date==null)
+         var date_check=new Date(clubRow.clubs.createdOn);
+         else
+         var date_check=date;
+
+
+
+         for(i=0;i<clubType.length;i++)
+         {
+             for(j=0;j<status.length;j++)
+             {
+                if(clubRow.clubs.clubType==clubType[i]&&clubRow.clubs.clubDeactiveBy==status[j]&&clubRow.clubs.clubTitle.toLowerCase().includes(searchBar)&&new Date(clubRow.clubs.createdOn).toDateString()==date_check.toDateString())
+                return true;
+             }
+         }
+        //clubType is not selected in the filter
+         if(clubType.length==0)
+         for(i=0;i<status.length;i++)
+         {
+            if(clubRow.clubs.clubDeactiveBy==status[i]&&clubRow.clubs.clubTitle.toLowerCase().includes(searchBar)&&new Date(clubRow.clubs.createdOn).toDateString()==date_check.toDateString())
+            return true;
+         }
+          
+        //status is not selected in the filter
+        if(status.length==0)
+        for(i=0;i<clubType.length;i++)
+        {
+            if(clubRow.clubs.clubType==clubType[i]&&clubRow.clubs.clubTitle.toLowerCase().includes(searchBar)&&new Date(clubRow.clubs.createdOn).toDateString()==date_check.toDateString())
+            return true;
+        }
+        //if both status and clubType are not selected in the filter
+        if(clubType.length==0&&status.length==0)
+        if(clubRow.clubs.clubTitle.toLowerCase().includes(searchBar)&&new Date(clubRow.clubs.createdOn).toDateString()==date_check.toDateString())
+            return true;
+        return false;
+
+
+    }
+
+    var filteredclubs=clubs.filter(myFilter);
+    dispatch(filtrationSuccess(filteredclubs));
+    
+}
 }

@@ -1,10 +1,12 @@
-.table
+.FavouriteClubsTable
   {
+    border-collapse: collapse;
     border :0.05px solid rgb(189, 187, 187);
     margin-right: 20%;
     border-color:  rgb(189, 187, 187);
     padding: 0px;
-
+    margin-left: 27px;
+    width:1515px;
     background-color: white;
     th 
     {

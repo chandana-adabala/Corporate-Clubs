@@ -11,7 +11,8 @@ export enum ActionsTypes {
     FetchFavouriteClubs = "FetchFavouriteClubs",
     ChangeSuccessful = "ChangesSuccessful",
     ChangesFailed = "ChangesFailed",
-    RemoveMessages = "RemoveMessages"
+    RemoveMessages = "RemoveMessages",
+    FetchAllUsers="FetchAllUsers"
     
 }
 
@@ -23,6 +24,7 @@ export interface PayloadType {
     error?:string
     IsLoading?: boolean
     Status?: string
+    Users?:IUsers[]
 
 }
 
@@ -65,10 +67,10 @@ function FetchClubDetailsSuccess(Payload: PayloadType): ActionReturnType {
     }
 }
 
-function FetchFavouriteClubsSuccess(Payload: PayloadType): ActionReturnType {
+function FetchFavouriteClubsSuccess(Payload: IClubs[]): ActionReturnType {
     return {
         type: ActionsTypes.FetchFavouriteClubs,
-        Payload: Payload
+        Payload: {FavClubs:Payload}
     }
 }
 
@@ -95,6 +97,25 @@ function RemoveMessageandError():ActionReturnType
         Payload: { message:'',error:''}
     }
 }
+
+function DetailsOfUser(Payload:IUsers[]):ActionReturnType
+{
+    return{
+        type:ActionsTypes.FetchAllUsers,
+        Payload:{Users:Payload}
+
+    }
+}
+
+function FetchDetailsOfAllClubs(Payload:IClubs[]):ActionReturnType
+{
+    return{
+        type:ActionsTypes.FetchClubDetails,
+        Payload:{Clubs:Payload}
+
+    }
+}
+
 export function FetchProfileDetails() {
     return (dispatch) => {
         console.log("fetch call");
@@ -174,17 +195,59 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
 
 
 
-export function FetchFavouriteClubDetails(dispatch) {
+export function FetchFavouriteClubDetails() {
+    const headers = { 'Authorization': 'Bearer ' + getToken() };
     return (dispatch) => {
         console.log("fetch call");
-        return fetch(url+'api/getallclubsofusers/2/2')
+        return fetch(url+'api/clubs/getallfavclubsofuser',{headers:headers})
             .then(data => data.json())
             .then(data => {
                 if (data.message === "Not Found") {
-                    throw new Error("User Not Found!");
+                    throw new Error("Fetch Failed!");
                 } else {
                     console.log(data);
                     dispatch(FetchFavouriteClubsSuccess(data));
+                }
+            })
+            .catch(error => dispatch(FetchDetailsFailed(error)))
+
+    }
+}
+
+
+export const FetchUsers =()=>{
+    debugger;
+    const headers = { 'Authorization': 'Bearer ' + getToken() };
+    return function(dispatch){
+        debugger;
+        console.log("fetch call");
+        return fetch(url+'api/Users/GetAllUsers',{headers:headers})
+        .then(data => data.json())
+        .then(data =>{
+            if(data.message === "Not Found"){
+                throw new Error("Fetch Failed!");
+            }else{
+                console.log(data);
+                dispatch(DetailsOfUser(data));
+            }
+        })
+        .catch(error=>dispatch(FetchDetailsFailed(error)))
+
+    }
+}
+
+export function FetchAllClubDetails() {
+    const headers = { 'Authorization': 'Bearer ' + getToken() };
+    return (dispatch) => {
+        console.log("fetch call");
+        return fetch(url+'api/clubs/getallclubs',{headers:headers})
+            .then(data => data.json())
+            .then(data => {
+                if (data.message === "Not Found") {
+                    throw new Error("Fetch Failed");
+                } else {
+                    console.log(data);
+                    dispatch(FetchDetailsOfAllClubs(data));
                 }
             })
             .catch(error => dispatch(FetchDetailsFailed(error)))

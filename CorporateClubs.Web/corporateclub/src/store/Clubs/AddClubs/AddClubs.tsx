@@ -276,7 +276,7 @@ class AddClubs extends React.Component<any, any>{
               <span className="addUsersDropdown">
                 <span className="dropdown">
                   <span className="dropdown-content">
-                    {this.state.displayUsers.map(user => (<p id={user.userID} onClick={this.addUser}>{user.displayName}</p>))}
+                    {this.state.displayUsers.map(user => (<p id={user.userID}  onClick={this.addUser}>{user.displayName}</p>))}
                   </span>
                 </span>
               </span>
@@ -290,7 +290,7 @@ class AddClubs extends React.Component<any, any>{
               <span className="addUsersDropdown">
                 <span className="dropdown">
                   <span className="dropdown-content">
-                    {this.state.displayAdmins.map(admin => (<p id={admin.userID} onClick={this.addAdmin}>{admin.displayName}</p>))}
+                    {this.state.displayAdmins.map(admin => (<p id={admin.userID}  onClick={this.addAdmin}>{admin.displayName}</p>))}
                   </span>
                 </span>
               </span>
@@ -327,6 +327,7 @@ class RoundBox extends React.Component<any, any>
     return (
       <span className="roundBoxClub" >
         <span>{this.props.name}</span>
+        <img src={this.props.profilePic}/>
         <span onClick={this.props.close} id={this.props.id}><Icon size={'1rem'} icon={ic_close} /></span>
       </span>
     )

@@ -168,7 +168,6 @@ export function filtration(userContacts:IConnections[],role,status,search)
         if(role.length==0&&status.length==0)
           if(userRow.displayName.toLowerCase().includes(search))
            return true;
-           console.log(userRow.displayName.toLowerCase().includes(search),"search result");
         return false;
          
     }
