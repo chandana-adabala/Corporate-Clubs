@@ -3,7 +3,8 @@ import './AddClubs.scss';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { ChoiceGroup } from 'office-ui-fabric-react/lib/ChoiceGroup';
 import { Icon } from 'react-icons-kit'
-import { ic_close } from 'react-icons-kit/md/ic_close'
+import { ic_cancel } from 'react-icons-kit/md/ic_cancel'
+import {ic_close} from 'react-icons-kit/md/ic_close'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import AddUser from '../../Admin/UsersList/AddUser';
@@ -96,7 +97,8 @@ class AddClubs extends React.Component<any, any>{
   addUser(event) {
     debugger;
     var selectedUsers = this.state.selectedUsers;
-    selectedUsers[event.currentTarget.id] = event.target.textContent;
+    var selectedUser=this.props.users.filter(user=>user.userID==event.currentTarget.id)
+    selectedUsers[event.currentTarget.id] = [event.target.textContent,selectedUser[0].profilePic];
     this.setState({ selectedUsers: selectedUsers, usersSelection: "", displayusers: this.props.users });
   }
 
@@ -141,7 +143,8 @@ class AddClubs extends React.Component<any, any>{
   addAdmin(event) {
     debugger;
     var selectedAdmins = this.state.selectedAdmins;
-    selectedAdmins[event.currentTarget.id] = event.target.textContent;
+    var selectedAdmin=this.props.users.filter(user=>user.userID==event.currentTarget.id)
+    selectedAdmins[event.currentTarget.id] = [event.target.textContent,selectedAdmin[0].profilePic];
     this.setState({ selectedAdmins: selectedAdmins, adminsSelection: "", displayAdmins: this.props.users });
   }
 
@@ -270,7 +273,7 @@ class AddClubs extends React.Component<any, any>{
 
 
             <div className="selectedUsers">
-              {this.state.selectedUsers != undefined ? Object.keys(this.state.selectedUsers).map(user => <RoundBox id={user} close={this.removeUser} name={this.state.selectedUsers[user]} />) : <span></span>}
+              {this.state.selectedUsers != undefined ? Object.keys(this.state.selectedUsers).map(user => <RoundBox id={user} close={this.removeUser} name={this.state.selectedUsers[user][0]} profilePic={this.state.selectedUsers[user][1]} />) : <span></span>}
               <input type="text" className="textline" value={this.state.usersSelection} onChange={this.userSearchChange} placeholder="search" />
 
               <span className="addUsersDropdown">
@@ -284,7 +287,7 @@ class AddClubs extends React.Component<any, any>{
 
 
             <div className="selectedUsers">
-              {this.state.selectedAdmins != undefined ? Object.keys(this.state.selectedAdmins).map(Admin => <RoundBox id={Admin} close={this.removeAdmin} name={this.state.selectedAdmins[Admin]} />) : <span></span>}
+              {this.state.selectedAdmins != undefined ? Object.keys(this.state.selectedAdmins).map(Admin => <RoundBox id={Admin} close={this.removeAdmin} name={this.state.selectedAdmins[Admin][0]} profilePic={this.state.selectedAdmins[Admin][1]}/>) : <span></span>}
               <input type="text" className="textline" value={this.state.adminsSelection} onChange={this.adminSearchChange} placeholder="search" />
 
               <span className="addUsersDropdown">
@@ -326,9 +329,9 @@ class RoundBox extends React.Component<any, any>
   render() {
     return (
       <span className="roundBoxClub" >
-        <span>{this.props.name}</span>
         <img src={this.props.profilePic}/>
-        <span onClick={this.props.close} id={this.props.id}><Icon size={'1rem'} icon={ic_close} /></span>
+        <span>{this.props.name}</span>
+          <span onClick={this.props.close} id={this.props.id}><Icon size={'1rem'} icon={ic_cancel} style={{color:"#a4aab2"}} /></span>
       </span>
     )
   }
