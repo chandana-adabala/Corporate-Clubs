@@ -35,7 +35,10 @@
 
         }
         .attachments{
-            
+            .attachments{
+                font-size: 12px;
+                color: #543754;
+            }
         }
     }
     .messageBody{
@@ -62,5 +65,15 @@
         margin-left: -10px;
     }
    
-    
+    .attachPreview{
+        position: absolute;
+        z-index:1;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        Video{
+            width:100%;
+        }
+    }
 }

@@ -41,8 +41,20 @@ namespace CorporateClubs.Services.Services
                 var msgInfo =  _context.Conversation.Where(m => m.ClubID == clubID && m.RowDeletedBy == null).ToList();
                 foreach(var msg in msgInfo)
                 {
+                    string[] urls;
+                    string[] names;
                    var userInfo = _context.Users.Single(u =>u.UserID == msg.UserID && u.RowDeletedBy == null && u.IsActive==true);
-
+                    if (msg.AttachmentNames != null)
+                    {
+                        urls = msg.AttachmentUrls.Split(" ");
+                        names = msg.AttachmentNames.Split("/");
+                    }
+                    else
+                    {
+                        urls = null;
+                        names = null;
+                    }
+                  
                     var msi = new MessageSenderInfo
                     {
                         userID = userInfo.UserID,
@@ -50,7 +62,9 @@ namespace CorporateClubs.Services.Services
                         message = msg.Message,
                         userName = userInfo.DisplayName,
                         profilePic = userInfo.ProfilePic,
-                        postedOn = msg.PostedOn
+                        postedOn = msg.PostedOn,
+                        attachmentUrls = urls,
+                        attachmentNames = names
                     };
                     messageInfo.Add(msi);
                 }

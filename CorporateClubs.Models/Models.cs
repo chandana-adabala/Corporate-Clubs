@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace CorporateClubs.Models.Models
 {
@@ -22,6 +23,9 @@ namespace CorporateClubs.Models.Models
         public DateTimeOffset postedOn;
         public string userName;
         public string profilePic;
+        public string[] attachmentUrls;
+        public string[] attachmentNames;
+
     }
 
 

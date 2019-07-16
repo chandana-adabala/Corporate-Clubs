@@ -113,7 +113,7 @@ class ClubInfo extends React.Component<any, any>{
 
     //adding new members to clubs
     addMembers=()=>{
-        debugger;
+         
         this.props.dispatch(addNewMembers(this.props.club.clubID,this.state.newMemList,this.props.currentUser));
         this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
         this.setState({
@@ -130,7 +130,7 @@ class ClubInfo extends React.Component<any, any>{
 
 
     componentWillReceiveProps(){
-        debugger;
+         
         this.setState({
             nonUsers:this.props.nUsers,
             newMemCount:0,

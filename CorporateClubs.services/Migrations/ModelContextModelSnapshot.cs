@@ -171,7 +171,9 @@ namespace CorporateClubs.services.Migrations
 
                     b.Property<int>("UserID");
 
-                    b.Property<string>("Attachment");
+                    b.Property<string>("AttachmentNames");
+
+                    b.Property<string>("AttachmentUrls");
 
                     b.Property<string>("Message");
 

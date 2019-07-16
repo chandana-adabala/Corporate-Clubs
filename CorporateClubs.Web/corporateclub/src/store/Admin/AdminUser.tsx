@@ -43,7 +43,7 @@ class  User extends React.Component<any,any> {
 
 
   onlyUnique(value, index, self) {
-    debugger;
+     
     console.log(self.indexOf(value));
     return self.indexOf(value) === index;
   }
@@ -65,7 +65,7 @@ handleReset()
 
 addStatusProperty(event)
 {
-  debugger;
+   
   var role=this.state.role;
   var searchBar=this.state.searchBar;
   var status=this.state.status;
@@ -78,7 +78,7 @@ addStatusProperty(event)
 
 addRoleProperty(event)
 {
-  debugger;
+   
   var role=this.state.role;
   var searchBar=this.state.searchBar;
   var status=this.state.status;
@@ -91,7 +91,7 @@ addRoleProperty(event)
 
 searchBarHandle(event)
 {
-  debugger;
+   
   var role=this.state.role;
   var status=this.state.status;
   var searchBar=event.target.value.toLowerCase();
@@ -102,7 +102,7 @@ searchBarHandle(event)
 
 removeStatusProperty(event)
 {
-  debugger;
+   
   var role=this.state.role;
   var searchBar=this.state.searchBar;
   var status=this.state.status;
@@ -114,7 +114,7 @@ removeStatusProperty(event)
 
 removeRoleProperty(event)
 {
-  debugger;
+   
   var role=this.state.role;
   var searchBar=this.state.searchBar;
   var status=this.state.status;
@@ -248,7 +248,7 @@ class DatatablePage extends React.Component<any,any>
 
 
   function mapStateToProps(State) {
-    debugger;
+     
     return {
       users:State.AdminPageReducer.users,
       selectedUsers:State.AdminPageReducer.selectedUsers

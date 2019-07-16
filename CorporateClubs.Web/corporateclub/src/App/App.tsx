@@ -31,7 +31,7 @@ import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
  
 
   render(){
-    debugger;
+     
 if(this.props.error!=''){
   return(<Forbidden/>);
 }

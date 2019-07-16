@@ -243,7 +243,7 @@ export const fetchMyClubs = UserID=>{
 }
 
 export const fetchMyClubInfo = clubID=>{
-    debugger;
+     
     return function(dispatch){
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
@@ -345,7 +345,7 @@ export const acceptRequest = (clubID,userID,currentUserID=4)=>{
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/acceptrequest/'+clubID+'/'+userID,{method:'post',headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
-           // debugger;
+           //  
             if (!response.ok) {
                 throw new Error("Fetch Failed");
             } else {
@@ -361,7 +361,7 @@ export const rejectRequest = (clubID,userID,currentUserID=4)=>{
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/rejectrequest/'+clubID+'/'+userID,{method:'post',headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
-            //debugger;
+            // 
             if (!response.ok) {
                 throw new Error("Fetch Failed");
             } else {
@@ -422,7 +422,7 @@ export const addNewMembers=(clubID,userList,requestID)=>{
 }
 
 export const fetchMessagesOfClub=(clubID)=>{
-    debugger;
+     debugger;
     return function(dispatch){
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/conversations/getallmessagesofclub/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})

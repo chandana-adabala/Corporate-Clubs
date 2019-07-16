@@ -37,11 +37,11 @@ class ChangeContactDetails extends React.Component<any, any>{
     this.state = {mobileNumber:this.props.User.mobileNumber,"email":this.props.User.email,"address":this.props.User.address};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    debugger;
+     
       }
 // componentDidUpdate()
 // {
-//     debugger;
+//      
 //     this.state = {mobileNumber:this.props.User.mobileNumber,"email":this.props.User.email,"address":this.props.User.address};
 // }
 
@@ -53,7 +53,7 @@ class ChangeContactDetails extends React.Component<any, any>{
    User.mobileNumber=this.state.mobileNumber;
    User.email=this.state.email;
    User.address=this.state.address;
-   debugger;
+    
    console.log(User)
    await this.props.dispatch(UpdateUserDetails(User,"contactdetails"));
    await this.props.dispatch(FetchProfileDetails())
@@ -72,7 +72,7 @@ class ChangeContactDetails extends React.Component<any, any>{
   }
 
     render() {
-        debugger;
+         
         return (
             <div id="ChangeContactDetailsModal" >
                 { <div id="content">
@@ -110,9 +110,9 @@ class ChangeContactDetails extends React.Component<any, any>{
 
 
 function mapStatetoProps(state) {
-    debugger;
+     
     console.log("changecontactDetails");
-    debugger;
+     
     return {
         User: state.ProfilePageReducer.User,
         error:state.ProfilePageReducer.error,

@@ -22,7 +22,7 @@ class DeleteUser extends React.Component<any,any> {
     
         reasonHandle(event)
         {
-            debugger;
+             
             var Reason=event.target.value;
             this.setState({reason:Reason})
         }   

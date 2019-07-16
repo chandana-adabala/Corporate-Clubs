@@ -48,7 +48,7 @@ class Home extends React.Component<any,any> {
             .catch(err => console.error(err.toString()));
      }
     showChat=()=>{
-            debugger;
+             
             this.setState({
                 isClubHide:true,
                 isChatHide:false
@@ -65,14 +65,14 @@ class Home extends React.Component<any,any> {
         });
     }
     hideClubInfo=()=>{
-        debugger;
+         
             this.setState({
                     isClubHide:true,
                     isChatHide:false
             });
     }
     showClubInfo=()=>{
-        debugger;
+         
         this.setState({
             isClubHide:false,
             isChatHide:true
@@ -80,7 +80,7 @@ class Home extends React.Component<any,any> {
     }
 
     render(){
-      debugger;
+       
         
         return(
             <div className="homeContainer">
@@ -143,7 +143,7 @@ class Home extends React.Component<any,any> {
 
 
 function mapStateToProps(state){
- debugger;
+  
      return{
          myclubs
             : state.homeReducer.myclubs,

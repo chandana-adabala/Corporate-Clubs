@@ -205,7 +205,7 @@ function clubAdded(payload:string):ActionReturnType
 
 
 export const FetchClubs = UserID=>{
-    debugger;
+     
     return function(dispatch){
         console.log("fetch call");
         return fetch('http://localhost:64412/api/clubs/getallclubs/'+UserID)
@@ -223,9 +223,9 @@ export const FetchClubs = UserID=>{
     }
 }
 export const FetchUsers =()=>{
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
         console.log("fetch call");
         return fetch('http://localhost:64412/api/Users/GetAllUsers/2')
         .then(data => data.json())
@@ -242,9 +242,9 @@ export const FetchUsers =()=>{
     }
 }
 export const FetchMembers =()=>{
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
         console.log("fetch call");
         return fetch('http://localhost:64412/api/clubs/getallclubsofusers/2/2')
         .then(data => data.json())
@@ -261,9 +261,9 @@ export const FetchMembers =()=>{
     }
 }
 export const FetchRequests =ClubID=>{
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
         console.log("fetch call");
         return fetch('http://localhost:64412/api/clubs/getallrequestedmembers/2/'+ClubID)
         .then(data => data.json())
@@ -282,9 +282,9 @@ export const FetchRequests =ClubID=>{
 }
 
 export const FetchClubMembersList =()=>{
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
         console.log("fetch call");
         return fetch('http://localhost:64412/api/clubs/getclubmemberslist/2')
         .then(data => data.json())
@@ -303,9 +303,9 @@ export const FetchClubMembersList =()=>{
 
 export const makeAndCancelRequest=(requestID,clubID,userID)=>
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
         return fetch('http://localhost:64412/api/clubs/MakeNCancelRequest/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
         .then(response =>{
             if(!response.ok){
@@ -322,9 +322,9 @@ export const makeAndCancelRequest=(requestID,clubID,userID)=>
 
 export const removeUser=(requestID,clubID,userID)=>
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
         return fetch('http://localhost:64412/api/clubs/removeuser/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
         .then(response =>{
             if(!response.ok){
@@ -340,10 +340,10 @@ export const removeUser=(requestID,clubID,userID)=>
 
 export const addUserToPublicClub=(requestID,clubID,userID)=>
 {
-    debugger;
+     
     console.log('http://localhost:64412/api/clubs/addUserToPublicClub/'+requestID+'/'+clubID+'/'+userID, "HERo")
     return function(dispatch){
-        debugger;
+         
         return fetch('http://localhost:64412/api/clubs/addUserToPublicClub/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
         .then(response =>{
             if(!response.ok){
@@ -359,9 +359,9 @@ export const addUserToPublicClub=(requestID,clubID,userID)=>
 
 export function addClub(user,newClub:INewClub)
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
          console.log(JSON.stringify(user));
         return fetch('http://localhost:64412/api/clubs/addclub/'+user,{method:"post",body:JSON.stringify(newClub),headers:{'Content-Type': 'application/json'}})
         .then(response =>{

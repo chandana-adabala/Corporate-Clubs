@@ -88,7 +88,7 @@ class Clubs extends React.Component<any,any>{
 }
 function mapStateToProps(State)
   {
-    debugger;
+     
     console.log(State)
     return{
        clubs:State.ClubReducer.clubs,

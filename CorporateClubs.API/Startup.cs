@@ -24,6 +24,8 @@ using CorporateClubs.Services.Services;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using CorporateClubs.API.Hubs;
+using Microsoft.AspNet.SignalR;
+
 
 namespace CorporateClubs.API
 {
@@ -86,6 +88,7 @@ namespace CorporateClubs.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+          
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
@@ -95,19 +98,20 @@ namespace CorporateClubs.API
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-                           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
-                RequestPath = new PathString("/images")
+                           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\")),
+                RequestPath = new PathString("/root")
             });
             app.UseDirectoryBrowser(new DirectoryBrowserOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
-                RequestPath = new PathString("/images")
+           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\")),
+                RequestPath = new PathString("/root")
             });
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ConversationHub>("/conversationhub");
             });
+            
             app.UseMvc();
         }
     }

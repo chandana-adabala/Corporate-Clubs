@@ -86,7 +86,7 @@ function SearchInactiveClubs(payload:PayLoad):ActionReturnType{
     }
 }
 export function DetailsOfClub(payload:IClubs[]):ActionReturnType{
-    debugger;
+     
     return{
         type:Actions.DETAILS_OF_CLUB,
         payload:{clubs:payload},
@@ -153,7 +153,7 @@ function SearchUser(payload:PayLoad):ActionReturnType{
     }
 }
 export function DetailsOfUser(payload:IUsers[]):ActionReturnType{
-    debugger;
+     
     return{
         type:Actions.DETAILS_OF_USER,
         payload:{users:payload},
@@ -226,7 +226,7 @@ function detailsOfAllClub(payload:IClubs[])
 
 
 export const FetchClubs = UserID=>{
-    debugger;
+     
     return function(dispatch){
         console.log("fetch call");
         return fetch('http://localhost:3333/api/clubs/getInactiveClubs/'+UserID)
@@ -245,7 +245,7 @@ export const FetchClubs = UserID=>{
 }
 
 export const fetchAllClubs = UserID=>{
-    debugger;
+     
     return function(dispatch){
         console.log("fetch call");
         return fetch('http://localhost:3333/api/clubs/getallclubs/'+UserID)
@@ -264,9 +264,9 @@ export const fetchAllClubs = UserID=>{
 }
 
 export const FetchUsers =()=>{
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
         console.log("fetch call");
         return fetch('http://localhost:3333/api/Users/GetAllUsers/2')
         .then(data => data.json())
@@ -286,9 +286,9 @@ export const FetchUsers =()=>{
 
 
 export const deleteClub =(clubID,reason)=>{
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
            var jsonObj={clubID:clubID,reason:reason}
            console.log(JSON.stringify(jsonObj));
         return fetch('http://localhost:3333/api/clubs/deleteclub/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
@@ -308,9 +308,9 @@ export const deleteClub =(clubID,reason)=>{
 
 
 export const reactiveClub =(clubID,reason)=>{
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
            var jsonObj={clubID:clubID,reason:reason}
            console.log(JSON.stringify(jsonObj));
         return fetch('http://localhost:3333/api/clubs/makeclubactive/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
@@ -331,9 +331,9 @@ export const reactiveClub =(clubID,reason)=>{
 
 export const activateUser=(userID,reason)=>
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
         return fetch('http://localhost:3333/api/users/reactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
@@ -353,9 +353,9 @@ export const activateUser=(userID,reason)=>
 
 export const deactivateUser=(userID,reason)=>
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
         return fetch('http://localhost:3333/api/users/deactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
@@ -373,9 +373,9 @@ export const deactivateUser=(userID,reason)=>
  
 export const deleteUser=(userID,reason)=>
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
         return fetch('http://localhost:3333/api/users/deleteuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json'}})
@@ -394,10 +394,10 @@ export const deleteUser=(userID,reason)=>
 
 export function addUser(user,clubs,invitation)
 {
-    debugger;
+     
     var user_details={user:user,clubs:clubs,invitaion:invitation}
     return function(dispatch){
-        debugger;
+         
          console.log(JSON.stringify(user));
         return fetch('http://localhost:3333/api/users/adduser/2',{method:"post",body:JSON.stringify(user_details),headers:{'Content-Type': 'application/json'}})
         .then(response =>{

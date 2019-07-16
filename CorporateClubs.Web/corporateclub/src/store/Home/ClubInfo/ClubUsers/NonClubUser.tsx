@@ -11,7 +11,7 @@ import './NonClubUser.scss'
 import { acceptRequest, rejectRequest, fetchMyClubInfo } from '../../actions/homeActions';
 export default class NonClubUser extends React.Component<any,{}>{
   handleChange=(ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean)=>{
-     // debugger;
+     //  
         this.props.select(checked,this.props.user);
         
   }

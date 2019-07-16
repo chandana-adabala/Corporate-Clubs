@@ -377,10 +377,10 @@ namespace CorporateClubs.API.Controllers
 
                 if (image.Length > 0)
                 {
-                    var url = "http://localhost:3333/images";
+                    var url = "http://localhost:3333/root/images/";
                     var fileType = '.' + image.ContentType.Split('/')[1];
-                    var name = "user" + userID + fileType;
-                    var file1 = System.IO.Path.Combine(webRoot, name);
+                    var name = image.FileName + userID + fileType;
+                    var file1 = System.IO.Path.Combine(webRoot+"//images", name);
                     using (var stream = new FileStream(file1, FileMode.Create))
                     {
                         await image.CopyToAsync(stream);

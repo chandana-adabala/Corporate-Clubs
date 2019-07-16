@@ -25,8 +25,9 @@ namespace CorporateClubs.Services.Models
         
         [MySqlCharset("utf8")]
         public string Message { get; set; }
-        [Url(ErrorMessage ="Invalid Field")]
-        public string Attachment { get; set; }
+        
+        public string AttachmentUrls { get; set; }
+        public string AttachmentNames { get; set; }
 
         public DateTime? RowCreatedOn { get; set; }//2-11-2019 12:00:02AM
         public int? RowCreatedBy { get; set; }// existing user id

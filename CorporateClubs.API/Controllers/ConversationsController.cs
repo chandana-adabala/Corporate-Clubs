@@ -10,23 +10,37 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using CorporateClubs.Services.Interfaces;
 using CorporateClubs.Models.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using CorporateClubs.API.Hubs;
+using System.Diagnostics;
+using Microsoft.AspNetCore.SignalR;
+
 
 namespace CorporateClubs.API.Controllers
 {
-    [Authorize]
+    [Microsoft.AspNetCore.Authorization.Authorize]
     [EnableCors("allowmyorgin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ConversationsController : ControllerBase
     {
         private readonly IConversation _conversation;
+        private readonly IConversation _conversationService;
         private readonly IClubs _clubs;
         private readonly IUsers _users;
-        public ConversationsController(IClubs clubs, IUsers users, IConversation conversation)
+        private IHostingEnvironment _env;
+        private readonly IHubContext<ConversationHub> _hubContext;
+        public ConversationsController(IHubContext<ConversationHub> hubContext,IConversation conversationService, IClubs clubs, IUsers users, IConversation conversation, IHostingEnvironment env)
         {
             _clubs = clubs;
+            _conversationService = conversationService;
             _users = users;
             _conversation = conversation;
+            _env = env;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -47,6 +61,64 @@ namespace CorporateClubs.API.Controllers
             {
                 return BadRequest();
             }
+        }
+
+
+
+        [HttpPost]
+        [Route("uploadattachments/{userID:int}/{clubID:int}")]
+        public async Task<string> UploadAttachments([FromForm] IFormFileCollection files, int userID, int clubID)
+        {
+            var webroot = _env.WebRootPath;
+            try
+            {
+                if(true)
+                {
+                    string msgInfo;
+                    using (var reader = new StreamReader(files[0].OpenReadStream()))
+                    {
+                        msgInfo = reader.ReadToEnd();
+                    }
+                    JObject msg = JObject.Parse(msgInfo);
+                    MessageSenderInfo messageSenderInfo = msg.ToObject<MessageSenderInfo>();
+                    Conversation chat = msg.ToObject<Conversation>();
+                    chat.PostedOn = DateTimeOffset.Now;
+                    chat.RowCreatedOn = DateTime.Now;
+                   
+                    string url = "http://localhost:3333/root/files/";
+                    
+                    for (int i=1;i<files.Count();i++)
+                    {
+                        
+                        string fileType = '.' + files[i].ContentType.Split('/')[1];
+                        string name = i+"-"+clubID + "-" + userID + "-" + chat.PostedOn.ToString("yyyy-MM-ddTHH-mm-ss") + fileType;
+                        var filepath = System.IO.Path.Combine(webroot+"//files", name);
+                        using (var stream = new FileStream(filepath, FileMode.Create))
+                        {
+                            await files[i].CopyToAsync(stream);
+                        }
+                        chat.AttachmentUrls +=  url + '/' + name+" ";
+                        chat.AttachmentNames += files[i].FileName + "/";
+                    }
+                    chat.AttachmentUrls = chat.AttachmentUrls.Substring(0,(chat.AttachmentUrls.Count() - 1));
+                    chat.AttachmentNames = chat.AttachmentNames.Substring(0, (chat.AttachmentNames.Count() - 1));
+                    _conversationService.AddMessageToClub(chat);
+
+                    string[] urls;
+                    string[] names;
+                    urls =chat.AttachmentUrls.Split(" ");
+                    names =chat.AttachmentNames.Split("/");
+                    await _hubContext.Clients.Group(clubID.ToString()).SendAsync("ReceiveMessage", userID, messageSenderInfo.userName, messageSenderInfo.profilePic, chat.Message, chat.PostedOn, urls, names);
+
+                }
+                
+
+            }
+            catch(Exception e)
+            {
+                return $"Error:{e.Message}";
+            }
+            return "Files uploaded";
         }
     }
 }

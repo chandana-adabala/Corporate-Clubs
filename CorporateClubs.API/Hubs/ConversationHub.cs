@@ -19,50 +19,14 @@ namespace CorporateClubs.API.Hubs
         public ConversationHub(IConversation conversationService, IHostingEnvironment env)
         {
             _conversationService = conversationService;
-            _env = env; ;
+            _env = env;
         }
 
 
 
-        public string FormatFile(IFormFile[] files)
-        {
-            var webRoot = _env.WebRootPath;
+      
 
-            List<string> urls = new List<string>();
-
-            try
-            {
-
-
-                if (files.Length > 0)
-                {
-                    foreach (var file in files)
-                    {
-                        var url = "http://localhost:3333/images";
-                        var fileType = '.' + file.ContentType.Split('/')[1];
-                        var name = file.FileName;
-                        var file1 = System.IO.Path.Combine(webRoot, name);
-                        using (var stream = new FileStream(file1, FileMode.Create))
-                        {
-                            file.CopyToAsync(stream);
-                        }
-                        urls.Add(url + '/' + name);
-                    }
-
-                }
-
-
-
-            }
-            catch (Exception e)
-            {
-
-            }
-
-            return String.Join(",", urls);
-        }
-
-        public Task SendMessageToAll(int clubID, int userID, string message)
+        public Task SendMessageToAll(int clubID, int userID, string message,List<string> files)
         {
             Conversation chat = new Conversation()
             {
@@ -73,11 +37,15 @@ namespace CorporateClubs.API.Hubs
                 RowCreatedOn = DateTime.Now
               
             };
+            if(files.Count > 0)
+            {
+                return Clients.All.SendAsync("ReceiveMessage", chat.UserID, chat.Message, chat.PostedOn,files);
+            }
             _conversationService.AddMessageToClub(chat);
-            return  Clients.All.SendAsync("ReceiveMessage", chat.UserID, chat.Message, chat.PostedOn);
+            return Clients.All.SendAsync("ReceiveMessage", chat.UserID, chat.Message, chat.PostedOn);
         }
 
-        public Task SendMessageToClub(int clubID,int userID,string displayName,string profilePic,string message,List<IFormFile> files)
+        public Task SendMessageToClub(int clubID, int userID, string displayName, string profilePic, string message, List<string> files)
         {
             Conversation chat = new Conversation()
             {
@@ -85,12 +53,22 @@ namespace CorporateClubs.API.Hubs
                 UserID = userID,
                 Message = message,
                 PostedOn = DateTimeOffset.Now,
-                RowCreatedOn  = DateTime.Now,
-                //Attachment = FormatFile(files)
+                RowCreatedOn = DateTime.Now,
+
             };
-            _conversationService.AddMessageToClub(chat);
-            return Clients.Group(clubID.ToString()).SendAsync("ReceiveMessage", chat.UserID,displayName,profilePic, chat.Message,chat.PostedOn);
+            if (files.Count == 0)
+            {
+                _conversationService.AddMessageToClub(chat);
+                return Clients.Group(clubID.ToString()).SendAsync("ReceiveMessage", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
+            }
+            return Clients.Group(clubID.ToString()).SendAsync("none");
         }
+
+        //public Task SendMessageToClubWithAttach(int clubID, int userID, string displayName, string profilePic, string message, string[] attachMentUrls,string[] attachmentNames)
+        //{
+            
+        //    return Clients.Group(clubID.ToString()).SendAsync("ReceiveMessage", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
+        //}
         public async Task AddToGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);

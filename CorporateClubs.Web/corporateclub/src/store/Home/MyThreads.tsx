@@ -36,7 +36,7 @@ class MyThreads extends React.Component<any,any>{
     }
     componentDidMount(){
         console.log('mounting success');
-        // debugger;
+        //  
         this.props.dispatch(fetchFavClubs(1));
         this.props.dispatch(fetchMyClubs(1));
         

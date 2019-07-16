@@ -1,8 +1,11 @@
 export default interface IConversation{
-    postedOn:Date,
+    postedOn:number,
     clubID:number,
     userID:number,
     message:string,
-    attachment?:string
+    profilePic:string,
+    userName:string,
+    // attachmentUrls:string,
+    // attachmentNames:string
 
 }

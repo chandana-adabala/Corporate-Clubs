@@ -55,7 +55,7 @@ export default function homeReducer(state=initialState,action:any){
                     myclubs:action.payload
                 }
         case ActionTypes.CLUBINFO_FETCH_SUCCESS:
-            debugger;
+             
                 console.log("fetch club info success",action);
                 return{
                    ...state,
@@ -96,7 +96,7 @@ export default function homeReducer(state=initialState,action:any){
                             ...state,
                         }
         case ActionTypes.FETCH_MESSAGES_SUCCESS:
-            debugger;
+             
                         console.log("fetch all messages success");
                         return{
                             ...state,
