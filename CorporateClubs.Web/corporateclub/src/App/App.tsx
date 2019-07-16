@@ -13,19 +13,22 @@ import Head from '../store/HeadNav/Head';
 import Profile_Head from '../store/Profile/ProfilePage'
 import Nav from '../store/HeadNav/Navigate';
 import {getToken} from '../Configure';
-import { fetchFavClubs } from '../store/Home/actions/clubAction';
+import { fetchFavClubs } from '../store/Home/actions/homeActions';
 import { connect } from 'react-redux';
 import MyThreads from '../store/Home/MyThreads';
 import Forbidden from '../store/ForbiddenPage/Forbidden'
 import {GetLoggedUserDetails} from './AppActions/AppActions'
+<<<<<<< HEAD
 import Connections from '../store/Connections/Connections'
 import {withRouter} from 'react-router-dom';
 
 
+=======
+import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
+>>>>>>> origin/signalR
 
  class App extends React.Component<any,any> {
-
-
+  
 
    componentWillMount(){
    this.props.dispatch(GetLoggedUserDetails());
@@ -34,8 +37,12 @@ import {withRouter} from 'react-router-dom';
  
  
   render(){
+<<<<<<< HEAD
   let NavigatewithLocation = withRouter(props => <Navigate {...props}/>);
     debugger;
+=======
+     
+>>>>>>> origin/signalR
 if(this.props.error!=''){
   return(<Forbidden/>);
 }
@@ -69,7 +76,6 @@ else{
 
 function mapStatetoProps(state)
 {
-  debugger;
   return {
        LoggedUser:state.AppReducer.LoggedUser,
        error:state.AppReducer.error

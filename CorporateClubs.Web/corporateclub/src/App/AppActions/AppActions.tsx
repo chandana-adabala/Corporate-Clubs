@@ -51,10 +51,10 @@ function FetchDetailsFailed():ActionReturnType
 
 export function GetLoggedUserDetails()
 {
-    debugger;
+     
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
-        debugger;
+         
         return fetch('http://localhost:3333/api/users/getuserbytoken',{headers:headers})
         .then(data => data.json())
         .then(data =>{

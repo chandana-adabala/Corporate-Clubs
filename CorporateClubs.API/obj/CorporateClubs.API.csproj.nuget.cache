@@ -1,5 +1,9 @@
 {
   "version": 1,
+<<<<<<< HEAD
   "dgSpecHash": "KhGvh81ZarBvcqS1r9D07r88Uu/VShEHkJQZx6MKcf6URHMp7UzeVuZ1034MkvVeDf3gs1/ZLWRbjCImOUHkBA==",
+=======
+  "dgSpecHash": "b4R3r5fC7+JQCxTFEBf4FBwrF/yvli4aTGzJ6ltywRSB72cSdY+IRoRHpcvQEBshqB4FOup7MxPQj0wR/aLtxA==",
+>>>>>>> origin/signalR
   "success": true
 }

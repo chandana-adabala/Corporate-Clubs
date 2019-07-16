@@ -33,7 +33,7 @@ class InactiveClubs extends React.Component<any, any>{
     this.reset = this.reset.bind(this);
     this.searchHandle=this.searchHandle.bind(this);
     this.state = { clubs:[],users:{},selectedList:[],search:""};
-    debugger;
+     
   }
 
   componentWillMount() {
@@ -46,7 +46,7 @@ class InactiveClubs extends React.Component<any, any>{
     this.setState({selectedList:this.props.clubs});
   }
   onlyUnique(value, index, self) {
-    debugger;
+     
     console.log(self.indexOf(value));
     return self.indexOf(value) === index;
   }
@@ -215,7 +215,7 @@ handleClubClose(event)
   var users=this.state.users;
   var search=this.state.search
   clubs=clubs.filter(value=>value!=(event.currentTarget.id));
-  debugger;
+   
   this.setState({ clubs: clubs });
   this.forceUpdate();
   let selectedList=this.props.clubs.filter(myFilter);
@@ -264,7 +264,7 @@ handleUserClose(event)
   var users=this.state.users;
   var search=this.state.search
   delete users[event.currentTarget.id]
-  debugger;
+   
   this.setState({ users: users });
   this.forceUpdate();
   let selectedList=this.props.clubs.filter(myFilter)
@@ -292,7 +292,7 @@ reset()
 searchHandle(event)
 {
   function  myFilter(clubRow)
-  {debugger;
+  { 
     let i=0;
   
     for (i=0;i<clubs.length;i++) 
@@ -469,7 +469,7 @@ class DatatablePage extends React.Component<any,any>{
   }
 }
 function mapStateToProps(State) {
-  debugger;
+   
   return {
     clubs: State.AdminPageReducer.clubs,
     users:State.AdminPageReducer.users

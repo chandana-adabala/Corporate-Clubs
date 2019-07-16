@@ -22,7 +22,7 @@ class ReactivateClub extends React.Component<any,any> {
        
     reasonHandle(event)
     {
-        debugger;
+         
         var Reason=event.target.value;
         this.setState({reason:Reason})
     }   
@@ -31,7 +31,7 @@ class ReactivateClub extends React.Component<any,any> {
 
     confirmButtonHandle(event)
     {
-        debugger;
+         
         this.props.dispatch(reactiveClub(this.props.clubID,this.state.reason));
     }
 

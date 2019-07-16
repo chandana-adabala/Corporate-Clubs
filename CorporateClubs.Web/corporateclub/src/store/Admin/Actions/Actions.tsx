@@ -90,7 +90,7 @@ function SearchInactiveClubs(payload:PayLoad):ActionReturnType{
     }
 }
 export function DetailsOfClub(payload:IClubs[]):ActionReturnType{
-    debugger;
+     
     return{
         type:Actions.DETAILS_OF_CLUB,
         payload:{clubs:payload},
@@ -157,7 +157,7 @@ function SearchUser(payload:PayLoad):ActionReturnType{
     }
 }
 export function DetailsOfUser(payload:IUsers[]):ActionReturnType{
-    debugger;
+     
     return{
         type:Actions.DETAILS_OF_USER,
         payload:{users:payload},
@@ -230,8 +230,12 @@ function detailsOfAllClub(payload:IClubs[])
 
 
 export const FetchClubs = UserID=>{
+<<<<<<< HEAD
     debugger;
     const headers = { 'Authorization': 'Bearer ' + getToken() };
+=======
+     
+>>>>>>> origin/signalR
     return function(dispatch){
         console.log("fetch call");
         return fetch(url+'api/clubs/getInactiveClubs/',{headers:headers})
@@ -250,8 +254,12 @@ export const FetchClubs = UserID=>{
 }
 
 export const fetchAllClubs = UserID=>{
+<<<<<<< HEAD
     debugger;
     const headers = { 'Authorization': 'Bearer ' + getToken() };
+=======
+     
+>>>>>>> origin/signalR
     return function(dispatch){
         console.log("fetch call");
         return fetch(url+'api/clubs/getallclubs/',{headers:headers})
@@ -270,10 +278,14 @@ export const fetchAllClubs = UserID=>{
 }
 
 export const FetchUsers =()=>{
+<<<<<<< HEAD
     debugger;
     const headers = { 'Authorization': 'Bearer ' + getToken() };
+=======
+     
+>>>>>>> origin/signalR
     return function(dispatch){
-        debugger;
+         
         console.log("fetch call");
         return fetch(url+'api/Users/GetAllUsers',{headers:headers})
         .then(data => data.json())
@@ -293,9 +305,9 @@ export const FetchUsers =()=>{
 
 
 export const deleteClub =(clubID,reason)=>{
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
            var jsonObj={clubID:clubID,reason:reason}
            console.log(JSON.stringify(jsonObj));
         return fetch(url+'api/clubs/deleteclub/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
@@ -315,9 +327,9 @@ export const deleteClub =(clubID,reason)=>{
 
 
 export const reactiveClub =(clubID,reason)=>{
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
            var jsonObj={clubID:clubID,reason:reason}
            console.log(JSON.stringify(jsonObj));
         return fetch(url+'api/clubs/makeclubactive',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
@@ -338,9 +350,9 @@ export const reactiveClub =(clubID,reason)=>{
 
 export const activateUser=(userID,reason)=>
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
         return fetch(url+'api/users/reactivateuser',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
@@ -360,9 +372,9 @@ export const activateUser=(userID,reason)=>
 
 export const deactivateUser=(userID,reason)=>
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
         return fetch(url+'api/users/deactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
@@ -380,9 +392,9 @@ export const deactivateUser=(userID,reason)=>
  
 export const deleteUser=(userID,reason)=>
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
         return fetch(url+'api/users/deleteuser',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
@@ -401,10 +413,10 @@ export const deleteUser=(userID,reason)=>
 
 export function addUser(user,clubs,invitation)
 {
-    debugger;
+     
     var user_details={user:user,clubs:clubs,invitaion:invitation}
     return function(dispatch){
-        debugger;
+         
          console.log(JSON.stringify(user));
         return fetch(url+'api/users/adduser',{method:"post",body:JSON.stringify(user_details),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{

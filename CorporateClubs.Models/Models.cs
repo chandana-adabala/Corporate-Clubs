@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace CorporateClubs.Models.Models
 {
@@ -12,9 +13,25 @@ namespace CorporateClubs.Models.Models
         public int count { get; set; }
     }
 
+    //conversation models
+
+    public class MessageSenderInfo
+    {
+        public int userID;
+        public int clubID;
+        public string message;
+        public DateTimeOffset postedOn;
+        public string userName;
+        public string profilePic;
+        public string[] attachmentUrls;
+        public string[] attachmentNames;
+
+    }
+
+
+
+
     //user modals
-
-
 
 
     public class userTypechangeReason

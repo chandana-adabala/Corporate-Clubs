@@ -193,7 +193,7 @@ handleReset()
 }
 function mapStateToProps(State)
   {
-    debugger;
+     
     console.log(State)
     return{
        clubs:State.ClubReducer.clubs,

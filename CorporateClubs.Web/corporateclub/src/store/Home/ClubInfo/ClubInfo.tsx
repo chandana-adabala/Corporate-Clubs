@@ -8,7 +8,6 @@ import { ic_lock } from 'react-icons-kit/md/ic_lock'
 import { edit } from 'react-icons-kit/ionicons/edit'
 import { closeRound } from 'react-icons-kit/ionicons/closeRound'
 import { user_add } from 'react-icons-kit/ikons/user_add'
-
 import User from './ClubUsers/User'
 import RequestedUser from './ClubUsers/RequestedUser'
 import MyToggle from './Components/Toggle'
@@ -18,10 +17,8 @@ import IUsers from '../../../models/IUsers';
 import { connect } from 'react-redux';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'; 
-import { changeClubType, fetchMyClubInfo, muteNunmuteClub, addNewMembers, fetchNonClubMembers } from '../actions/clubAction';
+import { changeClubType, fetchMyClubInfo, muteNunmuteClub, addNewMembers, fetchNonClubMembers } from '../actions/homeActions';
 import NonClubUser from './ClubUsers/NonClubUser';
-
-//import './MyCheckbox.scss';
 
 class ClubInfo extends React.Component<any, any>{
     uA: IUsers[];
@@ -41,11 +38,12 @@ class ClubInfo extends React.Component<any, any>{
             newMemCount:0,
             newMemList:[]
         };
-        this.onInputChange = this.onInputChange.bind(this);
-        this.getNewClub = this.getNewClub.bind(this);
+    
 
     }
-    onInputChange(event) {
+
+    //searching club members
+    onInputChange=(event)=> {
         this.searchMem = this.uA.filter(user => user.displayName.toLowerCase().includes((event.target.value).toLowerCase()));
         this.setState({
             searchTerm: event.target.value,
@@ -53,10 +51,8 @@ class ClubInfo extends React.Component<any, any>{
         });
         console.log('on input change', event.target.value, this.state.userArrayFilter, this.uA, this.searchMem);
 
-        //this.getSearchData(event);
-
     }
-    getNewClub(event) {
+    getNewClub=(event)=> {
         console.log('on blur called');
 
         this.setState({
@@ -114,8 +110,10 @@ class ClubInfo extends React.Component<any, any>{
         }
         
     }
+
+    //adding new members to clubs
     addMembers=()=>{
-        debugger;
+         
         this.props.dispatch(addNewMembers(this.props.club.clubID,this.state.newMemList,this.props.currentUser));
         this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
         this.setState({
@@ -126,13 +124,13 @@ class ClubInfo extends React.Component<any, any>{
     }
 
     componentWillUpdate() {
-   
-        
         this.uA = this.props.cUsers.map(cUser => this.props.users.filter(user => cUser.userID == user.userID)[0]);
-      
+   
     }
+
+
     componentWillReceiveProps(){
-        debugger;
+         
         this.setState({
             nonUsers:this.props.nUsers,
             newMemCount:0,
@@ -143,10 +141,6 @@ class ClubInfo extends React.Component<any, any>{
     }
     
     render() {
-  // debugger;
-console.log("non user",this.state.nonUsers);
-
-
         return (
             <div className="clubInfo">
                 <div className="clubTitle">
@@ -166,10 +160,11 @@ console.log("non user",this.state.nonUsers);
                                 <Icon size={18} icon={closeRound} style={{ color: '#a4aab2', paddingRight: '1rem' }} onClick={() => this.props.hide()} />
                             </div>
                         </div>
+
                         <div className="secondLine">
                             {this.props.club.description}
-
                         </div>
+
                         <div className="thirdLine">
                             Created by {this.props.users.map(user => {
                                 if (user.userID == this.props.club.clubCreatedBy)
@@ -177,28 +172,27 @@ console.log("non user",this.state.nonUsers);
                             })}  on {new Date(this.props.club.createdOn).toDateString()}
                             <div className="addParticipant">
                                 {this.props.cUsers.length} Participants
-                                                
+
                                 <nav>
                                     <Icon size={24} icon={user_add} style={{ color: '#a4aab2', padding: '0rem 0rem 0rem 1rem ' }} />
                                     <div className="nonUserDropDown">
-                                        <ul>
                                         
+                                        <ul>
                                             <div style={{ color: '#e3e5e6' }} className="searchBar">
                                                 <div>Select the users you wants to add</div>
-                                            
                                                 <input className="searchBox" type="search" name="search" placeholder="Start typing user name" onChange={this.searchNonUser}/>
-
                                             </div>
                                             {/* {this.props.nUsers!=""?(this.props.nUsers.map(user=><li><NonClubUser user={user} select={this.selectNewmembers}/></li>)):(<span>no members to add</span>)} */}
                                             {this.state.nonUsers.map(user=><li><NonClubUser user={user} select={this.selectNewmembers}/></li>)}        
                                         </ul>
+
                                             <div className="fixed">
                                                 {this.state.newMemCount} Members selected
                                                     <button className="primaryBtn" onClick={this.addMembers}>Add Members</button>
                                             </div>     
-                                    </div>  
-                                    
+                                    </div> 
                                 </nav>
+
                             </div>
                         </div>
 
@@ -207,13 +201,13 @@ console.log("non user",this.state.nonUsers);
                 <div className="clubBody">
                     <div className="leftGrid">
                         <div className="pa">Participants</div>
-                        <div className="participants">
+                         <div className="participants">
 
                             <div style={{ color: '#e3e5e6' }} className="searchBar">
                                 <Icon size={14} icon={search} />
                                 <input className="searchBox" type="search" name="search" placeholder="Search Member" onChange={this.onInputChange} onBlur={this.getNewClub} />
-
                             </div>
+
                             {this.props.cUsers != "" ? (
                                 this.props.cUsers.map((cuser) => {
                                     return this.state.userArrayFilter != "" ? (this.state.userArrayFilter.map((user) => {
@@ -232,12 +226,10 @@ console.log("non user",this.state.nonUsers);
                                         )
                                 }))
                                 : (<h4>no members</h4>)}
-
-
-
-
                         </div>
                     </div>
+
+
                     <div className="rightGrid">
                         <div className="re">Requests</div>
                         <div className="requests">
@@ -251,8 +243,8 @@ console.log("non user",this.state.nonUsers);
                                     })
                                 }))
                                 : (<h4>no req members</h4>)}
-
                         </div>
+                        
                         <div className="gs">Group Settings</div>
                         <div className="groupSettings">
                             <div className="clubType">

@@ -35,7 +35,7 @@ namespace CorporateClubs.Services.Models
                 .HasKey(o => new { o.UserID, o.ConnectedUserID })
                 ;
             modelBuilder.Entity<Conversation>()
-                .HasKey(o => new { o.Timestamp, o.ClubID, o.UserID })
+                .HasKey(o => new { o.PostedOn, o.ClubID, o.UserID })
                 ;
 
             modelBuilder.Entity<Conversation>()
@@ -75,7 +75,7 @@ namespace CorporateClubs.Services.Models
 
 
             modelBuilder.Entity<Conversation>()
-                .Property(p => p.Timestamp)
+                .Property(p => p.PostedOn)
                 .ValueGeneratedOnAdd()
                 ;
 

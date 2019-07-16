@@ -23,12 +23,12 @@ class ChangePersonalDetails extends React.Component<any,any>{
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.formatDate=this.formatDate.bind(this);
-    debugger;
+     
       }
 
  async handleSubmit(event)
   {
-    debugger;
+     
    const User:IUser={...this.props.User}
    console.log(User,"event")
    User.firstName=this.state.firstName;
@@ -40,7 +40,7 @@ class ChangePersonalDetails extends React.Component<any,any>{
    User.martialStatus=this.state.martialStatus;
    User.bloodGroup=this.state.bloodGroup;
    User.dOB=this.state.dOB;
-   debugger;
+    
    console.log(User)
    this.props.dispatch(UpdateUserDetails(User,"personaldetails"));
   
@@ -79,11 +79,11 @@ class ChangePersonalDetails extends React.Component<any,any>{
     this.setState({bloodGroup:event.target.value})
     if(event.target.name=="DateofBirth")
     this.setState({dOB:new Date(event.target.value)})
-    debugger;
+     
     console.log(this.state)
   }
     render()
-    {debugger;
+    { 
         return(
                <div id="ChangePersonalDetailsModal" >
                <div id="content">
@@ -148,9 +148,9 @@ class ChangePersonalDetails extends React.Component<any,any>{
 }
 
 function mapStatetoProps(state) {
-    debugger;
+     
     console.log("cChangePersonalDetails");
-    debugger;
+     
     return {
         User: state.ProfilePageReducer.User
     }

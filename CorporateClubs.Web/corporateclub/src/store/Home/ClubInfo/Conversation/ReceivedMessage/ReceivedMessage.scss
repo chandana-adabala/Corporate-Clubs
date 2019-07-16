@@ -1,23 +1,26 @@
 .receivedMessage{
     display: grid;
+    justify-items: start;
     grid-template-rows: 2rem auto;
     float:left;
     padding:1rem;
+    width: fit-content;
     .messageHeader{
         display:flex;
         justify-content:flex-start;
         font-size: 0.9rem;
         align-items: center;
         img{
+            height: 24px;
+            width: 24px;
             border-radius: 50%;
-            height: 20px;
-            width:20px;
-            padding-left: 1rem;
+            margin-right: 0.5rem;
+            
         }
         .time{
             font-size: 0.7rem;
             color:grey;
-            padding-right: 1rem;
+            padding-left: 1rem;
         }
     }
     .messageBody{
@@ -25,14 +28,20 @@
         grid-template-rows: auto auto;
         background-color: #fff;
         margin-right: 25%;
+        margin-top:0.5rem;
         padding:1rem;
+        width: -webkit-fill-available;
         .message{
-            display: flex;
-            flex-flow: row wrap;
+            word-break: break-word;
 
         }
         .attachments{
-            
+          
+                .attachments{
+                    font-size: 12px;
+                    color: #543754;
+                }
+           
         }
     }
     .messageBody{
@@ -56,6 +65,17 @@
         border-bottom-color: #fff;
         border-width: 10px;
         margin-left: -10px;
+    }
+    .attachPreview{
+        position: absolute;
+        z-index:1;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        Video{
+            width:100%;
+        }
     }
    
     

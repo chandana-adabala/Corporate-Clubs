@@ -53,7 +53,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   onImageUpload(event) {
-    debugger;
+     
     console.log(URL.createObjectURL(event.target.files[0]));
     this.setState({ image: URL.createObjectURL(event.target.files[0]), imageFile: event.target.files[0] });
   }
@@ -61,21 +61,21 @@ class AddClubs extends React.Component<any, any>{
 
 
   onNameChange(event) {
-    debugger;
+     
     this.setState({ name: event.target.value, error: "" });
   }
 
 
 
   onDescriptionChange(event) {
-    debugger;
+     
     this.setState({ description: event.target.value, error: "" });
   }
 
 
 
   onToggleChange(isToggled: boolean) {
-    debugger;
+     
     this.setState({ isToggled: isToggled, error: "" })
   }
 
@@ -95,7 +95,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   addUser(event) {
-    debugger;
+     
     var selectedUsers = this.state.selectedUsers;
     var selectedUser=this.props.users.filter(user=>user.userID==event.currentTarget.id)
     selectedUsers[event.currentTarget.id] = [event.target.textContent,selectedUser[0].profilePic];
@@ -105,7 +105,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   removeUser(event) {
-    debugger;
+     
     var selectedUsers = this.state.selectedUsers;
     delete selectedUsers[event.currentTarget.id];
     this.setState({ selectedUsers: selectedUsers });
@@ -123,7 +123,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   removeAdmin(event) {
-    debugger;
+     
     var selectedAdmins = this.state.selectedAdmins;
     delete selectedAdmins[event.currentTarget.id];
     this.setState({ selectedAdmins: selectedAdmins });
@@ -141,7 +141,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   addAdmin(event) {
-    debugger;
+     
     var selectedAdmins = this.state.selectedAdmins;
     var selectedAdmin=this.props.users.filter(user=>user.userID==event.currentTarget.id)
     selectedAdmins[event.currentTarget.id] = [event.target.textContent,selectedAdmin[0].profilePic];
@@ -150,7 +150,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   onSubmit(event) {
-    debugger;
+     
     if (this.state.name == '' || this.state.description == '') {
       this.setState({ error: "Fields marked * are mandatory" });
     }
@@ -176,7 +176,7 @@ class AddClubs extends React.Component<any, any>{
   //imageUpload
 
   imageUploadHandler = (ev) => {
-    debugger;
+     
 
     console.log("image upload");
 
@@ -316,7 +316,7 @@ class AddClubs extends React.Component<any, any>{
 }
 
 function mapStateToProps(State) {
-  debugger;
+   
   console.log(State)
   return {
     users: State.ClubReducer.users,

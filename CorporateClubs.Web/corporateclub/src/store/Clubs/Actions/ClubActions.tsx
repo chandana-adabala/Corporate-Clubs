@@ -128,20 +128,44 @@ function clubAdded(payload:string):ActionReturnType
     }
 }
 
+<<<<<<< HEAD
 function filtrationSuccess(payload:IClubMembersList[]):ActionReturnType
 {
     return{
         type:Actions.FILTRATION_SUCCESS,
         payload:{filteredClubMembersList:payload}
+=======
+
+export const FetchClubs = UserID=>{
+     
+    return function(dispatch){
+        console.log("fetch call");
+        return fetch('http://localhost:64412/api/clubs/getallclubs/'+UserID)
+        .then(data => data.json())
+        .then(data =>{
+            if(data.message === "Not Found"){
+                throw new Error("User Not Found!");
+            }else{
+                console.log(data);
+                dispatch(DisplayClubs(data));
+            }
+        })
+        .catch(error=>dispatch(FetchFailed(error)))
+
+>>>>>>> origin/signalR
     }
 }
 
 
 export const FetchUsers =()=>{
+<<<<<<< HEAD
     debugger;
     const headers = { 'Authorization': 'Bearer ' + getToken() };
+=======
+     
+>>>>>>> origin/signalR
     return function(dispatch){
-        debugger;
+         
         console.log("fetch call");
         return fetch(url+'api/Users/GetAllUsers',{headers:headers})
         .then(data => data.json())
@@ -158,10 +182,14 @@ export const FetchUsers =()=>{
     }
 }
 export const FetchMembers =()=>{
+<<<<<<< HEAD
     debugger;
     const headers = { 'Authorization': 'Bearer ' + getToken() };
+=======
+     
+>>>>>>> origin/signalR
     return function(dispatch){
-        debugger;
+         
         console.log("fetch call");
         return fetch(url+'api/clubs/getallclubsofusers',{headers:headers})
         .then(data => data.json())
@@ -177,13 +205,37 @@ export const FetchMembers =()=>{
 
     }
 }
+<<<<<<< HEAD
+=======
+export const FetchRequests =ClubID=>{
+     
+    return function(dispatch){
+         
+        console.log("fetch call");
+        return fetch('http://localhost:64412/api/clubs/getallrequestedmembers/2/'+ClubID)
+        .then(data => data.json())
+        .then(data =>{
+            if(data.message === "Not Found"){
+                throw new Error("Request Not Found!");
+            }else{
+                console.log(data);
+            
+                dispatch(RequestsOfClub(data));
+            }
+        })
+        .catch(error=>dispatch(FetchFailed(error)))
+>>>>>>> origin/signalR
 
 
 export const FetchClubMembersList =()=>{
-    debugger;
+     
     return function(dispatch){
+<<<<<<< HEAD
         debugger;
         const headers = { 'Authorization': 'Bearer ' + getToken() };
+=======
+         
+>>>>>>> origin/signalR
         console.log("fetch call");
         return fetch(url+'api/clubs/getclubmemberslist',{headers:headers})
         .then(data => data.json())
@@ -202,10 +254,15 @@ export const FetchClubMembersList =()=>{
 
 export const makeAndCancelRequest=(clubID,userID)=>
 {
-    debugger;
+     
     return function(dispatch){
+<<<<<<< HEAD
         debugger;
         return fetch(url+'api/clubs/MakeNCancelRequest/'+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+=======
+         
+        return fetch('http://localhost:64412/api/clubs/MakeNCancelRequest/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
+>>>>>>> origin/signalR
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -221,10 +278,15 @@ export const makeAndCancelRequest=(clubID,userID)=>
 
 export const removeUser=(clubID,userID)=>
 {
-    debugger;
+     
     return function(dispatch){
+<<<<<<< HEAD
         debugger;
         return fetch(url+'api/clubs/removeuser/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+=======
+         
+        return fetch('http://localhost:64412/api/clubs/removeuser/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
+>>>>>>> origin/signalR
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -239,10 +301,18 @@ export const removeUser=(clubID,userID)=>
 
 export const addUserToPublicClub=(clubID,userID)=>
 {
+<<<<<<< HEAD
     debugger;
     return function(dispatch){
         debugger;
         return fetch(url+'api/clubs/addUserToPublicClub/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+=======
+     
+    console.log('http://localhost:64412/api/clubs/addUserToPublicClub/'+requestID+'/'+clubID+'/'+userID, "HERo")
+    return function(dispatch){
+         
+        return fetch('http://localhost:64412/api/clubs/addUserToPublicClub/'+requestID+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json'}})
+>>>>>>> origin/signalR
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -257,9 +327,9 @@ export const addUserToPublicClub=(clubID,userID)=>
 
 export function addClub(user,newClub:INewClub)
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
          console.log(JSON.stringify(user));
         return fetch(url+'api/clubs/addclub/'+user,{method:"post",body:JSON.stringify(newClub),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{

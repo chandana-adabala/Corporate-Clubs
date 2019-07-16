@@ -3,7 +3,9 @@ import IClubs from '../../../models/IClubs'
 import IClubMembers from '../../../models/IClubMembers'
 import { type } from 'os';
 import {getToken} from '../../../Configure'
+import IConversation from '../../../models/IConversation';
 
+//Action Types
 export enum ActionTypes{
     FAVCLUBS_FETCH_SUCCESS = 'FAVCLUBS_FETCH_SUCCESS',
     FAVCLUBS_FETCH_BEGIN = 'FAVCLUBS_FETCH_BEGIN',
@@ -28,12 +30,13 @@ export enum ActionTypes{
     CHANGE_CLUB_TYPE_ERROR='CHANGE_CLUB_TYPE_ERROR',
     MUTE_N_UNMUTE_CLUB='MUTE_N_UNMUTE_CLUB',
     ADD_MEMBER_SUCCESS='ADD_MEMBER_SUCCESS',
-    ADD_MEMBER_ERROR='ADD_MEMBER_ERROR'
+    ADD_MEMBER_ERROR='ADD_MEMBER_ERROR',
+    FETCH_MESSAGES_SUCCESS = 'FETCH_MESSAGES_SUCCESS',
+    FETCH_MESSAGES_ERROR = 'FETCH_MESSAGES_ERROR',
+
 }
 
-// export interface ReceiveFavClubsAction {type:ActionTypes.FAVCLUBS_FETCH_SUCCESS,payload:{club:IClubs}}
-// export interface MyClubsFetchAction {type:ActionTypes.MYCLUBS_FETCH,payload:{club:IClubs}}
-//todo: create remaining
+
 
 //Action creators
 export const fetchFavClubsSuccess =(clubs:IClubs)=>{
@@ -61,7 +64,7 @@ export const fetchMyClubsError =(error:string)=>({
     type: ActionTypes.MYCLUBS_FETCH_ERROR,
     payload:{error}
 })
-export const fetchClubInfoSuccess =(clubs:IClubs,hide=false)=>{
+export const fetchClubInfoSuccess =(clubs:IClubs,hide=true)=>{
     console.log("fetchsuccessAC",clubs);
     return{
         type:ActionTypes.CLUBINFO_FETCH_SUCCESS,
@@ -77,7 +80,6 @@ export const fetchClubInfoError =(error:string)=>({
 })
 
 export const fetchClubMemberSuccess =(users:IUsers)=>{
-   // debugger;
     console.log("fetchsuccessAC",users);
     return{
         type:ActionTypes.CLUBMEMBERS_FETCH_SUCCESS,
@@ -90,7 +92,6 @@ export const fetchClubMembersError =(error:string)=>({
     payload:{error}
 })
 export const fetchClubRequestedMembersSuccess =(rUsers:IUsers)=>{
-   // debugger;
     console.log("fetchsuccessAC",rUsers);
     return{
         type:ActionTypes.REQCLUBMEM_FETCH_SUCCESS,
@@ -103,7 +104,6 @@ export const fetchClubRequestedMembersError =(error:string)=>({
     payload:{error}
 })
 export const fetchNonClubMembersSuccess =(nUsers:IUsers)=>{
-    // debugger;
      console.log("fetchsuccessnonusers",nUsers);
      return{
          type:ActionTypes.NONCLUBMEM_FETCH_SUCCESS,
@@ -116,7 +116,6 @@ export const fetchNonClubMembersSuccess =(nUsers:IUsers)=>{
      payload:{error}
  })
 export const fetchAllUsersSuccess =(users:IUsers)=>{
-   // debugger;
     console.log("fetchsuccessAC",users);
     return{
         type:ActionTypes.AllUSERS_FETCH_SUCCESS,
@@ -187,8 +186,23 @@ export const addNewMembersError=(error:string)=>{
     }
 }
 
-// Thunk Action Creators
 
+export const fetchMessageSuccess = (message:IConversation)=>{
+    return{
+        type:ActionTypes.FETCH_MESSAGES_SUCCESS,
+        payload:message
+    }
+}
+export const fetchMessageError = (error:string)=>{
+    return{
+        type:ActionTypes.FETCH_MESSAGES_ERROR,
+        payload:{error}
+    }
+}
+
+
+
+// Thunk Action Creators
 export const fetchFavClubs = UserID=>{
     return function(dispatch){
         console.log("fetch call");
@@ -229,6 +243,7 @@ export const fetchMyClubs = UserID=>{
 }
 
 export const fetchMyClubInfo = clubID=>{
+     
     return function(dispatch){
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
@@ -330,7 +345,7 @@ export const acceptRequest = (clubID,userID,currentUserID=4)=>{
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/acceptrequest/'+clubID+'/'+userID,{method:'post',headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
-           // debugger;
+           //  
             if (!response.ok) {
                 throw new Error("Fetch Failed");
             } else {
@@ -346,7 +361,7 @@ export const rejectRequest = (clubID,userID,currentUserID=4)=>{
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/rejectrequest/'+clubID+'/'+userID,{method:'post',headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
-            //debugger;
+            // 
             if (!response.ok) {
                 throw new Error("Fetch Failed");
             } else {
@@ -404,4 +419,23 @@ export const addNewMembers=(clubID,userList,requestID)=>{
             })
             .catch(error=>dispatch(addNewMembersError(error)))
         }
+}
+
+export const fetchMessagesOfClub=(clubID)=>{
+     debugger;
+    return function(dispatch){
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/conversations/getallmessagesofclub/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
+        .then(data => data.json())
+        .then(data =>{
+            if(data.message === "Not Found"){
+                throw new Error("User Not Found!");
+            }else{
+                dispatch(fetchMessageSuccess(data));
+               
+            }
+        })
+        .catch(error=>dispatch(fetchMessageError(error)))
+
+    }
 }

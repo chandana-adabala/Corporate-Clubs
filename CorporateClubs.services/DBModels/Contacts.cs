@@ -25,9 +25,9 @@ namespace CorporateClubs.Services.Models
         public DateTime RowCreatedOn { get; set; }//2-11-2019 12:00:02AM
 
         public int? RowCreatedBy { get; set; }// existing user id
-        public DateTime RowModifiedOn { get; set; }
+        public DateTime? RowModifiedOn { get; set; }
         public int? RowModifiedBy { get; set; }
-        public DateTime RowDeletedOn { get; set; }
+        public DateTime? RowDeletedOn { get; set; }
         public int? RowDeletedBy { get; set; }// existing user id
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CorporateClubs.services.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    [Migration("20190625101352_v1")]
-    partial class v1
+    [Migration("20190715052208_changedattachmenttype")]
+    partial class changedattachmenttype
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace CorporateClubs.services.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CorporateClubs.Services.DBModels.Club", b =>
+            modelBuilder.Entity("CorporateClubs.Services.Models.Club", b =>
                 {
                     b.Property<int>("ClubID")
                         .ValueGeneratedOnAdd()
@@ -77,7 +77,7 @@ namespace CorporateClubs.services.Migrations
                     b.ToTable("Clubs");
                 });
 
-            modelBuilder.Entity("CorporateClubs.Services.DBModels.ClubMembers", b =>
+            modelBuilder.Entity("CorporateClubs.Services.Models.ClubMembers", b =>
                 {
                     b.Property<int>("ClubID");
 
@@ -123,7 +123,7 @@ namespace CorporateClubs.services.Migrations
                     b.ToTable("ClubMembers");
                 });
 
-            modelBuilder.Entity("CorporateClubs.Services.DBModels.Contacts", b =>
+            modelBuilder.Entity("CorporateClubs.Services.Models.Contacts", b =>
                 {
                     b.Property<int>("UserID");
 
@@ -145,11 +145,11 @@ namespace CorporateClubs.services.Migrations
 
                     b.Property<int?>("RowDeletedBy");
 
-                    b.Property<DateTime>("RowDeletedOn");
+                    b.Property<DateTime?>("RowDeletedOn");
 
                     b.Property<int?>("RowModifiedBy");
 
-                    b.Property<DateTime>("RowModifiedOn");
+                    b.Property<DateTime?>("RowModifiedOn");
 
                     b.HasKey("UserID", "ConnectedUserID");
 
@@ -164,10 +164,9 @@ namespace CorporateClubs.services.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("CorporateClubs.Services.DBModels.Conversation", b =>
+            modelBuilder.Entity("CorporateClubs.Services.Models.Conversation", b =>
                 {
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
+                    b.Property<DateTimeOffset>("PostedOn")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("ClubID");
@@ -176,24 +175,23 @@ namespace CorporateClubs.services.Migrations
 
                     b.Property<string>("Attachment");
 
-                    b.Property<string>("Message")
-                        .HasColumnType("text");
+                    b.Property<string>("Message");
 
                     b.Property<int?>("RowCreatedBy");
 
-                    b.Property<DateTime>("RowCreatedOn");
+                    b.Property<DateTime?>("RowCreatedOn");
 
                     b.Property<int?>("RowDeletedBy");
 
-                    b.Property<DateTime>("RowDeletedOn");
+                    b.Property<DateTime?>("RowDeletedOn");
 
                     b.Property<int?>("RowModifiedBy");
 
-                    b.Property<DateTime>("RowModifiedOn");
+                    b.Property<DateTime?>("RowModifiedOn");
 
-                    b.HasKey("Timestamp", "ClubID", "UserID");
+                    b.HasKey("PostedOn", "ClubID", "UserID");
 
-                    b.HasAlternateKey("ClubID", "Timestamp", "UserID");
+                    b.HasAlternateKey("ClubID", "PostedOn", "UserID");
 
                     b.HasIndex("RowCreatedBy");
 
@@ -206,7 +204,7 @@ namespace CorporateClubs.services.Migrations
                     b.ToTable("Conversation");
                 });
 
-            modelBuilder.Entity("CorporateClubs.Services.DBModels.Users", b =>
+            modelBuilder.Entity("CorporateClubs.Services.Models.Users", b =>
                 {
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
@@ -274,7 +272,11 @@ namespace CorporateClubs.services.Migrations
 
                     b.Property<int?>("RowDeletedBy");
 
+                    b.Property<DateTime?>("RowDeletedOn");
+
                     b.Property<int?>("RowModifiedBy");
+
+                    b.Property<DateTime?>("RowModifiedOn");
 
                     b.HasKey("UserID");
 
@@ -287,131 +289,131 @@ namespace CorporateClubs.services.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CorporateClubs.Services.DBModels.Club", b =>
+            modelBuilder.Entity("CorporateClubs.Services.Models.Club", b =>
                 {
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("ClubCreatedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("ClubDeactiveBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowCreatedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowDeletedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowModifiedBy")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("CorporateClubs.Services.DBModels.ClubMembers", b =>
+            modelBuilder.Entity("CorporateClubs.Services.Models.ClubMembers", b =>
                 {
-                    b.HasOne("CorporateClubs.Services.DBModels.Club")
+                    b.HasOne("CorporateClubs.Services.Models.Club")
                         .WithMany()
                         .HasForeignKey("ClubID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowCreatedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowDeletedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowModifiedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("CorporateClubs.Services.DBModels.Contacts", b =>
+            modelBuilder.Entity("CorporateClubs.Services.Models.Contacts", b =>
                 {
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("ConnectedUserID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowCreatedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowDeletedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowModifiedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("CorporateClubs.Services.DBModels.Conversation", b =>
+            modelBuilder.Entity("CorporateClubs.Services.Models.Conversation", b =>
                 {
-                    b.HasOne("CorporateClubs.Services.DBModels.Club")
+                    b.HasOne("CorporateClubs.Services.Models.Club")
                         .WithMany()
                         .HasForeignKey("ClubID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowCreatedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowDeletedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowModifiedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("CorporateClubs.Services.DBModels.Users", b =>
+            modelBuilder.Entity("CorporateClubs.Services.Models.Users", b =>
                 {
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowCreatedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowDeletedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("CorporateClubs.Services.DBModels.Users")
+                    b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()
                         .HasForeignKey("RowModifiedBy")
                         .OnDelete(DeleteBehavior.Restrict);

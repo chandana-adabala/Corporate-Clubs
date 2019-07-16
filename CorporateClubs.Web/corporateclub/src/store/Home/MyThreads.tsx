@@ -8,11 +8,11 @@ import { Icon } from 'react-icons-kit';
 import Club from './ClubInfo/MyClubs/Club';
 import {connect} from 'react-redux';
 import Istate from './reducers/homeReducer';
-import { fetchFavClubs, fetchMyClubs } from './actions/clubAction';
+import { fetchFavClubs, fetchMyClubs } from './actions/homeActions';
 import IClubs from '../../models/IClubs';
 import HomeNav from './HomeBar/HomeNav';
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
-import Conversation from './connect/Conversation/Conversation'
+// import Conversation from './connect/Conversation/Conversation'
 
 
 class MyThreads extends React.Component<any,any>{
@@ -36,7 +36,7 @@ class MyThreads extends React.Component<any,any>{
     }
     componentDidMount(){
         console.log('mounting success');
-        // debugger;
+        //  
         this.props.dispatch(fetchFavClubs(1));
         this.props.dispatch(fetchMyClubs(1));
         
@@ -95,7 +95,7 @@ class MyThreads extends React.Component<any,any>{
                                 </div>
                     </div>
                     <div className="homeArena">
-                        <Conversation/>
+                        {/* <Conversation/> */}
                     {this.state.isClubHide==false?(<ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} nUsers={this.props.nUsers} users={this.props.users} hide={this.hideClubInfo} currentUser={2}/>)
                                                 :(<span></span>)}
                     
