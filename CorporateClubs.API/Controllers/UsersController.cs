@@ -83,13 +83,13 @@ namespace CorporateClubs.API.Controllers
 
         // GET: api/Users/GetAllUsers
         [HttpGet]
-        [Route("getallusers")]
+        [Route("getallusers/")]
         public ActionResult<List<Users>> GetAllUsers()
         {
-            var uniqueId = HttpContext.User.Identity.Name;
-            Users requestedUser = _users.GetUserByEmailId(uniqueId);
             try
             {
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
                 if (_users.IsUser(requestedUser.UserID))
                 {
                     if (_users.GetAllUsers().Count() != 0)
@@ -366,25 +366,26 @@ namespace CorporateClubs.API.Controllers
 
         [HttpPost]
         [Route("UploadImage/{userID:int}")]
-        public async Task<string> UploadImage(IFormFile image)
+        public async Task<string> UploadImage(IFormFile image, int userID)
         {
             var webRoot = _env.WebRootPath;
+
+
+
             try
             {
-                var uniqueId = HttpContext.User.Identity.Name;
-                Users requestedUser = _users.GetUserByEmailId(uniqueId);
 
                 if (image.Length > 0)
                 {
-                    var url = "http://localhost:3333/images";
+                    var url = "http://localhost:3333/root/images/";
                     var fileType = '.' + image.ContentType.Split('/')[1];
-                    var name = "user" + requestedUser.UserID + fileType;
-                    var file1 = System.IO.Path.Combine(webRoot, name);
+                    var name = image.FileName + userID + fileType;
+                    var file1 = System.IO.Path.Combine(webRoot+"//images", name);
                     using (var stream = new FileStream(file1, FileMode.Create))
                     {
                         await image.CopyToAsync(stream);
                     }
-                    _users.ChangeProfilePic(requestedUser.UserID, url + '/'+ name);
+                    _users.ChangeProfilePic(userID, url + '/'+ name);
                 }
 
 

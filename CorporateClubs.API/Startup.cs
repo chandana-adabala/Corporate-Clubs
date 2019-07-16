@@ -23,6 +23,9 @@ using CorporateClubs.Services.Interfaces;
 using CorporateClubs.Services.Services;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using CorporateClubs.API.Hubs;
+using Microsoft.AspNet.SignalR;
+
 
 namespace CorporateClubs.API
 {
@@ -44,17 +47,20 @@ namespace CorporateClubs.API
 
             //services.AddDbContextPool<ModelContext>(opts=> 
             //opts.UseSqlServer(Configuration.GetConnectionString("CorporateClubsDB")));
+            services.AddCors(c =>
+            {
+                c.AddPolicy("allowmyorgin", options => options.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader());
+
+            });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IClubs, ClubsService>();
             services.AddSingleton<IUsers, UserService>();
             services.AddSingleton<IConnections, ConnectionService>();
+            services.AddSingleton<IConversation, ConversationService>();
+            services.AddSignalR();
             services.AddDirectoryBrowser();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddCors(c =>
-            {
-                c.AddPolicy("allowmyorgin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-          });
+          
 
 
             services
@@ -83,6 +89,7 @@ namespace CorporateClubs.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+          
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
@@ -92,15 +99,20 @@ namespace CorporateClubs.API
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-                           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
-                RequestPath = new PathString("/images")
+                           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\")),
+                RequestPath = new PathString("/root")
             });
             app.UseDirectoryBrowser(new DirectoryBrowserOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images")),
-                RequestPath = new PathString("/images")
+           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\")),
+                RequestPath = new PathString("/root")
             });
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ConversationHub>("/conversationhub");
+            });
+            
             app.UseMvc();
         }
     }
