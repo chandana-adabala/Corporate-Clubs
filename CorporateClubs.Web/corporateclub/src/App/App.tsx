@@ -18,14 +18,10 @@ import { connect } from 'react-redux';
 import MyThreads from '../store/Home/MyThreads';
 import Forbidden from '../store/ForbiddenPage/Forbidden'
 import {GetLoggedUserDetails} from './AppActions/AppActions'
-<<<<<<< HEAD
 import Connections from '../store/Connections/Connections'
 import {withRouter} from 'react-router-dom';
 
 
-=======
-import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
->>>>>>> origin/signalR
 
  class App extends React.Component<any,any> {
   
@@ -37,12 +33,9 @@ import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr";
  
  
   render(){
-<<<<<<< HEAD
   let NavigatewithLocation = withRouter(props => <Navigate {...props}/>);
     debugger;
-=======
      
->>>>>>> origin/signalR
 if(this.props.error!=''){
   return(<Forbidden/>);
 }

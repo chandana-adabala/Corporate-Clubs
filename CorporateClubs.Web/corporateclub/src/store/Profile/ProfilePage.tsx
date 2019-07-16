@@ -71,11 +71,7 @@ class Profile_Head extends React.Component<any, any>{
 
 
     render() {
-<<<<<<< HEAD
         
-=======
-        debugger;
->>>>>>> origin/signalR
         console.log(getToken(), "usertoken");
         return (
             <div className="ProfilePage">

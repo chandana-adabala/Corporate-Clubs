@@ -230,12 +230,8 @@ function detailsOfAllClub(payload:IClubs[])
 
 
 export const FetchClubs = UserID=>{
-<<<<<<< HEAD
     debugger;
     const headers = { 'Authorization': 'Bearer ' + getToken() };
-=======
-     
->>>>>>> origin/signalR
     return function(dispatch){
         console.log("fetch call");
         return fetch(url+'api/clubs/getInactiveClubs/',{headers:headers})
@@ -254,12 +250,8 @@ export const FetchClubs = UserID=>{
 }
 
 export const fetchAllClubs = UserID=>{
-<<<<<<< HEAD
     debugger;
     const headers = { 'Authorization': 'Bearer ' + getToken() };
-=======
-     
->>>>>>> origin/signalR
     return function(dispatch){
         console.log("fetch call");
         return fetch(url+'api/clubs/getallclubs/',{headers:headers})
@@ -278,12 +270,8 @@ export const fetchAllClubs = UserID=>{
 }
 
 export const FetchUsers =()=>{
-<<<<<<< HEAD
     debugger;
     const headers = { 'Authorization': 'Bearer ' + getToken() };
-=======
-     
->>>>>>> origin/signalR
     return function(dispatch){
          
         console.log("fetch call");

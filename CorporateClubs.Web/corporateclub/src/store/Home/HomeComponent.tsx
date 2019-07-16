@@ -45,7 +45,7 @@ class Home extends React.Component<any,any> {
             //starting signalr connection
             this.state.connection
             .start({ withCredentials: false })
-            .catch(err => console.error(err.toString()));
+            .catch(err => console.error(err));
      }
     showChat=()=>{
              

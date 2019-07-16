@@ -47,11 +47,6 @@ class Club extends React.Component<any, any> {
         return <ConnectedExitbtn clubID={clubMember.clubs.clubID} userID={2} />;
     }
   }
-<<<<<<< HEAD
-=======
-    render(){
- 
->>>>>>> origin/signalR
 
 
   render() {
@@ -194,7 +189,6 @@ class RequestJoinbtn extends React.Component<any, any> {
     );
   }
 }
-<<<<<<< HEAD
 class Exitbtn extends React.Component<any, any> {
   render() {
     return (
@@ -208,14 +202,6 @@ class Exitbtn extends React.Component<any, any> {
       </button>
     );
   }
-=======
-class RequestJoinbtn extends React.Component<any,any>{
-    render(){
-    return(
-        <button className="join" onClick={()=>{ this.props.dispatch(makeAndCancelRequest(this.props.userID,this.props.clubID,this.props.userID))}}>Request Join</button>
-    )
-    }
->>>>>>> origin/signalR
 }
 function mapStateToProps(State) {
   debugger;
@@ -225,18 +211,6 @@ function mapStateToProps(State) {
     loggedUserRole: State.AppReducer.LoggedUser.role
   };
 }
-<<<<<<< HEAD
-=======
-function mapStateToProps(State)
-  {
-     
-    console.log(State)
-    return{
-      requests:State.ClubReducer.requests,
-    }
-  }
-
->>>>>>> origin/signalR
 
 const ConnectedJoinbtn = connect()(Joinbtn);
 const ConnectedExitbtn = connect()(Exitbtn);

@@ -422,20 +422,20 @@ export const addNewMembers=(clubID,userList,requestID)=>{
 }
 
 export const fetchMessagesOfClub=(clubID)=>{
-     debugger;
-    return function(dispatch){
-        const headers = { 'Authorization': 'Bearer ' + getToken() };
-        return fetch('http://localhost:3333/api/conversations/getallmessagesofclub/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
-        .then(data => data.json())
-        .then(data =>{
-            if(data.message === "Not Found"){
-                throw new Error("User Not Found!");
-            }else{
-                dispatch(fetchMessageSuccess(data));
-               
-            }
-        })
-        .catch(error=>dispatch(fetchMessageError(error)))
+    debugger;
+   return function(dispatch){
+       const headers = { 'Authorization': 'Bearer ' + getToken() };
+       return fetch('http://localhost:3333/api/conversations/getallmessagesofclub/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
+       .then(data => data.json())
+       .then(data =>{
+           if(data.message === "Not Found"){
+               throw new Error("User Not Found!");
+           }else{
+               dispatch(fetchMessageSuccess(data));
+              
+           }
+       })
+       .catch(error=>dispatch(fetchMessageError(error)))
 
-    }
+   }
 }
