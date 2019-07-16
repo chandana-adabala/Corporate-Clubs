@@ -14,6 +14,7 @@ import HomeNav from './HomeBar/HomeNav';
 import { Router,Switch,Route,Link} from 'react-router-dom';
 import Conversation from './ClubInfo/Conversation/Conversation'
 import AddClubs from "../Clubs/AddClubs/AddClubs"
+import {FetchUsers} from '../Clubs/Actions/ClubActions'
 
 initializeIcons();
 
@@ -43,6 +44,8 @@ class Home extends React.Component<any,any> {
         // debugger;
         this.props.dispatch(fetchFavClubs(1));
         this.props.dispatch(fetchMyClubs(1));
+        this.props.dispatch(FetchUsers())
+
         
     
     }

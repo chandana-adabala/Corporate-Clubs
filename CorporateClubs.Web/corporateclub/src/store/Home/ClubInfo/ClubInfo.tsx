@@ -22,6 +22,7 @@ import { changeClubType, fetchMyClubInfo, muteNunmuteClub, addNewMembers, fetchN
 import NonClubUser from './ClubUsers/NonClubUser';
 import DeactivateClub from '../../Clubs/DeactivateClub/DeactivateClub'
 import {Link,Route} from 'react-router-dom';
+import UpdateClub from './UpdateClub/UpdateClub'
 
 //import './MyCheckbox.scss';
 
@@ -183,10 +184,10 @@ console.log("non user",this.state.nonUsers);
                         <div className="firstLine">
                             {this.props.club.clubTitle}
                             <div className="i">
-                                <Icon size={28} icon={ic_lock} style={{ color: '#a4aab2' }} />
+                                {this.state.isChecked?<span/>:<Icon size={28} icon={ic_lock} style={{ color: '#a4aab2' }} />}
                             </div>
                             <div className="ii">
-                                <Icon size={18} icon={edit} style={{ color: '#a4aab2', padding: '0rem 1rem 0rem 0rem' }} />
+                                <Link to={"/editClub/"+this.props.club.clubID}><Icon size={18} icon={edit} style={{ color: '#a4aab2', padding: '0rem 1rem 0rem 0rem' }} /></Link>
                                 <Icon size={18} icon={closeRound} style={{ color: '#a4aab2', paddingRight: '1rem' }} onClick={() => this.props.hide()} />
                             </div>
                         </div>
@@ -280,7 +281,7 @@ console.log("non user",this.state.nonUsers);
                         <div className="gs">Group Settings</div>
                         <div className="groupSettings">
                             <div className="clubType">
-                                Make {this.props.club.clubTitle} {this.state.isChecked? "a public club":" a private club"}
+                                Make {this.props.club.clubTitle} {this.state.isChecked? "a private club":" a public club"}
                                
                                      {/* <MyToggle onChange={this.props.dispatch.changeClubType}/> */}
                                      <Toggle onChange={this.handleToggle} checked={!this.state.hideClubSubTypes}/>
@@ -301,7 +302,7 @@ console.log("non user",this.state.nonUsers);
                 </div>
                 <Route path={"/deactivateclub"+this.props.club.clubTitle} component={()=><DeactivateClub to="/" clubTitle={this.props.club.clubTitle} clubID={this.props.club.clubID}/>}/>
                 <Route path={"/exitclub"+this.props.club.clubTitle} component={()=><ExitClub to="/" clubTitle={this.props.club.clubTitle} clubID={this.props.club.clubID}/>}/>
-                
+                <Route path={"/editClub/"+this.props.club.clubID} component={()=><UpdateClub to="/" clubTitle={this.props.club.clubTitle} clubID={this.props.club.clubID} description={this.props.club.description}/>}/>
             </div>
         );
     }
