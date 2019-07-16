@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 using CorporateClubs.Models.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CorporateClubs.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClubsController : ControllerBase
@@ -67,15 +69,15 @@ namespace CorporateClubs.API.Controllers
         }
 
         [HttpGet]
-        [Route("getclubbyid")]
-        public ActionResult<Club> GetClubByID()
+        [Route("getclubbyid/{clubID:int}")]
+        public ActionResult<Club> GetClubByID(int clubID)
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
             try
             {
                 if (_users.IsUser(requestedUser.UserID) == true)
-                    return _clubs.GetClubById(requestedUser.UserID);
+                    return _clubs.GetClubById(clubID);
                 else
                     return Unauthorized();
             }
@@ -420,7 +422,7 @@ namespace CorporateClubs.API.Controllers
 
 
         [HttpPut]
-        [Route("RemoveUser/{userID:int}/{ClubID:int}")]
+        [Route("RemoveUser/{userID:int}/{clubID:int}")]
         public ActionResult RemoveUser(int clubID,int userID)
         {
             var uniqueId = HttpContext.User.Identity.Name;
@@ -520,18 +522,16 @@ namespace CorporateClubs.API.Controllers
             }
 
         }
-
         [HttpPost]
         [Route("UploadImage/{clubID:int}")]
-        public async Task<string> UploadImage(IFormFile image, int clubID)
+        public async Task<ActionResult> UploadImage(IFormFile image, int clubID)
         {
             var webRoot = _env.WebRootPath;
 
-
-
             try
             {
-
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
                 if (image.Length > 0)
                 {
                     var url = "http://localhost:3333/images";
@@ -542,18 +542,70 @@ namespace CorporateClubs.API.Controllers
                     {
                         await image.CopyToAsync(stream);
                     }
+                    if (_clubs.changeProfilePicOfClub(clubID, url + '/' + name))
+                        return Ok();
+                    else
+                        return BadRequest();
+                    
                     
                 }
-
-
             }
             catch (Exception e)
             {
-                return $"Error: {e.Message}";
+                return BadRequest();
             }
 
-            return "File uploaded!";
+            return Unauthorized();
         }
 
+
+
+
+        [HttpPut]
+        [Route("blockorunblockuserInAClub/{clubID:int}/{userID:int}")]
+        public ActionResult BlockOrUnBlockUserInAClub(int clubID, int userID)
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if(_users.IsUser(requestedUser.UserID))
+                {
+                    if (_clubs.BlockOrUnBlockUser(clubID, userID, requestedUser.UserID))
+                        return Ok();
+                    else
+                        return BadRequest();
+                }
+                return Unauthorized();
+            }
+            catch(Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [Route("RemoveAsAdmin/{clubID:int}/{userID:int}")]
+        public ActionResult RemoveAsAdmin (int clubID, int userID)
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if (_users.IsUser(requestedUser.UserID))
+                {
+                    if (_clubs.RemoveUserAsAdmin(clubID, userID, requestedUser.UserID))
+                        return Ok();
+                    else
+                        return BadRequest();
+                }
+                return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
     }
+  
 }

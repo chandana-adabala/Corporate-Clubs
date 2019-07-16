@@ -28,7 +28,13 @@ export enum ActionTypes{
     CHANGE_CLUB_TYPE_ERROR='CHANGE_CLUB_TYPE_ERROR',
     MUTE_N_UNMUTE_CLUB='MUTE_N_UNMUTE_CLUB',
     ADD_MEMBER_SUCCESS='ADD_MEMBER_SUCCESS',
-    ADD_MEMBER_ERROR='ADD_MEMBER_ERROR'
+    ADD_MEMBER_ERROR='ADD_MEMBER_ERROR',
+    EXIT_FROM_CLUB_SUCCESS='EXIT_FROM_CLUB_SUCCESS',
+    EXIT_FROM_CLUB_FAILED='EXIT_FROM_CLUB_FAILED',
+    BLOCK_OR_UNBLOCK_USER_SUCCESS='BLOCK_USER_SUCCESS',
+    BLOCK_OR_UNBLOCK_USER_FAILED='BLOCK_USER_FAILED',
+    REMOVE_USER_AS_ADMIN_SUCCESS='REMOVE_USER_AS_ADMIN_SUCCESS',
+    REMOVE_USER_AS_ADMIN_FAILED='REMOVE_USER_AS_ADMIN_FAILED'
 }
 
 // export interface ReceiveFavClubsAction {type:ActionTypes.FAVCLUBS_FETCH_SUCCESS,payload:{club:IClubs}}
@@ -187,6 +193,50 @@ export const addNewMembersError=(error:string)=>{
     }
 }
 
+export const exitFromClubSuccess=()=>{
+    return{
+        type:ActionTypes.EXIT_FROM_CLUB_SUCCESS,
+    }
+}
+
+export const exitFromClubError=(error)=>{
+    return{
+        type:ActionTypes.EXIT_FROM_CLUB_FAILED,
+        payload:{error}
+    }
+}
+
+
+export const blockOrUnblockUserSuccess=()=>{
+return {
+type:ActionTypes.BLOCK_OR_UNBLOCK_USER_SUCCESS,
+payload:"blockusersuccess"
+}
+}
+
+
+export const blockOrUnblockUserFailed=()=>{
+    return {
+    type:ActionTypes.BLOCK_OR_UNBLOCK_USER_FAILED,
+    payload:"blockuserFailed"
+    }
+    }
+
+export const removeUserAsAdminSuccess=()=>{
+    return {
+    type:ActionTypes.REMOVE_USER_AS_ADMIN_SUCCESS,
+    payload:"removeUserAsAdminSuccess"
+}
+}
+
+export const removeUserAsAdminFailed=()=>{
+    return {
+    type:ActionTypes.REMOVE_USER_AS_ADMIN_FAILED,
+    payload:"removeUserAsAdminFailed"
+}
+}
+    
+
 // Thunk Action Creators
 
 export const fetchFavClubs = UserID=>{
@@ -229,6 +279,7 @@ export const fetchMyClubs = UserID=>{
 }
 
 export const fetchMyClubInfo = clubID=>{
+    debugger;
     return function(dispatch){
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
@@ -404,4 +455,55 @@ export const addNewMembers=(clubID,userList,requestID)=>{
             })
             .catch(error=>dispatch(addNewMembersError(error)))
         }
+}
+
+
+export const exitFromClub=(userID,clubID)=>{
+    debugger;
+    return function(dispatch){
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/RemoveUser/'+userID+'/'+clubID,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(response=>{
+            if(!response.ok){
+                throw new Error("change failed");
+            }else{
+                dispatch(exitFromClubSuccess());
+            }
+        })
+        .catch(error=>dispatch(exitFromClubError(error)))
+    }
+}
+
+export const blockOrUnblockUser=(userID,clubID)=>
+{
+    debugger;
+    return function(dispatch){
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/blockorunblockuserInAClub/'+clubID+'/'+userID,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(response=>{
+            if(!response.ok){
+                throw new Error();
+            }else{
+                dispatch(blockOrUnblockUserSuccess());
+            }
+        })
+        .catch(error=>dispatch(blockOrUnblockUserFailed()))
+    }
+}
+
+export const removeUserAsAdmin=(userID,clubID)=>
+{
+    debugger;
+    return function(dispatch){
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/RemoveAsAdmin/'+clubID+'/'+userID,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(response=>{
+            if(!response.ok){
+                throw new Error("change failed");
+            }else{
+                dispatch(removeUserAsAdminSuccess());
+            }
+        })
+        .catch(error=>dispatch(removeUserAsAdminFailed()))
+    }
 }

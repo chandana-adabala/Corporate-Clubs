@@ -5,6 +5,7 @@ import Club from '../Club';
 import IClubMembersList from '../../../models/IClubMembersList'
 import INewClub from '../../../models/INewClub'
 import {getToken} from '../../../Configure'
+import axios from 'axios';
 const url="http://localhost:3333/"
 export enum Actions
 {
@@ -255,23 +256,43 @@ export const addUserToPublicClub=(clubID,userID)=>
     }
 }
 
-export function addClub(user,newClub:INewClub)
+export function addClub(newClub:INewClub,formData:FormData)
 {
     debugger;
     return function(dispatch){
         debugger;
-         console.log(JSON.stringify(user));
-        return fetch(url+'api/clubs/addclub/'+user,{method:"post",body:JSON.stringify(newClub),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
-        .then(response =>{
-            if(!response.ok){
-                throw new Error("user added failed");
+        return fetch(url+'api/clubs/addclub',{method:"post",body:JSON.stringify(newClub),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(data => data.json())
+        .then(data =>{
+            if(data.message === "Not Found"){
+                throw new Error("User Not Found!");
             }else{
-                console.log(response.status);
-                dispatch(clubAdded(response.statusText));
+                axios.post('http://localhost:3333/api/clubs/UploadImage/'+data,
+                formData, { headers: { 'Content-Type': "multipart/form-data",'Authorization': 'Bearer ' + getToken()}})
+                .then(res => {
+                    dispatch(clubAdded(res.statusText));
+                })
             }
         })
         .catch(error=>dispatch(FetchFailed(error)))
-    }
+    //     .then(response =>{
+    //         if(!response.ok){
+    //             throw new Error("user added failed");
+    //         }else{
+    //             console.log(response.status);
+    //             // axios.post('http://localhost:3333/api/clubs/UploadImage/7',
+    //             // formData, { headers: { 'Content-Type': "multipart/form-data" } })
+    //             // .then(res => {
+    //             //   console.log(res);
+    //             // })
+    //             var a=response.json()
+    //             console.log(response.json())
+    //             dispatch(clubAdded(response.statusText));
+    //         }
+    //     })
+    //     .catch(error=>dispatch(FetchFailed(error)))
+    // }
+}
 }
 
 export function deactivateClub(clubID:number,reason:string)
@@ -348,3 +369,5 @@ export function filterClub(clubType:string[],status:string[],date:Date|null,sear
     
 }
 }
+
+

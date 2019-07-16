@@ -11,8 +11,10 @@ import Istate from './reducers/homeReducer';
 import { fetchFavClubs, fetchMyClubs } from './actions/clubAction';
 import IClubs from '../../models/IClubs';
 import HomeNav from './HomeBar/HomeNav';
-import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
+import { Router,Switch,Route,Link} from 'react-router-dom';
 import Conversation from './ClubInfo/Conversation/Conversation'
+import AddClubs from "../Clubs/AddClubs/AddClubs"
+
 initializeIcons();
 
 
@@ -65,7 +67,7 @@ class Home extends React.Component<any,any> {
                
                     <div className="homeBar">
                         My Clubs
-                        <button className="createBtn">Create New</button>
+                        <Link to="/addclub"><button className="createBtn">Create New</button></Link>
                     </div>
                     <div className="homeBody">
 
@@ -108,7 +110,7 @@ class Home extends React.Component<any,any> {
                     
                     </div>
                 </div> 
-
+                     <Route path="/addclub" component={()=><AddClubs from="/"/>}/>
                     </div>
     
         );

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.services\\CorporateClubs.Services.csproj": {}
+    "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.services\\CorporateClubs.Services.csproj": {}
   },
   "projects": {
-    "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj": {
+    "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj",
+        "projectUniqueName": "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj",
         "projectName": "CorporateClubs.Models",
-        "projectPath": "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj",
-        "packagesPath": "C:\\Users\\chandana.a\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\obj\\",
+        "projectPath": "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj",
+        "packagesPath": "C:\\Users\\ramgirish.k\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\chandana.a\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ramgirish.k\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -56,20 +56,20 @@
         }
       }
     },
-    "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.services\\CorporateClubs.Services.csproj": {
+    "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.services\\CorporateClubs.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.services\\CorporateClubs.Services.csproj",
+        "projectUniqueName": "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.services\\CorporateClubs.Services.csproj",
         "projectName": "CorporateClubs.Services",
-        "projectPath": "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.services\\CorporateClubs.Services.csproj",
-        "packagesPath": "C:\\Users\\chandana.a\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.services\\obj\\",
+        "projectPath": "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.services\\CorporateClubs.Services.csproj",
+        "packagesPath": "C:\\Users\\ramgirish.k\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\chandana.a\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ramgirish.k\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,8 +82,8 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj": {
-                "projectPath": "C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj"
+              "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj": {
+                "projectPath": "C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.Models\\CorporateClubs.Models.csproj"
               }
             }
           }

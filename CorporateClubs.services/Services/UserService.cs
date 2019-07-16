@@ -20,7 +20,7 @@ namespace CorporateClubs.Services.Services
             using (var _context = new ModelContext())
             {
 
-                return _context.ClubMembers.Where(c => c.ClubID == c_id && c.RowDeletedBy == null && c.IsRequested==false).ToList();
+                return _context.ClubMembers.Where(c => c.ClubID == c_id && c.RowDeletedBy == null && c.IsRequested == false).ToList();
             }
         }
 
@@ -48,7 +48,7 @@ namespace CorporateClubs.Services.Services
 
 
         // To delete user from the application u_id is userid and a_id is admin_id
-        public Boolean DeleteUser(int u_id, int a_id,string reason)
+        public Boolean DeleteUser(int u_id, int a_id, string reason)
 
         {
             using (var _context = new ModelContext())
@@ -64,7 +64,7 @@ namespace CorporateClubs.Services.Services
 
 
         //TO Deactive the user in the application
-        public Boolean DeactiveUser(int u_id,string reason)
+        public Boolean DeactiveUser(int u_id, string reason)
         {
             using (var _context = new ModelContext())
             {
@@ -83,7 +83,7 @@ namespace CorporateClubs.Services.Services
         {
             using (var _context = new ModelContext())
             {
-                Users userModel=new Users();
+                Users userModel = new Users();
                 userModel.FirstName = newUserInfo.FirstName;
                 userModel.LastName = newUserInfo.LastName;
                 userModel.MiddleName = newUserInfo.MiddleName;
@@ -173,7 +173,7 @@ namespace CorporateClubs.Services.Services
         }
 
         //to reactivate the user
-        public Boolean ReactiveUser(int u_id,string reason)
+        public Boolean ReactiveUser(int u_id, string reason)
         {
             using (var _context = new ModelContext())
             {
@@ -256,16 +256,16 @@ namespace CorporateClubs.Services.Services
 
                     return _context.Users.Single(u => u.UserID == u_id && u.RowDeletedBy == null && u.IsActive == true);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     return null;
                 }
             }
         }
 
-        public void ChangeProfilePic(int userID,string url)
+        public void ChangeProfilePic(int userID, string url)
         {
-            using(var _context = new ModelContext())
+            using (var _context = new ModelContext())
             {
                 try
                 {
@@ -273,9 +273,9 @@ namespace CorporateClubs.Services.Services
                     user.ProfilePic = url;
                     _context.SaveChanges();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    
+
                 }
             }
         }
@@ -288,16 +288,11 @@ namespace CorporateClubs.Services.Services
                 {
                     return _context.Users.Single(u => u.Email == emailID && u.RowDeletedBy == null && u.IsActive == true);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     return new Users();
                 }
             }
         }
     }
-
-
-
-
-
 }

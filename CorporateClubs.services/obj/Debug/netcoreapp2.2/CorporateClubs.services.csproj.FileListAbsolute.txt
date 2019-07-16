@@ -24,3 +24,18 @@ C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.
 C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Models.pdb
 C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.csproj.CopyComplete
 C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\NLog.config
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\NLog.config
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Services.deps.json
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Services.runtimeconfig.json
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Services.runtimeconfig.dev.json
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Services.dll
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Services.pdb
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Models.dll
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\bin\Debug\netcoreapp2.2\CorporateClubs.Models.pdb
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.csprojAssemblyReference.cache
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.csproj.CoreCompileInputs.cache
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.AssemblyInfoInputs.cache
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.AssemblyInfo.cs
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.csproj.CopyComplete
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.dll
+C:\Users\ramgirish.k\copy of newrepo\Corporate-Clubs\CorporateClubs.services\obj\Debug\netcoreapp2.2\CorporateClubs.Services.pdb

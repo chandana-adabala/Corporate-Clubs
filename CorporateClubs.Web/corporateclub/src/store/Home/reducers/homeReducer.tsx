@@ -1,6 +1,7 @@
 import {ActionTypes} from '../actions/clubAction';
 import IClubs from '../../../models/IClubs';
 import IUsers from '../../../models/IUsers';
+import { ActionsTypes } from '../../Profile/Actions';
 
 export interface Istate {
     myclubs:IClubs[],
@@ -91,6 +92,14 @@ export default function homeReducer(state=initialState,action:any){
                         return{
                             ...state,
                         }
+        case ActionTypes.REMOVE_USER_AS_ADMIN_SUCCESS:
+            return state
+        case ActionTypes.REMOVE_USER_AS_ADMIN_FAILED:
+            return state
+        case ActionTypes.BLOCK_OR_UNBLOCK_USER_SUCCESS:
+            return state
+        case ActionTypes.BLOCK_OR_UNBLOCK_USER_FAILED:
+            return state
         default:
             return state;
     }

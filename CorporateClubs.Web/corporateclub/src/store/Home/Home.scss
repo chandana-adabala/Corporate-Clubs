@@ -1,6 +1,9 @@
 $bodyColor:#e3e5e6;
 $homeBorderStyle: 0.08rem solid #dad9d9;
 .homeContainer{
+  a{
+    text-decoration: none
+  }
   .ms-Label{
     display:none;
   }
@@ -16,10 +19,11 @@ $homeBorderStyle: 0.08rem solid #dad9d9;
         margin : 2rem 1rem 0rem 2rem;
         
         .createBtn{
+          height:3rem;
             background-color: #76618b;
         color: white;
         border-radius: 0.4rem;
-        width: 6.4rem;
+        width: 7rem;
         a:-webkit-any-link{
           text-decoration: none;
           color:white;

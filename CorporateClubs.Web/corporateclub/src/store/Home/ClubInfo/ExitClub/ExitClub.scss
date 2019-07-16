@@ -1,0 +1,80 @@
+.ExitClub
+ {
+ /* Hidden by default *///display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding: 100px;
+    padding-left:30%;
+    padding-right:20%; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    .ExitClub_head
+        {
+            color:black;
+            font-size: 20px;
+            width:770px;
+            background-color: rgba(244, 245, 248 ,1);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+
+            svg 
+            {
+                position: relative;
+                right:10%;
+                color: rgb(185, 183, 183);
+            }            
+
+        }
+    #content
+    {
+        margin:0px;
+        width:770px;
+        background-color: white;
+        padding:15px;
+        h3 
+        {
+            margin-top:0%;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 100;
+            margin-bottom: 0%;
+            
+        }
+        
+         p
+         {
+             margin-top:1px;
+             margin-bottom:1px
+         }
+            .buttons
+            {
+                margin-top: 30%;
+                padding-left: 75%;
+            .cancelbutton
+            {
+                outline: none;
+                border: none;
+                padding: 12px 20px 12px 20px;
+                border-radius: 5px;
+                color: white;
+                background-color: rgb(185, 183, 183);          
+            }
+            .leaveClub
+            {
+                outline: none;
+                border: none;
+                padding:  12px 20px 12px 20px;
+                border-radius: 5px;
+                color: white;
+                background-color: #fa5f5f;      
+                margin:2%;    
+         
+            }
+            }
+    }
+ }
