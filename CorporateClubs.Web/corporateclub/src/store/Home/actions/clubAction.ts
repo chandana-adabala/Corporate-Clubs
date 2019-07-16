@@ -3,6 +3,7 @@ import IClubs from '../../../models/IClubs'
 import IClubMembers from '../../../models/IClubMembers'
 import { type } from 'os';
 import {getToken} from '../../../Configure'
+import {loadingStarted,loadingEnded} from '../../../App/AppActions/AppActions'
 
 export enum ActionTypes{
     FAVCLUBS_FETCH_SUCCESS = 'FAVCLUBS_FETCH_SUCCESS',
@@ -241,6 +242,7 @@ export const removeUserAsAdminFailed=()=>{
 
 export const fetchFavClubs = UserID=>{
     return function(dispatch){
+        dispatch(loadingStarted())
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/getallfavclubsofuser/',{ headers: {'Authorization': 'Bearer ' + getToken()}})
@@ -251,9 +253,10 @@ export const fetchFavClubs = UserID=>{
             }else{
                 console.log(data);
                 dispatch(fetchFavClubsSuccess(data));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(fetchFavClubsError(error)))
+        .catch(error=>{dispatch(fetchFavClubsError(error));dispatch(loadingEnded())})
 
     }
     
@@ -261,6 +264,7 @@ export const fetchFavClubs = UserID=>{
 
 export const fetchMyClubs = UserID=>{
     return function(dispatch){
+        dispatch(loadingStarted())
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/getallclubsofusers/',{ headers: {'Authorization': 'Bearer ' + getToken()}})
@@ -271,9 +275,10 @@ export const fetchMyClubs = UserID=>{
             }else{
                 console.log(data);
                 dispatch(fetchMyClubsSuccess(data));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(fetchMyClubsError(error)))
+        .catch(error=>{dispatch(fetchMyClubsError(error));dispatch(loadingEnded())})
 
     }
 }

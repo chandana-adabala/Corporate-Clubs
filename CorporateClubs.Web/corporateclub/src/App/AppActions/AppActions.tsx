@@ -51,7 +51,7 @@ function FetchDetailsFailed():ActionReturnType
     }
 }
 
-function loadingStarted():ActionReturnType
+export function loadingStarted():ActionReturnType
 {
     return{
        type:ActionTypes.LOADING_STARTED,
@@ -60,7 +60,7 @@ function loadingStarted():ActionReturnType
 }
 
 
-function loadingEnded():ActionReturnType
+export function loadingEnded():ActionReturnType
 {
     return{
        type:ActionTypes.LOADING_ENDED,

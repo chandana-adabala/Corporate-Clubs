@@ -1,6 +1,7 @@
 import IUsers from '../../models/IUsers'
 import IClubs from '../../models/IClubs';
 import {getToken} from '../../Configure'
+import {loadingStarted,loadingEnded} from '../../App/AppActions/AppActions'
 const url="http://localhost:3333/"
 export enum ActionsTypes {
     FetchDetailsStarted = "FetchDetailsStarted",
@@ -120,6 +121,7 @@ export function FetchProfileDetails() {
     return (dispatch) => {
         console.log("fetch call");
         debugger;
+        dispatch(loadingStarted())
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch(url+'api/users/getuserbytoken',{headers:headers})
             .then(data => data.json())
@@ -130,9 +132,10 @@ export function FetchProfileDetails() {
                 } else {
                     console.log(data);
                     dispatch(FetchProfileDetailsSuccess(data));
+                    dispatch(loadingEnded())
                 }
             })
-            .catch(error => dispatch(FetchDetailsFailed(error.message)))
+            .catch(error =>{ dispatch(FetchDetailsFailed(error.message));dispatch(loadingEnded())})
 
     }
 }
@@ -145,6 +148,7 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
         case "contactdetails":
             return (dispatch) => {
                 debugger;
+                dispatch(loadingStarted())
                 console.log("fetch call");
                 console.log(JSON.stringify(user));
                 return fetch(url+'api/users/changecontactdetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken()} })
@@ -154,13 +158,15 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
                             throw new Error("Fetch Failed");
                         } else {
                             dispatch(ChangeDetailsSuccess(user));
+                            dispatch(loadingEnded())
                         }
                     })
-                    .catch(error => dispatch(ChnageDetailsFailed(error)))
+                    .catch(error => {dispatch(ChnageDetailsFailed(error));dispatch(loadingEnded())})
             }
         case "personaldetails":
             return (dispatch) => {
                 debugger;
+                dispatch(loadingStarted())
                 console.log("fetch call");
                 console.log(JSON.stringify(user));
                 return fetch(url+'api/users/ChangePersonalDetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken()} })
@@ -170,13 +176,15 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
                             throw new Error("Fetch Failed");
                         } else {
                             dispatch(ChangeDetailsSuccess(user));
+                            dispatch(loadingEnded())
                         }
                     })
-                    .catch(error => dispatch(ChnageDetailsFailed(error)))
+                    .catch(error =>{ dispatch(ChnageDetailsFailed(error));dispatch(loadingEnded())})
             }
         case "professionaldetails":
             return (dispatch) => {
                 debugger;
+                dispatch(loadingStarted())
                 console.log("fetch call");
                 console.log(JSON.stringify(user));
                 return fetch(url+'api/users/ChangeProfessionalSummary', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken() } })
@@ -186,9 +194,10 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
                             throw new Error("Fetch Failed");
                         } else {
                             dispatch(ChangeDetailsSuccess(user));
+                            dispatch(loadingEnded())
                         }
                     })
-                    .catch(error => dispatch(ChnageDetailsFailed(error)))
+                    .catch(error => {dispatch(ChnageDetailsFailed(error));dispatch(loadingEnded())})
             }
     }
 }
@@ -198,7 +207,7 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
 export function FetchFavouriteClubDetails() {
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return (dispatch) => {
-        console.log("fetch call");
+        dispatch(loadingStarted())
         return fetch(url+'api/clubs/getallfavclubsofuser',{headers:headers})
             .then(data => data.json())
             .then(data => {
@@ -207,9 +216,10 @@ export function FetchFavouriteClubDetails() {
                 } else {
                     console.log(data);
                     dispatch(FetchFavouriteClubsSuccess(data));
+                    dispatch(loadingEnded())
                 }
             })
-            .catch(error => dispatch(FetchDetailsFailed(error)))
+            .catch(error => {dispatch(FetchDetailsFailed(error));dispatch(loadingEnded())})
 
     }
 }
@@ -220,6 +230,7 @@ export const FetchUsers =()=>{
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         debugger;
+        dispatch(loadingStarted())
         console.log("fetch call");
         return fetch(url+'api/Users/GetAllUsers',{headers:headers})
         .then(data => data.json())
@@ -229,9 +240,10 @@ export const FetchUsers =()=>{
             }else{
                 console.log(data);
                 dispatch(DetailsOfUser(data));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(FetchDetailsFailed(error)))
+        .catch(error=>{dispatch(FetchDetailsFailed(error));dispatch(loadingEnded())})
 
     }
 }
@@ -239,7 +251,7 @@ export const FetchUsers =()=>{
 export function FetchAllClubDetails() {
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return (dispatch) => {
-        console.log("fetch call");
+        dispatch(loadingStarted())
         return fetch(url+'api/clubs/getallclubs',{headers:headers})
             .then(data => data.json())
             .then(data => {
@@ -248,9 +260,10 @@ export function FetchAllClubDetails() {
                 } else {
                     console.log(data);
                     dispatch(FetchDetailsOfAllClubs(data));
+                    dispatch(loadingEnded())
                 }
             })
-            .catch(error => dispatch(FetchDetailsFailed(error)))
+            .catch(error => {dispatch(FetchDetailsFailed(error));dispatch(loadingEnded())})
 
     }
 }

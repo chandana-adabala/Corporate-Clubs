@@ -5,7 +5,8 @@ import Club from '../Club';
 import IClubMembersList from '../../../models/IClubMembersList'
 import INewClub from '../../../models/INewClub'
 import {getToken} from '../../../Configure'
-import axios from 'axios';
+import axios from 'axios'
+import {loadingStarted,loadingEnded} from '../../../App/AppActions/AppActions'
 const url="http://localhost:3333/"
 export enum Actions
 {
@@ -143,6 +144,7 @@ export const FetchUsers =()=>{
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         debugger;
+        dispatch(loadingStarted())
         console.log("fetch call");
         return fetch(url+'api/Users/GetAllUsers',{headers:headers})
         .then(data => data.json())
@@ -152,9 +154,10 @@ export const FetchUsers =()=>{
             }else{
                 console.log(data);
                 dispatch(DetailsOfUser(data));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(FetchFailed(error)))
+        .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
 
     }
 }
@@ -163,6 +166,7 @@ export const FetchMembers =()=>{
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         debugger;
+        dispatch(loadingStarted())
         console.log("fetch call");
         return fetch(url+'api/clubs/getallclubsofusers',{headers:headers})
         .then(data => data.json())
@@ -172,9 +176,10 @@ export const FetchMembers =()=>{
             }else{
                 console.log(data);
                 dispatch(DetailsOfMembers(data));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(FetchFailed(error)))
+        .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
 
     }
 }
@@ -184,6 +189,7 @@ export const FetchClubMembersList =()=>{
     debugger;
     return function(dispatch){
         debugger;
+        dispatch(loadingStarted())
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         console.log("fetch call");
         return fetch(url+'api/clubs/getclubmemberslist',{headers:headers})
@@ -194,10 +200,10 @@ export const FetchClubMembersList =()=>{
             }else{
                 console.log(data);
                 dispatch(clubMembersListFetch(data));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(FetchFailed(error)))
-
+        .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
     }
 }
 
@@ -206,6 +212,7 @@ export const makeAndCancelRequest=(clubID,userID)=>
     debugger;
     return function(dispatch){
         debugger;
+        dispatch(loadingStarted())
         return fetch(url+'api/clubs/MakeNCancelRequest/'+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
@@ -213,9 +220,10 @@ export const makeAndCancelRequest=(clubID,userID)=>
             }else{
                 console.log(response.status);
                 dispatch(requestChanged(response.statusText));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(FetchFailed(error)))
+        .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
     }
 }
 
@@ -225,6 +233,7 @@ export const removeUser=(clubID,userID)=>
     debugger;
     return function(dispatch){
         debugger;
+        dispatch(loadingStarted())
         return fetch(url+'api/clubs/removeuser/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
@@ -232,9 +241,10 @@ export const removeUser=(clubID,userID)=>
             }else{
                 console.log(response.status);
                 dispatch(userDeleted(response.statusText));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(FetchFailed(error)))
+        .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
     }
 }
 
@@ -243,6 +253,7 @@ export const addUserToPublicClub=(clubID,userID)=>
     debugger;
     return function(dispatch){
         debugger;
+        dispatch(loadingStarted())
         return fetch(url+'api/clubs/addUserToPublicClub/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
@@ -250,9 +261,10 @@ export const addUserToPublicClub=(clubID,userID)=>
             }else{
                 console.log(response.status);
                 dispatch(userAdded(response.statusText));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(FetchFailed(error)))
+        .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
     }
 }
 
@@ -261,6 +273,7 @@ export function addClub(newClub:INewClub,formData:FormData)
     debugger;
     return function(dispatch){
         debugger;
+        dispatch(loadingStarted())
         return fetch(url+'api/clubs/addclub',{method:"post",body:JSON.stringify(newClub),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
@@ -271,10 +284,11 @@ export function addClub(newClub:INewClub,formData:FormData)
                 formData, { headers: { 'Content-Type': "multipart/form-data",'Authorization': 'Bearer ' + getToken()}})
                 .then(res => {
                     dispatch(clubAdded(res.statusText));
+                    dispatch(loadingEnded())
                 })
             }
         })
-        .catch(error=>dispatch(FetchFailed(error)))
+        .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
     //     .then(response =>{
     //         if(!response.ok){
     //             throw new Error("user added failed");
@@ -300,6 +314,7 @@ export function deactivateClub(clubID:number,reason:string)
     debugger;
     return function(dispatch){
         debugger;
+        dispatch(loadingStarted())
         return fetch(url+'api/clubs/makeclubdeactive/'+clubID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
@@ -307,9 +322,10 @@ export function deactivateClub(clubID:number,reason:string)
             }else{
                 console.log(response.status);
                 dispatch(deactivateSuccess(response.statusText));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(FetchFailed(error)))
+        .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
     }
 }
 

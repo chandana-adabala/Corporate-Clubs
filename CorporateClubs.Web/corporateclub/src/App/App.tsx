@@ -31,8 +31,8 @@ class App extends React.Component<any, any> {
     let NavigatewithLocation = withRouter(props => <Navigate {...props} />);
     debugger;
     //returning loading page if fetch call is not resolved
-    if (1)
-      return <Loading/>
+    if(this.props.error=="not mounted")
+     return <Loading/>
     if (this.props.error != "") {
       return <Forbidden />;
     } else {
@@ -58,6 +58,7 @@ class App extends React.Component<any, any> {
               </Switch>
             </div>
           </Router>
+          {this.props.isLoading?<Loading/>:<span/>}
         </div>
       );
     }
