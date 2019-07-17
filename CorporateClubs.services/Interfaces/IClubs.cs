@@ -7,7 +7,7 @@ namespace CorporateClubs.Services.Interfaces
     public interface IClubs
     {
        int AddClub(string clubTitle, string description, string clubType, List<int> clubMembers, string imageURL, int currentUserID, List<int> clubAdmins = null);
-        bool Addmember(int clubID, int addedUserID, int currentUserID, bool isRequested = false);
+        bool Addmember(int clubID, int addedUserID, int currentUserID, bool isRequested = false,string role="User");
         bool AddMembers(int clubID, List<int> members, int currentUserID);
         bool DeleteClub(int clubID, int currentUserID,string reason);
         List<Club> GetAllClubs();
@@ -31,5 +31,8 @@ namespace CorporateClubs.Services.Interfaces
         bool RejectRequest(int clubID, int addedUserID, int currentUserID);
         bool ChangeClubType(string clubType,int clubID, int currentUserID);
         List<ClubMembersList> GetClubMembersListofUser(int userID);
+        bool BlockOrUnBlockUser(int clubID, int userID, int requestID);
+        bool RemoveUserAsAdmin(int clubID, int userID, int requestID);
+        bool changeProfilePicOfClub(int clubID, string imageURL);
     }
 }

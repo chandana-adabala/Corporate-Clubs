@@ -8,21 +8,32 @@ import {cross} from 'react-icons-kit/metrize/cross'
 import { connect } from 'react-redux';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'; 
 import './NonClubUser.scss'
-import { acceptRequest, rejectRequest, fetchMyClubInfo } from '../../actions/homeActions';
-export default class NonClubUser extends React.Component<any,{}>{
+import { acceptRequest, rejectRequest, fetchMyClubInfo } from '../../actions/clubAction';
+export default class NonClubUser extends React.Component<any,any>{
+    constructor(props)
+    {
+        super(props)
+        this.state={defaultChecked:false}
+    }
   handleChange=(ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean)=>{
-     //  
         this.props.select(checked,this.props.user);
+        this.setState({defaultChecked:checked})
         
+  }
+
+  componentWillReceiveProps(nextProps)
+  {
+      if(nextProps.user!=this.props.user)
+      this.setState({defaultChecked:false})
   }
     render(){
  
-        
+        debugger;
         return(
             <div className="nonUser">
             
                 <div className="nonUserprofilePic"> 
-                <Checkbox onChange={this.handleChange} defaultChecked={false}/>
+                <Checkbox onChange={this.handleChange} checked={this.state.defaultChecked}/>
                         <img src={this.props.user.profilePic} ></img>
                 </div>
                 <div className="details">

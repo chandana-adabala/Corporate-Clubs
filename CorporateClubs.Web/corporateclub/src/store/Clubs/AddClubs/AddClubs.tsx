@@ -8,7 +8,7 @@ import {ic_close} from 'react-icons-kit/md/ic_close'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import AddUser from '../../Admin/UsersList/AddUser';
-import { FetchUsers } from '../Actions/ClubActions'
+import { FetchUsers,FetchClubMembersList } from '../Actions/ClubActions'
 import '../RoundBox.scss'
 import { addClub } from '../Actions/ClubActions'
 import INewClub from '../../../models/INewClub'
@@ -53,7 +53,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   onImageUpload(event) {
-     
+    debugger;
     console.log(URL.createObjectURL(event.target.files[0]));
     this.setState({ image: URL.createObjectURL(event.target.files[0]), imageFile: event.target.files[0] });
   }
@@ -61,29 +61,29 @@ class AddClubs extends React.Component<any, any>{
 
 
   onNameChange(event) {
-     
+    debugger;
     this.setState({ name: event.target.value, error: "" });
   }
 
 
 
   onDescriptionChange(event) {
-     
+    debugger;
     this.setState({ description: event.target.value, error: "" });
   }
 
 
 
   onToggleChange(isToggled: boolean) {
-     
+    debugger;
     this.setState({ isToggled: isToggled, error: "" })
   }
 
 
 
-  componentWillMount() {
-    this.props.dispatch(FetchUsers());
-  }
+  // componentWillMount() {
+  //   this.props.dispatch(FetchUsers());
+  // }
 
 
 
@@ -95,20 +95,22 @@ class AddClubs extends React.Component<any, any>{
 
 
   addUser(event) {
-     
+    debugger;
     var selectedUsers = this.state.selectedUsers;
+    var displayAdmins=this.state.displayAdmins.filter(user=>user.userID!=event.currentTarget.id)
+    var displayUsers=this.state.displayUsers.filter(user=>user.userID!=event.currentTarget.id)
     var selectedUser=this.props.users.filter(user=>user.userID==event.currentTarget.id)
     selectedUsers[event.currentTarget.id] = [event.target.textContent,selectedUser[0].profilePic];
-    this.setState({ selectedUsers: selectedUsers, usersSelection: "", displayusers: this.props.users });
+    this.setState({ selectedUsers: selectedUsers, usersSelection: "", displayUsers: displayUsers,displayAdmins:displayAdmins });
   }
 
 
-
   removeUser(event) {
-     
+    debugger;
     var selectedUsers = this.state.selectedUsers;
     delete selectedUsers[event.currentTarget.id];
-    this.setState({ selectedUsers: selectedUsers });
+    var removedUser=this.props.users.filter(user=>user.userID==event.currentTarget.id)
+    this.setState({ selectedUsers: selectedUsers,displayUsers: [...this.state.displayUsers,removedUser[0]],displayAdmins:[...this.state.displayAdmins,removedUser[0]] });
   }
 
 
@@ -123,10 +125,11 @@ class AddClubs extends React.Component<any, any>{
 
 
   removeAdmin(event) {
-     
+    debugger;
     var selectedAdmins = this.state.selectedAdmins;
     delete selectedAdmins[event.currentTarget.id];
-    this.setState({ selectedAdmins: selectedAdmins });
+    var removedUser=this.props.users.filter(user=>user.userID==event.currentTarget.id)
+    this.setState({ selectedAdmins: selectedAdmins,displayUsers: [...this.state.displayUsers,removedUser[0]],displayAdmins:[...this.state.displayAdmins,removedUser[0]]});
   }
 
 
@@ -141,16 +144,18 @@ class AddClubs extends React.Component<any, any>{
 
 
   addAdmin(event) {
-     
+    debugger;
     var selectedAdmins = this.state.selectedAdmins;
     var selectedAdmin=this.props.users.filter(user=>user.userID==event.currentTarget.id)
+    var displayAdmins=this.state.displayAdmins.filter(user=>user.userID!=event.currentTarget.id)
+    var displayUsers=this.state.displayUsers.filter(user=>user.userID!=event.currentTarget.id)
     selectedAdmins[event.currentTarget.id] = [event.target.textContent,selectedAdmin[0].profilePic];
-    this.setState({ selectedAdmins: selectedAdmins, adminsSelection: "", displayAdmins: this.props.users });
+    this.setState({ selectedAdmins: selectedAdmins, adminsSelection: "",displayUsers: displayUsers,displayAdmins:displayAdmins});
   }
 
 
-  onSubmit(event) {
-     
+  async onSubmit(event) {
+    debugger;
     if (this.state.name == '' || this.state.description == '') {
       this.setState({ error: "Fields marked * are mandatory" });
     }
@@ -163,26 +168,28 @@ class AddClubs extends React.Component<any, any>{
         description: this.state.description,
         profilePic: "1",
         members: Object.keys(this.state.selectedUsers).map(key => parseInt(key, 10)),
-        admins: Object.keys(this.state.selectedUsers).map(key => parseInt(key, 10)),
+        admins: Object.keys(this.state.selectedAdmins).map(key => parseInt(key, 10)),
         clubTitle: this.state.name
       }
       console.log("NewClub", NewClub);
-      this.imageUploadHandler(2)
-      this.props.dispatch(addClub(2, NewClub))
+      const formData = new FormData();
+      var dataURL = this.state.editor.getImageScaledToCanvas().toDataURL();
+      var imageBlob: Blob = this.b64toBlob(dataURL);
+      formData.append('image', imageBlob);
+      await this.props.dispatch(addClub(NewClub,formData));
+      await this.props.dispatch(FetchClubMembersList())
 
     }
   }
 
   //imageUpload
 
-  imageUploadHandler = (ev) => {
-     
+  imageUploadHandler = () => {
+    debugger;
 
     console.log("image upload");
 
     const fd = new FormData();
-    fd.append('image', this.state.editor.getImageScaledToCanvas());
-    // console.log(fd.get('image'),this.state.selectedImage,this.state.selectedImage.name);
     var dataURL = this.state.editor.getImageScaledToCanvas().toDataURL();
     var imageBlob: Blob = this.b64toBlob(dataURL);
     fd.append('image', imageBlob);
@@ -208,7 +215,7 @@ class AddClubs extends React.Component<any, any>{
       <div className="AddUser" >
         <header className="adduser_head">
           <text>Add New Club</text>
-          <Link to="/Clubs">
+          <Link to={this.props.from}>
             <Icon icon={ic_close} size={30} />
           </Link>
         </header>
@@ -222,8 +229,8 @@ class AddClubs extends React.Component<any, any>{
               : (<div><AvatarEditor
                 ref={this.setEditorRef}
                 image={this.state.image}
-                width={300}
-                height={200}
+                width={320}
+                height={144}
                 border={30}
                 color={[255, 255, 255, 1]} // RGBA
                 scale={1}
@@ -301,10 +308,12 @@ class AddClubs extends React.Component<any, any>{
 
 
             <span className="buttons">
-              <Link to="/Clubs">
+              <Link to={this.props.from}>
                 <button className="cancelbutton"><text>Cancel</text></button>
               </Link>
+              <Link to={this.props.from}> 
               <button className="addclub" onClick={this.onSubmit}><text>Add Club</text></button>
+              </Link>
             </span>
           </div>
 
@@ -316,7 +325,7 @@ class AddClubs extends React.Component<any, any>{
 }
 
 function mapStateToProps(State) {
-   
+  debugger;
   console.log(State)
   return {
     users: State.ClubReducer.users,

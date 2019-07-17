@@ -129,12 +129,24 @@ namespace CorporateClubs.Services.Services
                         ClubTitle = clubTitle,
                         Description = description,
                         ClubType = clubType,
-                        ProfilePic = imageURL
+                        ClubCreatedBy = currentUserID,
+                        CreatedOn = DateTime.Now,
+                        RowCreatedOn = DateTime.Now
+
                     };
                     _context.Add(club);
                     _context.SaveChanges();
                     AddMembers(club.ClubID, clubMembers, currentUserID);
-                    // todo: add admins
+
+
+                    if (_context.Users.Single(u => u.UserID == currentUserID).Role == "Admin")
+                        Addmember(club.ClubID, currentUserID, currentUserID, false, "Admin");
+                    else
+                        Addmember(club.ClubID, currentUserID, currentUserID, false, "Club Owner");
+
+
+                    foreach (int i in clubAdmins)
+                        Addmember(club.ClubID, i, currentUserID, false, "Admin"); //for adding admins to the club
                     return club.ClubID;
                 }
                 catch (Exception)
@@ -146,7 +158,7 @@ namespace CorporateClubs.Services.Services
 
         }
 
-        public bool Addmember(int clubID, int addedUserID, int currentUserID, bool isRequested = false)
+        public bool Addmember(int clubID, int addedUserID, int currentUserID, bool isRequested = false,string role="User")
         {
             using (var _context = new ModelContext())
             {
@@ -156,7 +168,7 @@ namespace CorporateClubs.Services.Services
                     {
                         ClubID = clubID,
                         UserID = addedUserID,
-                        Role = "User",
+                        Role = role,
                         JoiningDate = DateTime.Now,
                         IsFavouriteClub = false,
                         IsPersonBlock = false,
@@ -238,6 +250,7 @@ namespace CorporateClubs.Services.Services
                 return true;
             }
         }
+
 
         public bool DeleteClub(int clubID, int currentUserID, string reason)
         {
@@ -402,6 +415,7 @@ namespace CorporateClubs.Services.Services
                     var club = _context.Clubs.Single(c => clubID == c.ClubID);
                     club.ClubTitle = ClubTitle;
                     club.Description = description;
+                    if(ImageURL!=null)
                     club.ProfilePic = ImageURL;
                     _context.SaveChanges();
                 }
@@ -549,5 +563,88 @@ namespace CorporateClubs.Services.Services
             }
 
         }
+
+        public bool BlockOrUnBlockUser(int clubID,int userID,int requestID)
+        {
+            using (var _context = new ModelContext())
+            {
+                try
+                {
+                    var clubMember = _context.ClubMembers.Single(c => c.ClubID == clubID && c.UserID == userID);
+                    clubMember.IsPersonBlock = !clubMember.IsPersonBlock;
+                    clubMember.RowModifiedBy = requestID;
+                    clubMember.RowModifiedOn = DateTime.Now;
+                    _context.SaveChanges();
+                    return true;
+                    
+                }
+                catch(Exception e)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool RemoveUserAsAdmin(int clubID, int userID, int requestID)
+        {
+            using (var _context = new ModelContext())
+            {
+                try
+                {
+                    var clubMember = _context.ClubMembers.Single(c => c.ClubID == clubID && c.UserID == userID);
+                    clubMember.Role = "User";
+                    clubMember.RowModifiedBy = requestID;
+                    clubMember.RowModifiedOn = DateTime.Now;
+                    _context.SaveChanges();
+                    return true;
+
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool changeProfilePicOfClub(int clubID,string imageURL)
+        {
+            using(var _context =new ModelContext())
+            {
+                try
+                {
+                    var club = _context.Clubs.Single(c => c.ClubID == clubID);
+                    club.ProfilePic = imageURL;
+                    _context.SaveChanges();
+                    return true;
+
+                }
+                catch(Exception e)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool isClubAdminOrClubOwner(int clubID,int userID)
+        {
+            using (var _context = new ModelContext())
+            {
+                try
+                {
+                    var clubMember = _context.ClubMembers.Single(c => c.ClubID == clubID && c.UserID == userID && c.RowDeletedBy == null && c.IsPersonBlock == false);
+                    if (clubMember.Role == "Club Owner" || clubMember.Role == "Admin")
+                        return true;
+                    else
+                        return false;
+
+
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+        }
+
     }
 }

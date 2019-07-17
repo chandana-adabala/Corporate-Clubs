@@ -4,8 +4,9 @@
     {
         clubType?:string
         description?:string
-        profilePic?:string
+        profilePic?:string|null
         members?:number[]
         admins?:number[]
         clubTitle?:string;
+        clubID?:number
     }

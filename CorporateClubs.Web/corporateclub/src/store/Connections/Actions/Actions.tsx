@@ -1,6 +1,8 @@
 import IConnections from '../../../models/IConnections'
 import {getToken} from '../../../Configure'
+import {loadingStarted,loadingEnded} from '../../../App/AppActions/AppActions'
 const url="http://localhost:3333/"
+
 export enum ActionTypes
 {
     FETCH_USER_CONTACTS="FETCH_USER_CONTACTS",
@@ -68,6 +70,7 @@ export const fetchContacts = ()=>{
     return function(dispatch){
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         console.log("fetch call");
+        dispatch(loadingStarted())
         return fetch(url+'api/connection/getmycontacts',{headers:headers})
         .then(data => data.json())
         .then(data =>{
@@ -76,9 +79,10 @@ export const fetchContacts = ()=>{
             }else{
                 console.log(data);
                 dispatch(fetchUserContacts(data));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(fetchFailed(error)))
+        .catch(error=>{dispatch(fetchFailed(error));dispatch(loadingEnded())})
 
     }
     
@@ -88,6 +92,7 @@ export const fetchSuggestions = ()=>{
     return function(dispatch){
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         console.log("fetch call");
+        dispatch(loadingStarted())
         return fetch(url+'api/connection/getmysuggestions',{headers:headers})
         .then(data => data.json())
         .then(data =>{
@@ -96,9 +101,10 @@ export const fetchSuggestions = ()=>{
             }else{
                 console.log(data);
                 dispatch(fetchUserSuggestions(data));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(fetchFailed(error)))
+        .catch(error=>{dispatch(fetchFailed(error));dispatch(loadingEnded())})
 
     }
     
@@ -107,6 +113,7 @@ export const fetchSuggestions = ()=>{
 export const addNewConnection = (requestID)=>{
     return function(dispatch){
         console.log("fetch call");
+        dispatch(loadingStarted())
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch(url+'api/connection/addcontact/'+requestID, {method: "post",headers:{'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
@@ -123,11 +130,12 @@ export const addNewConnection = (requestID)=>{
                     }else{
                         console.log(data);
                         dispatch(fetchUserSuggestions(data));
+                        dispatch(loadingEnded())
                     }
                 }).catch(error=>dispatch(fetchFailed(error)))
             }
         })
-        .catch(error => dispatch(fetchFailed(error)))
+        .catch(error=>{dispatch(fetchFailed(error));dispatch(loadingEnded())})
 
     }
     

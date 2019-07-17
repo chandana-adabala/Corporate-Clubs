@@ -1,0 +1,302 @@
+.AddUser
+ {
+ /* Hidden by default *///display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding: 100px;
+    padding-left:600px;
+    padding-right:300px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    .adduser_head
+        {
+            color:black;
+            font-size: 20px;
+            width:810px;
+            background-color: rgba(244, 245, 248 ,1);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+
+            svg 
+            {
+                padding-left: 620px;
+                color: rgb(185, 183, 183);
+            }            
+
+        }
+    #content
+    {
+        margin:0px;
+        width:550px;
+        min-height:850px;
+        @keyframes blinker {  
+            50% { opacity: 0; }
+           }
+           @keyframes blinker {  
+            50% { opacity: 0; }
+           }
+        .error{
+            color:red;
+            background-color: white;
+            padding-left:2rem;
+            animation: blinker-one 1s linear infinite;
+        }
+        
+    }
+     #first-half
+     {
+       min-width:45%;
+       
+       float:left;
+       height:245px;
+       background-color:white;
+
+       opacity:1;
+       padding-top:5%;
+       padding-left: 3%;
+       text 
+       {
+           font-size: 1em;
+       }
+       input 
+       {
+           width:75%;
+           padding:2.5%;
+           margin:3% 0% 5% 0%;
+       }
+     }
+
+     #second-half
+     {
+         min-width:50%;
+         height:280px;
+         background-color:white;
+         padding-left: 42%;
+         padding-top: 5%;
+         text 
+       {
+           font-size: 1em;
+       }
+       input 
+       {
+           width:57%;
+           padding:2%;
+           margin:2.5% 0% 3.8% 0%;
+       }
+         
+        
+       
+    }
+    .bottom 
+    {
+        height: 220px;
+        width: 850px;
+        background-color:white;
+        .container {
+            display: block;
+            position: relative;
+            padding-left: 3%;;
+            margin-bottom:5%;
+            margin-left:3%;
+            cursor: pointer;
+            font-size: 1em;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+          
+          /* Hide the browser's default checkbox */
+          .container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+          }
+          
+          /* Create a custom checkbox */
+          .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 1em;
+            width: 1em;
+            background-color:white;
+            padding-right: 0%;
+            border: 0.5px solid rgb(66, 66, 66);
+           
+          }
+          
+          /* On mouse-over, add a grey background color */
+          .container:hover input ~ .checkmark {
+            background-color:rgb(178, 167, 189);
+          }
+          
+          /* When the checkbox is checked, add a blue background */
+          .container input:checked ~ .checkmark {
+            background-color: #76618B;
+          }
+          
+          /* Create the checkmark/indicator (hidden when not checked) */
+          .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+          }
+          
+          /* Show the checkmark when checked */
+          .container input:checked ~ .checkmark:after {
+            display: block;
+          }
+          
+          /* Style the checkmark/indicator */
+          .container .checkmark:after {
+            left: 0.2em;
+            top: 0.1em;
+            width: 0.3em;
+            height: 0.6em;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+          div
+          {
+              padding-left: 3%;
+              text 
+              {
+                  margin-top:20%;
+
+              }
+              input 
+              {
+                  margin-top: 2%;
+                  border-top: none;
+                  border-left: none;
+                  border-right:none;
+                  
+              }
+
+
+          }
+        .buttons
+        {
+            margin-top: 30%;
+            padding-left: 75%;
+        .cancelbutton
+        {
+            outline: none;
+            border: none;
+            padding: 12px 15px 12px 15px;
+            border-radius: 5px;
+            color: white;
+            background-color: rgb(185, 183, 183);          
+        }
+        .addclub
+        {
+            outline: none;
+            border: none;
+            padding:  12px 15px 12px 15px;
+            border-radius: 5px;
+            color: white;
+            background-color: #76618B;      
+            margin:2%;    
+        }
+    }
+     }
+     h4{
+         background-color:#f4f5f8;
+         margin:0px;
+         padding:20px
+
+     }
+     span 
+     {
+         label 
+         {
+             display: flex;
+             flex-direction: row;
+             justify-content:left;
+           
+
+         }
+     }
+
+     .addClubsDropdown
+     {
+    
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 22%;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+         margin-top:12px;
+            
+          }
+          
+          .dropdown-content p {
+            
+            float: none;
+            color:grey;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            &:hover
+            {
+                background-color: gray;
+                color: black
+            }
+          }
+          
+          .dropdown-content p:active {
+            background-color: #ddd;
+            color: black;
+          
+          }
+          
+          .dropdown:hover .dropdown-content {
+            display: block;
+            color:black;
+           }
+        
+          .dropbtn
+          {
+            display: inline-flex;
+            justify-content: space-between;
+            height:100%;
+            text-align: left;
+              color: grey;
+              background-color: white;
+              border :0.05px solid rgb(189, 187, 187);
+              width :10em;
+              padding-top: 2em;
+              padding-bottom: 2em;
+              
+          }
+     } 
+     .selectedClubs
+     {
+      padding-bottom:10px;
+      border-bottom: 2px solid rgb(170, 170, 170);
+      input:focus
+      {
+        margin-left: 2px;
+        outline: none;
+      }
+     } 
+     .selectedClubs:hover .dropdown-content {
+      display: block;
+      color:black;
+     }
+}

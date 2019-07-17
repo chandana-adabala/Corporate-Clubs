@@ -43,7 +43,7 @@ class Head extends React.Component<any,any> {
    
         <span className="profile">
           <Icon size={size} icon={iosBell} className="notify" />
-          <span><Link to="/profile"> <Avatar size="2.5rem" name={this.props.UserDisplayName} style={{"margin-right":"1vw"}} round={true} src={this.props.profilePic} />   </Link></span>
+          <span><Link to="/profile"> <Avatar size="2.5rem" name={this.props.UserDisplayName.charAt(0).toUpperCase+this.props.user} style={{"margin-right":"1vw"}} round={true} src={this.props.profilePic} />   </Link></span>
           <text>{this.props.UserDisplayName}</text>
          
         </span>

@@ -5,6 +5,7 @@ import { ChoiceGroup, IChoiceGroupOption } from 'office-ui-fabric-react/lib/Choi
 
 interface IChoiceGroupBasicExampleState {
     imageKey: string;
+    publicClubType:string
   }
   
   export default class MyRadio extends React.Component<any, IChoiceGroupBasicExampleState> {
@@ -12,18 +13,39 @@ interface IChoiceGroupBasicExampleState {
       super(props);
   
       this.state = {
-        imageKey: ''
+        imageKey: '',
+        publicClubType:''
       };
+
+      this.onchange=this.onchange.bind(this);
+
     }
     
-    
+    onchange(event)
+    {
+      debugger
+      if(event.text=='Open Club')
+      this.setState({publicClubType:'A'})
+      else
+      this.setState({publicClubType:'B'})
+      this.props.onChange(event)
+    }
+
+    componentDidMount()
+    {
+        this.setState({publicClubType:this.props.publicClubType})
+    }
+    componentWillReceiveProps(nextProps)
+    {
+      this.setState({publicClubType:this.props.publicClubType})
+    }
     public render() {
       console.log(this.props.onChange,'change',this.props.hide,"hide");
       return (
         <div>
           <ChoiceGroup
             className="defaultChoiceGroup"
-            defaultSelectedKey="B"
+            selectedKey={this.state.publicClubType}
             options={[
               {
                 key: 'A',

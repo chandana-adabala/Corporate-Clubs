@@ -3,7 +3,13 @@ import IClubs from '../../../models/IClubs'
 import IClubMembers from '../../../models/IClubMembers'
 import { type } from 'os';
 import {getToken} from '../../../Configure'
+<<<<<<<< HEAD:CorporateClubs.Web/corporateclub/src/store/Home/actions/homeActions.ts
 import IConversation from '../../../models/IConversation';
+========
+import {loadingStarted,loadingEnded} from '../../../App/AppActions/AppActions'
+import INewClub from '../../../models/INewClub'
+import axios from 'axios';
+>>>>>>>> origin/girish:CorporateClubs.Web/corporateclub/src/store/Home/actions/clubAction.ts
 
 //Action Types
 export enum ActionTypes{
@@ -31,9 +37,20 @@ export enum ActionTypes{
     MUTE_N_UNMUTE_CLUB='MUTE_N_UNMUTE_CLUB',
     ADD_MEMBER_SUCCESS='ADD_MEMBER_SUCCESS',
     ADD_MEMBER_ERROR='ADD_MEMBER_ERROR',
+<<<<<<<< HEAD:CorporateClubs.Web/corporateclub/src/store/Home/actions/homeActions.ts
     FETCH_MESSAGES_SUCCESS = 'FETCH_MESSAGES_SUCCESS',
     FETCH_MESSAGES_ERROR = 'FETCH_MESSAGES_ERROR',
 
+========
+    EXIT_FROM_CLUB_SUCCESS='EXIT_FROM_CLUB_SUCCESS',
+    EXIT_FROM_CLUB_FAILED='EXIT_FROM_CLUB_FAILED',
+    BLOCK_OR_UNBLOCK_USER_SUCCESS='BLOCK_USER_SUCCESS',
+    BLOCK_OR_UNBLOCK_USER_FAILED='BLOCK_USER_FAILED',
+    REMOVE_USER_AS_ADMIN_SUCCESS='REMOVE_USER_AS_ADMIN_SUCCESS',
+    REMOVE_USER_AS_ADMIN_FAILED='REMOVE_USER_AS_ADMIN_FAILED',
+    CLUB_DETAILS_UPDATED='CLUB_DETAILS_UPDATED',
+    CLUB_DETAILS_UPDATION_FAILED='CLUB_DETAILS_UPDATION_FAILED'
+>>>>>>>> origin/girish:CorporateClubs.Web/corporateclub/src/store/Home/actions/clubAction.ts
 }
 
 
@@ -187,6 +204,67 @@ export const addNewMembersError=(error:string)=>{
     }
 }
 
+<<<<<<<< HEAD:CorporateClubs.Web/corporateclub/src/store/Home/actions/homeActions.ts
+========
+export const exitFromClubSuccess=()=>{
+    return{
+        type:ActionTypes.EXIT_FROM_CLUB_SUCCESS,
+    }
+}
+
+export const exitFromClubError=(error)=>{
+    return{
+        type:ActionTypes.EXIT_FROM_CLUB_FAILED,
+        payload:{error}
+    }
+}
+
+
+export const blockOrUnblockUserSuccess=()=>{
+return {
+type:ActionTypes.BLOCK_OR_UNBLOCK_USER_SUCCESS,
+payload:"blockusersuccess"
+}
+}
+
+
+export const blockOrUnblockUserFailed=()=>{
+    return {
+    type:ActionTypes.BLOCK_OR_UNBLOCK_USER_FAILED,
+    payload:"blockuserFailed"
+    }
+    }
+
+export const removeUserAsAdminSuccess=()=>{
+    return {
+    type:ActionTypes.REMOVE_USER_AS_ADMIN_SUCCESS,
+    payload:"removeUserAsAdminSuccess"
+}
+}
+
+export const clubUpdated=()=>{
+    return {
+    type:ActionTypes.CLUB_DETAILS_UPDATED,
+    payload:"club details updated"
+}
+}
+    
+export const clubUpdationFailed=()=>{
+    return {
+    type:ActionTypes.CLUB_DETAILS_UPDATION_FAILED,
+    payload:"clubDetailsUpdationFailed"
+}
+}
+
+
+export const removeUserAsAdminFailed=()=>{
+    return {
+    type:ActionTypes.REMOVE_USER_AS_ADMIN_FAILED,
+    payload:"removeUserAsAdminFailed"
+}
+}
+// Thunk Action Creators
+>>>>>>>> origin/girish:CorporateClubs.Web/corporateclub/src/store/Home/actions/clubAction.ts
 
 export const fetchMessageSuccess = (message:IConversation)=>{
     return{
@@ -207,6 +285,7 @@ export const fetchMessageError = (error:string)=>{
 export const fetchFavClubs = UserID=>{
     debugger;
     return function(dispatch){
+        dispatch(loadingStarted())
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/getallfavclubsofuser/',{ headers: {'Authorization': 'Bearer ' + getToken()}})
@@ -217,9 +296,10 @@ export const fetchFavClubs = UserID=>{
             }else{
                 console.log(data);
                 dispatch(fetchFavClubsSuccess(data));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(fetchFavClubsError(error)))
+        .catch(error=>{dispatch(fetchFavClubsError(error));dispatch(loadingEnded())})
 
     }
     
@@ -228,6 +308,7 @@ export const fetchFavClubs = UserID=>{
 export const fetchMyClubs = UserID=>{
     debugger;
     return function(dispatch){
+        dispatch(loadingStarted())
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/getallclubsofusers/',{ headers: {'Authorization': 'Bearer ' + getToken()}})
@@ -238,15 +319,20 @@ export const fetchMyClubs = UserID=>{
             }else{
                 console.log(data);
                 dispatch(fetchMyClubsSuccess(data));
+                dispatch(loadingEnded())
             }
         })
-        .catch(error=>dispatch(fetchMyClubsError(error)))
+        .catch(error=>{dispatch(fetchMyClubsError(error));dispatch(loadingEnded())})
 
     }
 }
 
 export const fetchMyClubInfo = clubID=>{
+<<<<<<<< HEAD:CorporateClubs.Web/corporateclub/src/store/Home/actions/homeActions.ts
      
+========
+    debugger;
+>>>>>>>> origin/girish:CorporateClubs.Web/corporateclub/src/store/Home/actions/clubAction.ts
     return function(dispatch){
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
@@ -425,6 +511,7 @@ export const addNewMembers=(clubID,userList,requestID)=>{
         }
 }
 
+<<<<<<<< HEAD:CorporateClubs.Web/corporateclub/src/store/Home/actions/homeActions.ts
 export const fetchMessagesOfClub=(clubID)=>{
      
    return function(dispatch){
@@ -442,4 +529,86 @@ export const fetchMessagesOfClub=(clubID)=>{
        .catch(error=>dispatch(fetchMessageError(error)))
 
    }
+========
+
+export const exitFromClub=(userID,clubID)=>{
+    debugger;
+    return function(dispatch){
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/RemoveUser/'+userID+'/'+clubID,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(response=>{
+            if(!response.ok){
+                throw new Error("change failed");
+            }else{
+                dispatch(exitFromClubSuccess());
+            }
+        })
+        .catch(error=>dispatch(exitFromClubError(error)))
+    }
+}
+
+export const blockOrUnblockUser=(userID,clubID)=>
+{
+    debugger;
+    return function(dispatch){
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/blockorunblockuserInAClub/'+clubID+'/'+userID,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(response=>{
+            if(!response.ok){
+                throw new Error();
+            }else{
+                dispatch(blockOrUnblockUserSuccess());
+            }
+        })
+        .catch(error=>dispatch(blockOrUnblockUserFailed()))
+    }
+}
+
+export const removeUserAsAdmin=(userID,clubID)=>
+{
+    debugger;
+    return function(dispatch){
+        const headers = { 'Authorization': 'Bearer ' + getToken() };
+        return fetch('http://localhost:3333/api/clubs/RemoveAsAdmin/'+clubID+'/'+userID,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(response=>{
+            if(!response.ok){
+                throw new Error("change failed");
+            }else{
+                dispatch(removeUserAsAdminSuccess());
+            }
+        })
+        .catch(error=>dispatch(removeUserAsAdminFailed()))
+    }
+}
+
+export function editClub(editedClub:INewClub,formData:FormData|null)
+{
+    debugger;
+    return function(dispatch){
+        debugger;
+        dispatch(loadingStarted())
+        return fetch('http://localhost:3333/'+'api/clubs/updateclub',{method:"put",body:JSON.stringify(editedClub),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(response=>{
+            if(!response.ok){
+                throw new Error("User Not Found!");
+            }else{
+               if(formData!=null)
+                { 
+                axios.post('http://localhost:3333/api/clubs/UploadImage/'+editedClub.clubID,
+                formData, { headers: { 'Content-Type': "multipart/form-data",'Authorization': 'Bearer ' + getToken()}})
+                .then(res => {
+                    dispatch(clubUpdated());
+                    dispatch(loadingEnded())
+                })
+                }
+                else
+                {
+                    dispatch(clubUpdated());
+                    dispatch(loadingEnded());
+                }
+            }
+        })
+        .catch(error=>{dispatch(clubUpdationFailed());dispatch(loadingEnded())})
+}
+>>>>>>>> origin/girish:CorporateClubs.Web/corporateclub/src/store/Home/actions/clubAction.ts
 }

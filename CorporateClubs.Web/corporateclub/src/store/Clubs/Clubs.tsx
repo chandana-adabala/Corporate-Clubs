@@ -165,7 +165,7 @@ handleReset()
                   <DatePicker placeholderText='Date Created' selected={this.state.date} className="date" onChange={this.onDateChange}/>
                   </span>
                     <Switch>
-                    <Route path="/Clubs/addclubs" component={AddClubs} />
+                    <Route path="/Clubs/addclubs" component={()=><AddClubs key={1} from="/clubs"/>} />
                     </Switch>
                   <span className="search">
                    <span><Icon icon={search} size={20}/></span>   

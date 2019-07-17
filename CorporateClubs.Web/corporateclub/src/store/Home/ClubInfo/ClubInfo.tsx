@@ -8,6 +8,7 @@ import { ic_lock } from 'react-icons-kit/md/ic_lock'
 import { edit } from 'react-icons-kit/ionicons/edit'
 import { closeRound } from 'react-icons-kit/ionicons/closeRound'
 import { user_add } from 'react-icons-kit/ikons/user_add'
+import ExitClub from './ExitClub/ExitClub'
 import User from './ClubUsers/User'
 import RequestedUser from './ClubUsers/RequestedUser'
 import MyToggle from './Components/Toggle'
@@ -17,8 +18,13 @@ import IUsers from '../../../models/IUsers';
 import { connect } from 'react-redux';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'; 
-import { changeClubType, fetchMyClubInfo, muteNunmuteClub, addNewMembers, fetchNonClubMembers } from '../actions/homeActions';
+import { changeClubType, fetchMyClubInfo, muteNunmuteClub, addNewMembers, fetchNonClubMembers } from '../actions/clubAction';
 import NonClubUser from './ClubUsers/NonClubUser';
+import DeactivateClub from '../../Clubs/DeactivateClub/DeactivateClub'
+import {Link,Route} from 'react-router-dom';
+import UpdateClub from './UpdateClub/UpdateClub'
+
+//import './MyCheckbox.scss';
 
 class ClubInfo extends React.Component<any, any>{
     uA: IUsers[];
@@ -36,14 +42,16 @@ class ClubInfo extends React.Component<any, any>{
             userArrayFilter: this.props.cUsers.map(cUser => this.props.users.filter(user => cUser.userID == user.userID)[0]),
             hideClubSubTypes:(this.props.club.clubType=="Private Club")?(true):(false),
             newMemCount:0,
-            newMemList:[]
+            newMemList:[],
+            publicClubType:"",
+            isChecked:false,
+            currentUserRole:''
         };
-    
+        this.onInputChange = this.onInputChange.bind(this);
+        this.getNewClub = this.getNewClub.bind(this);
 
     }
-
-    //searching club members
-    onInputChange=(event)=> {
+    onInputChange(event) {
         this.searchMem = this.uA.filter(user => user.displayName.toLowerCase().includes((event.target.value).toLowerCase()));
         this.setState({
             searchTerm: event.target.value,
@@ -51,8 +59,10 @@ class ClubInfo extends React.Component<any, any>{
         });
         console.log('on input change', event.target.value, this.state.userArrayFilter, this.uA, this.searchMem);
 
+        //this.getSearchData(event);
+
     }
-    getNewClub=(event)=> {
+    getNewClub(event) {
         console.log('on blur called');
 
         this.setState({
@@ -66,7 +76,7 @@ class ClubInfo extends React.Component<any, any>{
 
     handleToggle=(event: React.MouseEvent<HTMLElement>, checked: boolean|undefined)=>{
         console.log('handle toggle');
-        
+        debugger;
         if(checked==true){
             this.setState({
                 hideClubSubTypes:false
@@ -110,37 +120,57 @@ class ClubInfo extends React.Component<any, any>{
         }
         
     }
-
-    //adding new members to clubs
     addMembers=()=>{
-         
+        debugger;
         this.props.dispatch(addNewMembers(this.props.club.clubID,this.state.newMemList,this.props.currentUser));
         this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
         this.setState({
             newMemCount:0,
-            newMemList:[]
+            newMemList:[],
+            
         })
        
     }
 
     componentWillUpdate() {
-        this.uA = this.props.cUsers.map(cUser => this.props.users.filter(user => cUser.userID == user.userID)[0]);
    
+        
+        this.uA = this.props.cUsers.map(cUser => this.props.users.filter(user => cUser.userID == user.userID)[0]);
+      
     }
-
-
-    componentWillReceiveProps(){
-         
+    componentWillReceiveProps(nextProps){
+        debugger;
         this.setState({
-            nonUsers:this.props.nUsers,
+            nonUsers:nextProps.nUsers,
             newMemCount:0,
             newMemList:[]
         });
-        console.log('updated');
+         
+        if(nextProps.club.clubID!=this.props.club.clubID)
+         this.setState({newMemList:[],newMemCount:0})
+        
+        if(nextProps.club.clubType=="Private Club")
+         this.setState({isChecked:false,hideClubSubTypes:true})
+        else
+        {
+        var publicClubType=nextProps.club.clubType=="Public-Open Club"?'A':'B';  
+        this.setState({isChecked:true,hideClubSubTypes:false,publicClubType:publicClubType})
+        }
+        if(this.state.currentUserRole==''&&nextProps.club!=undefined&&nextProps.cUsers!=undefined)
+        {
+            debugger;
+            var user=nextProps.cUsers.filter(cUser=>cUser.clubID==nextProps.club.clubID&&cUser.userID==nextProps.LoggedUserID)
+            if(user[0]!=undefined)
+            {
+            this.setState({currentUserRole:user[0].role})
+            }
+        }
         
     }
     
     render() {
+  debugger;
+console.log("non user",this.state.nonUsers);
         return (
             <div className="clubInfo">
                 <div className="clubTitle">
@@ -153,18 +183,17 @@ class ClubInfo extends React.Component<any, any>{
                         <div className="firstLine">
                             {this.props.club.clubTitle}
                             <div className="i">
-                                <Icon size={28} icon={ic_lock} style={{ color: '#a4aab2' }} />
+                                {this.state.isChecked?<span/>:<Icon size={28} icon={ic_lock} style={{ color: '#a4aab2' }} />}
                             </div>
                             <div className="ii">
-                                <Icon size={18} icon={edit} style={{ color: '#a4aab2', padding: '0rem 1rem 0rem 0rem' }} />
+                                <Link to={"/editClub/"+this.props.club.clubID}><Icon size={18} icon={edit} style={{ color: '#a4aab2', padding: '0rem 1rem 0rem 0rem' }} /></Link>
                                 <Icon size={18} icon={closeRound} style={{ color: '#a4aab2', paddingRight: '1rem' }} onClick={() => this.props.hide()} />
                             </div>
                         </div>
-
                         <div className="secondLine">
                             {this.props.club.description}
-                        </div>
 
+                        </div>
                         <div className="thirdLine">
                             Created by {this.props.users.map(user => {
                                 if (user.userID == this.props.club.clubCreatedBy)
@@ -172,27 +201,28 @@ class ClubInfo extends React.Component<any, any>{
                             })}  on {new Date(this.props.club.createdOn).toDateString()}
                             <div className="addParticipant">
                                 {this.props.cUsers.length} Participants
-
+                                                
                                 <nav>
                                     <Icon size={24} icon={user_add} style={{ color: '#a4aab2', padding: '0rem 0rem 0rem 1rem ' }} />
                                     <div className="nonUserDropDown">
-                                        
                                         <ul>
+                                        
                                             <div style={{ color: '#e3e5e6' }} className="searchBar">
                                                 <div>Select the users you wants to add</div>
+                                            
                                                 <input className="searchBox" type="search" name="search" placeholder="Start typing user name" onChange={this.searchNonUser}/>
+
                                             </div>
                                             {/* {this.props.nUsers!=""?(this.props.nUsers.map(user=><li><NonClubUser user={user} select={this.selectNewmembers}/></li>)):(<span>no members to add</span>)} */}
-                                            {this.state.nonUsers.map(user=><li><NonClubUser user={user} select={this.selectNewmembers}/></li>)}        
+                                            {this.state.nonUsers.map((user,index)=><li><NonClubUser user={user} key={index} select={this.selectNewmembers}/></li>)}        
                                         </ul>
-
                                             <div className="fixed">
                                                 {this.state.newMemCount} Members selected
                                                     <button className="primaryBtn" onClick={this.addMembers}>Add Members</button>
                                             </div>     
-                                    </div> 
+                                    </div>  
+                                    
                                 </nav>
-
                             </div>
                         </div>
 
@@ -201,13 +231,13 @@ class ClubInfo extends React.Component<any, any>{
                 <div className="clubBody">
                     <div className="leftGrid">
                         <div className="pa">Participants</div>
-                         <div className="participants">
+                        <div className="participants">
 
                             <div style={{ color: '#e3e5e6' }} className="searchBar">
                                 <Icon size={14} icon={search} />
                                 <input className="searchBox" type="search" name="search" placeholder="Search Member" onChange={this.onInputChange} onBlur={this.getNewClub} />
-                            </div>
 
+                            </div>
                             {this.props.cUsers != "" ? (
                                 this.props.cUsers.map((cuser) => {
                                     return this.state.userArrayFilter != "" ? (this.state.userArrayFilter.map((user) => {
@@ -221,15 +251,17 @@ class ClubInfo extends React.Component<any, any>{
                                                 // console.log('role',cuser.role);
 
                                                 if (cuser.userID == user.userID)
-                                                    return <User user={user} key={user.userID} cuser={cuser} />
+                                                    return <User user={user} key={user.userID} cuser={cuser} clubID={this.props.club.clubID} />
                                             })
                                         )
                                 }))
                                 : (<h4>no members</h4>)}
+
+
+
+
                         </div>
                     </div>
-
-
                     <div className="rightGrid">
                         <div className="re">Requests</div>
                         <div className="requests">
@@ -243,33 +275,42 @@ class ClubInfo extends React.Component<any, any>{
                                     })
                                 }))
                                 : (<h4>no req members</h4>)}
+
                         </div>
-                        
                         <div className="gs">Group Settings</div>
                         <div className="groupSettings">
                             <div className="clubType">
-                                Make "iPhone users club" a public club
+                                Make {this.props.club.clubTitle} {this.state.isChecked? "a private club":" a public club"}
                                
                                      {/* <MyToggle onChange={this.props.dispatch.changeClubType}/> */}
-                                     <Toggle onChange={this.handleToggle} defaultChecked={(this.props.clubType=="Private Club")?(false):(true)}/>
+                                     <Toggle onChange={this.handleToggle} checked={!this.state.hideClubSubTypes}/>
                             </div>
                             <div className="subType">
-                                <MyRadio hide={this.state.hideClubSubTypes} onChange={this.handleRadio}/>
+                                <MyRadio hide={this.state.hideClubSubTypes} onChange={this.handleRadio} publicClubType={this.state.publicClubType}/>
                             </div>
                             <div className="mute">
                                 <Checkbox onChange={this.handleMute}/> Mute all the notifications and messages from this club
                                    </div>
                             <div className="clubActions">
-                                <button>Deactivate Club</button>
-                                <button>Exit Club</button>
+                                <Link to={"/deactivateclub"+this.props.club.clubTitle}><button>Deactivate Club</button></Link>
+                                <Link to={"/exitclub"+this.props.club.clubTitle}><button>Exit Club</button></Link>
                             </div>
 
                         </div>
                     </div>
                 </div>
+                <Route path={"/deactivateclub"+this.props.club.clubTitle} component={()=><DeactivateClub to="/" clubTitle={this.props.club.clubTitle} clubID={this.props.club.clubID}/>}/>
+                <Route path={"/exitclub"+this.props.club.clubTitle} component={()=><ExitClub to="/" clubTitle={this.props.club.clubTitle} clubID={this.props.club.clubID}/>}/>
+                <Route path={"/editClub/"+this.props.club.clubID} component={()=><UpdateClub to="/" clubTitle={this.props.club.clubTitle} clubID={this.props.club.clubID} description={this.props.club.description} profilePic={this.props.club.profilePic}/>}/>
             </div>
         );
     }
 }
 
-export default connect()(ClubInfo);
+function mapStatetoProps(state)
+{
+    return{
+        LoggedUserID:state.AppReducer.LoggedUser.userID
+    }
+}
+export default connect(mapStatetoProps)(ClubInfo);

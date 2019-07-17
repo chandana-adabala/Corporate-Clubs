@@ -4,14 +4,16 @@ import {getToken} from '../../Configure'
 export enum ActionTypes{
     USER_EXIST="USER_EXIST",
     USER_NOT_EXIST='USER_NOT_EXIST',
-    FETCH_FAILED='FETCH_FAILED'
+    FETCH_FAILED='FETCH_FAILED',
+    LOADING_STARTED="LOADING_STARTED",
+    LOADING_ENDED='LOADING_ENDED'
 }
 
 export interface PayloadType {
     LoggedUser?: IUsers,
     message?: string
     error?:string
-    IsLoading?: boolean
+    isLoading?: boolean
     Status?: string
 
 }
@@ -49,12 +51,29 @@ function FetchDetailsFailed():ActionReturnType
     }
 }
 
+export function loadingStarted():ActionReturnType
+{
+    return{
+       type:ActionTypes.LOADING_STARTED,
+       Payload: {isLoading:true}
+    }
+}
+
+
+export function loadingEnded():ActionReturnType
+{
+    return{
+       type:ActionTypes.LOADING_ENDED,
+       Payload: {isLoading:false}
+    }
+}
 export function GetLoggedUserDetails()
 {
-     
+    debugger;
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
-         
+        dispatch(loadingStarted());
+        debugger;
         return fetch('http://localhost:3333/api/users/getuserbytoken',{headers:headers})
         .then(data => data.json())
         .then(data =>{
@@ -63,9 +82,10 @@ export function GetLoggedUserDetails()
             }else{
                 console.log(data);
                 dispatch(FetchLoggedUserDetails(data));
+                dispatch(loadingEnded());
             }
         })
-        .catch(error=>dispatch(UserUnAuthorized()))
+        .catch(error=>{dispatch(UserUnAuthorized());dispatch(loadingEnded())})
 
     }
 }

@@ -71,8 +71,6 @@ class Profile_Head extends React.Component<any, any>{
 
 
     render() {
-        
-        console.log(getToken(), "usertoken");
         return (
             <div className="ProfilePage">
                 {/* <div className="alertWrapper">
@@ -133,11 +131,12 @@ class Profile_Head extends React.Component<any, any>{
                     <Route path="/Profile/Favourites" component={FavouriteClubsTable} />
                     <Route path="/Profile/" component={About} />
                 </Switch>
-                <Route path="/Profile/ChangeProfilePicture" component={ChangeProfilePicture} />
+                <Route path="/Profile/ChangeProfilePicture" component={()=>{ return <ChangeProfilePicture profilePic={this.props.profilePic}/>}} />
 
             </div>
 
         );
+        
     }
 
 }

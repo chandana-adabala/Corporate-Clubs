@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CorporateClubs.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -422,7 +423,7 @@ namespace CorporateClubs.API.Controllers
 
 
         [HttpPut]
-        [Route("RemoveUser/{userID:int}/{ClubID:int}")]
+        [Route("RemoveUser/{userID:int}/{clubID:int}")]
         public ActionResult RemoveUser(int clubID,int userID)
         {
             var uniqueId = HttpContext.User.Identity.Name;
@@ -452,7 +453,7 @@ namespace CorporateClubs.API.Controllers
 
         [HttpPut]
         [Route("updateclub")]
-        public ActionResult UpdateClub( [FromBody]Club clubDetails)
+        public ActionResult UpdateClub( [FromBody]Clubs clubDetails)
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
@@ -522,18 +523,16 @@ namespace CorporateClubs.API.Controllers
             }
 
         }
-
         [HttpPost]
         [Route("UploadImage/{clubID:int}")]
-        public async Task<string> UploadImage(IFormFile image, int clubID)
+        public async Task<ActionResult> UploadImage(IFormFile image, int clubID)
         {
             var webRoot = _env.WebRootPath;
 
-
-
             try
             {
-
+                var uniqueId = HttpContext.User.Identity.Name;
+                Users requestedUser = _users.GetUserByEmailId(uniqueId);
                 if (image.Length > 0)
                 {
                     var url = "http://localhost:3333/images";
@@ -544,18 +543,70 @@ namespace CorporateClubs.API.Controllers
                     {
                         await image.CopyToAsync(stream);
                     }
+                    if (_clubs.changeProfilePicOfClub(clubID, url + '/' + name))
+                        return Ok();
+                    else
+                        return BadRequest();
+                    
                     
                 }
-
-
             }
             catch (Exception e)
             {
-                return $"Error: {e.Message}";
+                return BadRequest();
             }
 
-            return "File uploaded!";
+            return Unauthorized();
         }
 
+
+
+
+        [HttpPut]
+        [Route("blockorunblockuserInAClub/{clubID:int}/{userID:int}")]
+        public ActionResult BlockOrUnBlockUserInAClub(int clubID, int userID)
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if(_users.IsUser(requestedUser.UserID))
+                {
+                    if (_clubs.BlockOrUnBlockUser(clubID, userID, requestedUser.UserID))
+                        return Ok();
+                    else
+                        return BadRequest();
+                }
+                return Unauthorized();
+            }
+            catch(Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [Route("RemoveAsAdmin/{clubID:int}/{userID:int}")]
+        public ActionResult RemoveAsAdmin (int clubID, int userID)
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if (_users.IsUser(requestedUser.UserID))
+                {
+                    if (_clubs.RemoveUserAsAdmin(clubID, userID, requestedUser.UserID))
+                        return Ok();
+                    else
+                        return BadRequest();
+                }
+                return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
     }
+  
 }

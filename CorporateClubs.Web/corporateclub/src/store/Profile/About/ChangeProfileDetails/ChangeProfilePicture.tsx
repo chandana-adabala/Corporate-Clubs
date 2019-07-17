@@ -15,8 +15,8 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
         super(props)
         this.state = {
             selectedImage:null,
-          preview: null,
-          src:null,
+          preview: this.props.profilePic,
+          src:this.props.profilePic,
           name:null,
         }
         this.onCrop = this.onCrop.bind(this);
@@ -71,18 +71,12 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
 
       
       onCrop(preview) {
+            debugger;
+         if(preview!="")
         this.setState({preview})
       }
 
 
-
-    //   onFileLoad(event){
-    //     console.log(event);
-    //     this.setState({
-    //         selectedImage:event.target.files[0]
-    //     });
-    //       this.setState({name:event.name})
-    //   }
 
     onFileLoad(event)
     {
@@ -117,11 +111,9 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
           width={300}
           height={200}
           imageWidth={300}
-        
+          src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
           onCrop={this.onCrop}
           onClose={this.onClose}
-          src={this.state.src}
-       
           lineWidth={0}
           cropColor	={"white"}
           onFileLoad={this.onFileLoad}

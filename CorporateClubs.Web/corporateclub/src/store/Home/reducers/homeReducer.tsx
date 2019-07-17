@@ -2,6 +2,7 @@ import {ActionTypes} from '../actions/homeActions';
 import IClubs from '../../../models/IClubs';
 import IUsers from '../../../models/IUsers';
 import IConversation from '../../../models/IConversation';
+import { ActionsTypes } from '../../Profile/Actions';
 
 export interface Istate {
     myclubs:IClubs[],
@@ -102,8 +103,18 @@ export default function homeReducer(state=initialState,action:any){
                             ...state,
                            messages:action.payload
                         }
-                        
-                        
+        case ActionTypes.REMOVE_USER_AS_ADMIN_SUCCESS:
+            return state
+        case ActionTypes.REMOVE_USER_AS_ADMIN_FAILED:
+            return state
+        case ActionTypes.BLOCK_OR_UNBLOCK_USER_SUCCESS:
+            return state
+        case ActionTypes.BLOCK_OR_UNBLOCK_USER_FAILED:
+            return state
+        case ActionTypes.CLUB_DETAILS_UPDATED:
+                return state
+        case ActionTypes.CLUB_DETAILS_UPDATION_FAILED:
+                    return state
         default:
             return state;
     }
