@@ -62,6 +62,7 @@ class Home extends React.Component<any,any> {
     }
 
     render(){
+        
        console.log('my',this.props.myclubs,this.props.favclubs);
        
         return(
