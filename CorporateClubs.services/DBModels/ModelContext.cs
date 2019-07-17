@@ -21,9 +21,10 @@ namespace CorporateClubs.Services.Models
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("C:\\Users\\chandana.a\\source\\repos\\Corporate-Clubs\\Corporate-Clubs\\CorporateClubs.services\\appsettings.json")
+            .AddJsonFile("C:\\Users\\chandana.a\\source\\repos\\AprojectCorporateClubs\\Corporate-Clubs\\CorporateClubs.services\\appsettings.json")
             .Build();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("CorporateClubsDB"));
+            //AprojectCorporateClubs\Corporate-Clubs\CorporateClubs.services
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -18,7 +18,7 @@ export default class ReceivedMessage extends React.Component<any,any>{
     }
 
     viewAttachment=(event)=>{
-        debugger;
+         
         var i = this.props.message.attachmentNames.indexOf(event.currentTarget.id);
         var type=this.props.message.attachmentUrls[i].split('.');
         this.setState({
@@ -28,7 +28,7 @@ export default class ReceivedMessage extends React.Component<any,any>{
         })
     }
     unViewAttachment=(event)=>{
-        debugger;
+         
         this.setState({
             attach:"",
             attachType:"",

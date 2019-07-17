@@ -10,11 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 using CorporateClubs.Models.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CorporateClubs.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClubsController : ControllerBase
     {
         private readonly IClubs _clubs;
@@ -67,15 +69,15 @@ namespace CorporateClubs.API.Controllers
         }
 
         [HttpGet]
-        [Route("getclubbyid")]
-        public ActionResult<Club> GetClubByID()
+        [Route("getclubbyid/{clubID:int}")]
+        public ActionResult<Club> GetClubByID(int clubID)
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
             try
             {
                 if (_users.IsUser(requestedUser.UserID) == true)
-                    return _clubs.GetClubById(requestedUser.UserID);
+                    return _clubs.GetClubById(clubID);
                 else
                     return Unauthorized();
             }

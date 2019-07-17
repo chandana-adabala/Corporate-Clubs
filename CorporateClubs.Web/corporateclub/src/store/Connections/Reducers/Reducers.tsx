@@ -12,7 +12,7 @@ const IntialState:PayloadType=
 
 export default function ConnectionsReducer(State=IntialState,Action:ActionReturnType):PayloadType
 {
-    debugger;
+     
     switch(Action.type)
     {
         case ActionTypes.FETCH_USER_CONTACTS:

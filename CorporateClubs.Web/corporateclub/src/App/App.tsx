@@ -34,7 +34,7 @@ import {withRouter} from 'react-router-dom';
  
   render(){
   let NavigatewithLocation = withRouter(props => <Navigate {...props}/>);
-    debugger;
+     
      
 if(this.props.error!=''){
   return(<Forbidden/>);

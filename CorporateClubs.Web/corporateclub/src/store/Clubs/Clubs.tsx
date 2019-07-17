@@ -35,7 +35,7 @@ class Clubs extends React.Component<any,any>{
 
 onlyUnique(value, index, self)
  {
-  debugger;
+   
   console.log(self.indexOf(value));
   return self.indexOf(value) === index;
 }
@@ -43,7 +43,7 @@ onlyUnique(value, index, self)
 
 addClubTypeProperty(event)
 {
-debugger;
+ 
 var status=this.state.status;
 var clubType=this.state.clubType;
 var date=this.state.date;

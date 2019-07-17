@@ -19,7 +19,7 @@ class Navigate extends React.Component<any,any> {
  
    componentWillReceiveProps(nextprops)
    {
-       debugger;
+        
        let path=nextprops.location.pathname;
        var loc=path.split('/')[1].toLowerCase();
        var activeButtons={"home":false,"connections":false,"clubs":false,"admin":false}

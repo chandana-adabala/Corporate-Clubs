@@ -14,7 +14,7 @@ class AdminNav extends  React.Component<any,any> {
     }
     onClickChangeButtonToActive(event)
     {
-        debugger;
+         
           var activeButtons={users:false,inactiveClubs:false}
           activeButtons[event.currentTarget.id]=true;
           this.setState({activeButtons:activeButtons})

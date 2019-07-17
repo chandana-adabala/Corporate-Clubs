@@ -40,6 +40,7 @@ export enum ActionTypes{
 
 //Action creators
 export const fetchFavClubsSuccess =(clubs:IClubs)=>{
+    debugger;
     console.log("fetchsuccessAC",clubs);
     return{
         type:ActionTypes.FAVCLUBS_FETCH_SUCCESS,
@@ -204,6 +205,7 @@ export const fetchMessageError = (error:string)=>{
 
 // Thunk Action Creators
 export const fetchFavClubs = UserID=>{
+    debugger;
     return function(dispatch){
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
@@ -224,6 +226,7 @@ export const fetchFavClubs = UserID=>{
 }
 
 export const fetchMyClubs = UserID=>{
+    debugger;
     return function(dispatch){
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
@@ -247,6 +250,7 @@ export const fetchMyClubInfo = clubID=>{
     return function(dispatch){
         console.log("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
+        console.log('http://localhost:3333/api/clubs/getclubbyid/'+clubID);
         return fetch('http://localhost:3333/api/clubs/getclubbyid/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
@@ -422,7 +426,7 @@ export const addNewMembers=(clubID,userList,requestID)=>{
 }
 
 export const fetchMessagesOfClub=(clubID)=>{
-    debugger;
+     
    return function(dispatch){
        const headers = { 'Authorization': 'Bearer ' + getToken() };
        return fetch('http://localhost:3333/api/conversations/getallmessagesofclub/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})

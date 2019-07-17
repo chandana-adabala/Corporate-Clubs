@@ -28,7 +28,7 @@ export class NewConnection extends React.Component<any, any>
 
     onSearchChange(event)
     {
-        debugger;
+         
         let selecteduserSuggestions=this.props.userSuggestions.filter(userSuggestion=>userSuggestion.displayName.toLowerCase().includes(event.target.value.toLowerCase()));
         this.setState({selecteduserSuggestions:selecteduserSuggestions,search:event.target.value})
     }
@@ -71,7 +71,7 @@ class SuggestedUser extends React.Component<any, any>
 
     newConnectionRequest()
     {
-        debugger;
+         
       this.props.dispatch(addNewConnection(this.props.userID));
     }
     

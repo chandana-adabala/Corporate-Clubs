@@ -11,7 +11,7 @@ class Club extends React.Component<any, any>{
     }
 
    onClubClick(event) {
-         
+         debugger;
         this.props.dispatch(fetchMessagesOfClub(this.props.club.clubID));
         this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
         this.props.openChat();

@@ -138,7 +138,7 @@ function filtrationSuccess(payload:IClubMembersList[]):ActionReturnType
 
 
 export const FetchUsers =()=>{
-    debugger;
+     
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
          
@@ -158,7 +158,7 @@ export const FetchUsers =()=>{
     }
 }
 export const FetchMembers =()=>{
-    debugger;
+     
     const headers = { 'Authorization': 'Bearer ' + getToken() };
      
     return function(dispatch){
@@ -183,7 +183,7 @@ export const FetchMembers =()=>{
 export const FetchClubMembersList =()=>{
      
     return function(dispatch){
-        debugger;
+         
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         console.log("fetch call");
         return fetch(url+'api/clubs/getclubmemberslist',{headers:headers})
@@ -205,7 +205,7 @@ export const makeAndCancelRequest=(clubID,userID)=>
 {
      
     return function(dispatch){
-        debugger;
+         
         return fetch(url+'api/clubs/MakeNCancelRequest/'+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
@@ -224,7 +224,7 @@ export const removeUser=(clubID,userID)=>
 {
      
     return function(dispatch){
-        debugger;
+         
         return fetch(url+'api/clubs/removeuser/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
@@ -240,9 +240,9 @@ export const removeUser=(clubID,userID)=>
 
 export const addUserToPublicClub=(clubID,userID)=>
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
         return fetch(url+'api/clubs/addUserToPublicClub/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
@@ -277,9 +277,9 @@ export function addClub(user,newClub:INewClub)
 
 export function deactivateClub(clubID:number,reason:string)
 {
-    debugger;
+     
     return function(dispatch){
-        debugger;
+         
         return fetch(url+'api/clubs/makeclubdeactive/'+clubID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){

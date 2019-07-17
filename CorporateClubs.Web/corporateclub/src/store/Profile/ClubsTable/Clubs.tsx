@@ -39,7 +39,7 @@ class ClubsTable extends React.Component<any,any> {
 }
 function mapStatetoProps(state)
 {
-  debugger;
+   
 return {
   users:state.ProfilePageReducer.Users,
   clubs:state.ProfilePageReducer.Clubs

@@ -230,7 +230,7 @@ function detailsOfAllClub(payload:IClubs[])
 
 
 export const FetchClubs = UserID=>{
-    debugger;
+     
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         console.log("fetch call");
@@ -250,7 +250,7 @@ export const FetchClubs = UserID=>{
 }
 
 export const fetchAllClubs = UserID=>{
-    debugger;
+     
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         console.log("fetch call");
@@ -270,7 +270,7 @@ export const fetchAllClubs = UserID=>{
 }
 
 export const FetchUsers =()=>{
-    debugger;
+     
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
          

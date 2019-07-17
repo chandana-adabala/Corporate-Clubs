@@ -80,7 +80,7 @@ class Conversation extends React.Component<any,any>{
     componentDidMount(){
          
         //signalr client side methods invoked from server side
-        debugger;
+         
         this.props.connection.on(
             
             "ReceiveMessage",

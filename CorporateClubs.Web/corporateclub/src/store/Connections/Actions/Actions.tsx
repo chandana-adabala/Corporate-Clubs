@@ -110,7 +110,7 @@ export const addNewConnection = (requestID)=>{
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch(url+'api/connection/addcontact/'+requestID, {method: "post",headers:{'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
-            debugger;
+             
             if (!response.ok) {
                 throw new Error("Fetch Failed");
             } else {

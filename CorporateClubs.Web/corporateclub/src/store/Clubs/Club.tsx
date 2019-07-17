@@ -50,7 +50,7 @@ class Club extends React.Component<any, any> {
 
 
   render() {
-    debugger;
+     
     return (
       <div className="club">
         <div className="clubhead">
@@ -178,7 +178,7 @@ class RequestJoinbtn extends React.Component<any, any> {
       <button
         className="join"
         onClick={() => {
-          debugger;
+           
           this.props.dispatch(
             makeAndCancelRequest(this.props.userID, this.props.clubID)
           );
@@ -204,7 +204,7 @@ class Exitbtn extends React.Component<any, any> {
   }
 }
 function mapStateToProps(State) {
-  debugger;
+   
   console.log(State);
   return {
     requests: State.ClubReducer.requests,

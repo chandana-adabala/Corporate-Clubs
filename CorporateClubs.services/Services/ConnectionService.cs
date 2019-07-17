@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using CorporateClubs.Services.Models;
 using CorporateClubs.Models.Models;
 using CorporateClubs.Services.Interfaces;
-using NLog;
+
 
 namespace CorporateClubs.Services.Services
 {
     public class ConnectionService : IConnections
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        
         public List<FrontEndContacts> GetMyContacts(int userID)
         {
             try
@@ -120,7 +120,7 @@ namespace CorporateClubs.Services.Services
                         suggestedUser.MutualClubs = userClubs.Count();
                         suggestedUsers.Add(suggestedUser);
                     }
-                    logger.Error("in getting user connections");
+                  
                     return suggestedUsers;
                 }
             }

@@ -216,10 +216,10 @@ export function FetchFavouriteClubDetails() {
 
 
 export const FetchUsers =()=>{
-    debugger;
+     
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
-        debugger;
+         
         console.log("fetch call");
         return fetch(url+'api/Users/GetAllUsers',{headers:headers})
         .then(data => data.json())
