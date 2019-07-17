@@ -7,6 +7,7 @@ import INewClub from '../../../models/INewClub'
 import {getToken} from '../../../Configure'
 import axios from 'axios'
 import {loadingStarted,loadingEnded} from '../../../App/AppActions/AppActions'
+
 const url="http://localhost:3333/"
 export enum Actions
 {
@@ -289,23 +290,6 @@ export function addClub(newClub:INewClub,formData:FormData)
             }
         })
         .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
-    //     .then(response =>{
-    //         if(!response.ok){
-    //             throw new Error("user added failed");
-    //         }else{
-    //             console.log(response.status);
-    //             // axios.post('http://localhost:3333/api/clubs/UploadImage/7',
-    //             // formData, { headers: { 'Content-Type': "multipart/form-data" } })
-    //             // .then(res => {
-    //             //   console.log(res);
-    //             // })
-    //             var a=response.json()
-    //             console.log(response.json())
-    //             dispatch(clubAdded(response.statusText));
-    //         }
-    //     })
-    //     .catch(error=>dispatch(FetchFailed(error)))
-    // }
 }
 }
 

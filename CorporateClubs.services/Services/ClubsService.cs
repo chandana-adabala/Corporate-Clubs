@@ -416,6 +416,7 @@ namespace CorporateClubs.Services.Services
                     var club = _context.Clubs.Single(c => clubID == c.ClubID);
                     club.ClubTitle = ClubTitle;
                     club.Description = description;
+                    if(ImageURL!=null)
                     club.ProfilePic = ImageURL;
                     _context.SaveChanges();
                 }

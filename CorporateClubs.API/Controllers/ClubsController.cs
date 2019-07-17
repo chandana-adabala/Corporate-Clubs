@@ -452,7 +452,7 @@ namespace CorporateClubs.API.Controllers
 
         [HttpPut]
         [Route("updateclub")]
-        public ActionResult UpdateClub( [FromBody]Club clubDetails)
+        public ActionResult UpdateClub( [FromBody]Clubs clubDetails)
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);

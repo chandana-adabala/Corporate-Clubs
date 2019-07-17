@@ -100,6 +100,10 @@ export default function homeReducer(state=initialState,action:any){
             return state
         case ActionTypes.BLOCK_OR_UNBLOCK_USER_FAILED:
             return state
+        case ActionTypes.CLUB_DETAILS_UPDATED:
+                return state
+        case ActionTypes.CLUB_DETAILS_UPDATION_FAILED:
+                    return state
         default:
             return state;
     }

@@ -156,7 +156,6 @@ class ClubInfo extends React.Component<any, any>{
         var publicClubType=nextProps.club.clubType=="Public-Open Club"?'A':'B';  
         this.setState({isChecked:true,hideClubSubTypes:false,publicClubType:publicClubType})
         }
-        console.log('updated');
         if(this.state.currentUserRole==''&&nextProps.club!=undefined&&nextProps.cUsers!=undefined)
         {
             debugger;
@@ -302,7 +301,7 @@ console.log("non user",this.state.nonUsers);
                 </div>
                 <Route path={"/deactivateclub"+this.props.club.clubTitle} component={()=><DeactivateClub to="/" clubTitle={this.props.club.clubTitle} clubID={this.props.club.clubID}/>}/>
                 <Route path={"/exitclub"+this.props.club.clubTitle} component={()=><ExitClub to="/" clubTitle={this.props.club.clubTitle} clubID={this.props.club.clubID}/>}/>
-                <Route path={"/editClub/"+this.props.club.clubID} component={()=><UpdateClub to="/" clubTitle={this.props.club.clubTitle} clubID={this.props.club.clubID} description={this.props.club.description}/>}/>
+                <Route path={"/editClub/"+this.props.club.clubID} component={()=><UpdateClub to="/" clubTitle={this.props.club.clubTitle} clubID={this.props.club.clubID} description={this.props.club.description} profilePic={this.props.club.profilePic}/>}/>
             </div>
         );
     }

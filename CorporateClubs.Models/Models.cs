@@ -38,13 +38,13 @@ namespace CorporateClubs.Models.Models
 
     public class Clubs
     {
-        public string ClubType;
-        public string Description;
-        public string ProfilePic;
-        public List<int> Members;
-        public List<int> Admins;
-        public string ClubTitle;
-        public int ClubID;
+        public string ClubType { get; set; }
+        public string Description { get; set; }
+        public string ProfilePic { get; set; }
+        public List<int> Members { get; set; }
+        public List<int> Admins { get; set; }
+        public string ClubTitle { get; set; }
+        public int ClubID { get; set; }
 
     }
 
@@ -56,11 +56,11 @@ namespace CorporateClubs.Models.Models
 
     public class FrontEndUsers
     {
-      
+
         public int UserID { get; set; }//1
-     
+
         public string DisplayName { get; set; }//giraffi_2
-     
+
         public string FirstName { get; set; }//John
 
         public string MiddleName { get; set; }//Yung
@@ -90,10 +90,10 @@ namespace CorporateClubs.Models.Models
 
         public DateTime LastSeen { get; set; }//  2-11-2019 12:00:02AM
 
-    
+
         public string About { get; set; }// I am happy
 
-      
+
         public string ProfSum { get; set; }// I am a Full Stack developer
 
 
@@ -115,7 +115,7 @@ namespace CorporateClubs.Models.Models
 
     public class FrontEndClub
     {
- 
+
         public int ClubID { get; set; }
 
         public string ClubTitle { get; set; }// Information Technology
@@ -123,7 +123,7 @@ namespace CorporateClubs.Models.Models
         public string ProfilePic { get; set; }
 
         public string ClubType { get; set; }// Public-Open Club, Public-Closed Club, Private Club
-   
+
         public int? ClubCreatedBy { get; set; }// existing user id
 
 
@@ -133,7 +133,7 @@ namespace CorporateClubs.Models.Models
         public string Reason { get; set; }
 
         public DateTime CreatedOn { get; set; }//2-11-2019 12:00:02AM
-  
+
         public string Description { get; set; }// About Club
 
 
@@ -150,7 +150,7 @@ namespace CorporateClubs.Models.Models
 
     public class FrontEndClubMembers
     {
-    
+
         public int ClubID { get; set; }// Existing club i
 
         public int UserID { get; set; }// Existing user id

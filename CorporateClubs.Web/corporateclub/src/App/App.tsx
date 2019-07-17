@@ -23,12 +23,19 @@ import { withRouter } from "react-router-dom";
 import Loading from "./LoadingPage/Loading";
 
 class App extends React.Component<any, any> {
+  constructor(props)
+  {
+    super(props);
+    this.state={NavigatewithLocation:null}
+
+  }
   componentWillMount() {
     this.props.dispatch(GetLoggedUserDetails());
+     this.setState({NavigatewithLocation:withRouter(props => <Navigate {...props} />)});
   }
 
   render() {
-    let NavigatewithLocation = withRouter(props => <Navigate {...props} />);
+    
     debugger;
     //returning loading page if fetch call is not resolved
     if(this.props.error=="not mounted")
@@ -40,7 +47,7 @@ class App extends React.Component<any, any> {
         <div className="app">
           <Router>
             <div className="commonNav">
-              <NavigatewithLocation />
+              <this.state.NavigatewithLocation />
               <Head
                 UserDisplayName={this.props.LoggedUser.displayName}
                 profilePic={this.props.LoggedUser.profilePic}

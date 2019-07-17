@@ -9,8 +9,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import INewClub from '../../../../models/INewClub'
 import AvatarEditor from 'react-avatar-editor'
-import axios from 'axios';
-
+import {editClub} from '../../actions/clubAction'
 class UpdateClub extends React.Component<any, any>{
   constructor(props) {
     super(props);
@@ -68,15 +67,23 @@ class UpdateClub extends React.Component<any, any>{
     }
     else {
 
-      let NewClub: INewClub =
+      let editedClub: INewClub =
       {
         description: this.state.description,
-        clubTitle: this.state.name
+        clubTitle: this.state.name,
+        clubID:this.props.clubID,
+        profilePic:null
       }
       const formData = new FormData();
+      if(this.state.editor!='')
+      {
       var dataURL = this.state.editor.getImageScaledToCanvas().toDataURL();
       var imageBlob: Blob = this.b64toBlob(dataURL);
       formData.append('image', imageBlob);
+      await this.props.dispatch(editClub(editedClub,formData));
+      }
+      else
+      await this.props.dispatch(editClub(editedClub,null))
 
     }
   }
