@@ -1,6 +1,0 @@
-C:\Users\chandana.a\source\repos\CORPORATE CLUB\web-team1\CorporateClubs.Web\obj\Debug\CorporateClubs.Web.njsprojAssemblyReference.cache
-C:\Users\chandana.a\source\repos\CORPORATE CLUB\web-team1\CorporateClubs.Web\obj\Debug\CorporateClubs.Web.njsproj.CoreCompileInputs.cache
-C:\Users\chandana.a\source\repos\CORPORATE CLUB\web-team1\CorporateClubs.Web\bin\Microsoft.NodejsTools.WebRole.dll
-C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.Web\obj\Debug\CorporateClubs.Web.njsprojAssemblyReference.cache
-C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.Web\obj\Debug\CorporateClubs.Web.njsproj.CoreCompileInputs.cache
-C:\Users\chandana.a\source\repos\Corporate-Clubs\Corporate-Clubs\CorporateClubs.Web\bin\Microsoft.NodejsTools.WebRole.dll
