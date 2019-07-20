@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { ReactComponent } from '*.svg';
 import { connect } from 'react-redux';
 import IUsers from '../../../models/IUsers'
-import { addUser } from '../Actions/Actions'
+import { addUser,FetchUsers } from '../Actions/Actions'
 import { caretDown } from 'react-icons-kit/fa/caretDown'
 import { fetchAllClubs } from '../Actions/Actions'
 import {library} from 'react-icons-kit/icomoon/library'
@@ -90,7 +90,7 @@ class AddUser extends React.Component<any, any>{
         delete selectedClubs[event.currentTarget.id];
         this.setState({selectedClubs:selectedClubs});
     }
-    handleButton(event) {
+    async handleButton(event) {
         ;
         var newUser: IUsers =
         {
@@ -105,7 +105,10 @@ class AddUser extends React.Component<any, any>{
         if (this.state.displayNameHandle == '' || this.state.firstName == '' || this.state.lastName == '' || this.state.middleName == '' || this.state.email == '' || this.state.mobileNumber == ' ')
             this.setState({ error: "....All Fields are mandatory" });
         else
-            this.props.dispatch(addUser(newUser,Object.keys(this.state.selectedClubs),true));
+        {
+           await  this.props.dispatch(addUser(newUser,Object.keys(this.state.selectedClubs),true));
+           await this.props.dispatch(FetchUsers())
+        }
  }
 
 changeDisplayClubs(event)
@@ -175,7 +178,9 @@ this.setState({clubSelection:event.target.value,displayClubs:displayClubs})
                             <Link to="/Admin">
                                 <button className="cancelbutton"><text>Cancel</text></button>
                             </Link>
+                            <Link to="/Admin">
                             <button onClick={this.handleButton} className="addclub"><text>Add User</text></button>
+                            </Link>
                         </span>
 
                     </div>

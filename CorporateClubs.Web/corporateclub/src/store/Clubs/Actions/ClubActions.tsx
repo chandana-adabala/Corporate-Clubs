@@ -208,13 +208,13 @@ export const FetchClubMembersList =()=>{
     }
 }
 
-export const makeAndCancelRequest=(clubID,userID)=>
+export const cancelRequest=(clubID,userID)=>
 {
     debugger;
     return function(dispatch){
         debugger;
         dispatch(loadingStarted())
-        return fetch(url+'api/clubs/MakeNCancelRequest/'+'/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        return fetch(url+'api/clubs/CancelRequest/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -228,6 +228,25 @@ export const makeAndCancelRequest=(clubID,userID)=>
     }
 }
 
+export const makeRequest=(clubID,userID)=>
+{
+    debugger;
+    return function(dispatch){
+        debugger;
+        // dispatch(loadingStarted())
+        return fetch(url+'api/clubs/MakeRequest/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(response =>{
+            if(!response.ok){
+                throw new Error("User Not Found!");
+            }else{
+                console.log(response.status);
+                dispatch(requestChanged(response.statusText));
+                dispatch(loadingEnded())
+            }
+        })
+        .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
+    }
+}
 
 export const removeUser=(clubID,userID)=>
 {
@@ -255,7 +274,7 @@ export const addUserToPublicClub=(clubID,userID)=>
     return function(dispatch){
         debugger;
         dispatch(loadingStarted())
-        return fetch(url+'api/clubs/addUserToPublicClub/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        return fetch(url+'api/clubs/AddToPublicClub/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -269,7 +288,7 @@ export const addUserToPublicClub=(clubID,userID)=>
     }
 }
 
-export function addClub(newClub:INewClub,formData:FormData)
+export function addClub(newClub:INewClub,formData:FormData|null)
 {
     debugger;
     return function(dispatch){
@@ -281,12 +300,15 @@ export function addClub(newClub:INewClub,formData:FormData)
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                axios.post('http://localhost:3333/api/clubs/UploadImage/'+data,
+                if(formData!=null)
+                {
+                    axios.post('http://localhost:3333/api/clubs/UploadImage/'+data,
                 formData, { headers: { 'Content-Type': "multipart/form-data",'Authorization': 'Bearer ' + getToken()}})
                 .then(res => {
                     dispatch(clubAdded(res.statusText));
                     dispatch(loadingEnded())
                 })
+            }
             }
         })
         .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})

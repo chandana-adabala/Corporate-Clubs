@@ -115,7 +115,7 @@ handleReset()
     return(
       this.props.userContacts==[]?<EmptyConnection/>:
         <div className="connections">
-            <div >
+            <div className="header" >
              
               <div>
                 <text className="heading">All Connections</text>

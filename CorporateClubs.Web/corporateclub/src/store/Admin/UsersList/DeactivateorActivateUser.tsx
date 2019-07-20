@@ -4,7 +4,7 @@ import { Icon } from 'react-icons-kit'
 import { ic_close } from 'react-icons-kit/md/ic_close'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { activateUser, deactivateUser } from '../Actions/Actions';
+import { activateUser, deactivateUser,FetchUsers } from '../Actions/Actions';
 import { getNativeProps } from '@uifabric/utilities';
 
 interface Iprops {
@@ -26,12 +26,18 @@ class DeactivateorActiveUser extends React.Component<any, any>  {
 
 
 
-    confirmButtonHandle(event) {
+    async confirmButtonHandle(event) {
         debugger;
         if (this.props.isActive)
-            this.props.dispatch(deactivateUser(this.props.userID, this.state.reason))
+        {
+            await this.props.dispatch(deactivateUser(this.props.userID, this.state.reason))
+            this.props.dispatch(FetchUsers())
+        }
         else
-            this.props.dispatch(activateUser(this.props.userID, this.state.reason))
+        {
+           await  this.props.dispatch(activateUser(this.props.userID, this.state.reason))
+            this.props.dispatch(FetchUsers())
+        }
 
     }
 
@@ -59,7 +65,9 @@ class DeactivateorActiveUser extends React.Component<any, any>  {
                         <Link to={this.props.to}>
                             <button className="cancelbutton"><text>Cancel</text></button>
                         </Link>
+                        <Link to={this.props.to}>
                         <button className="addclub" onClick={this.confirmButtonHandle}><text>Confirm</text></button>
+                        </Link>
                     </span>
 
 

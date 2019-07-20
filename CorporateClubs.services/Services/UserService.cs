@@ -79,7 +79,7 @@ namespace CorporateClubs.Services.Services
 
 
         //TO add user in the application
-        public int AddUser(FrontEndUsers newUserInfo)
+        public int AddUser(FrontEndUsers newUserInfo,int adminUserID)
         {
             using (var _context = new ModelContext())
             {
@@ -90,7 +90,9 @@ namespace CorporateClubs.Services.Services
                 userModel.DisplayName = newUserInfo.DisplayName;
                 userModel.MobileNumber = newUserInfo.MobileNumber;
                 userModel.Email = newUserInfo.Email;
-
+                userModel.IsActive = true;
+                userModel.RowCreatedOn = DateTime.Now;
+                userModel.RowCreatedBy = adminUserID;
                 _context.Users.Add(userModel);
                 if (_context.SaveChanges() == 1)
                     return userModel.UserID;
@@ -101,7 +103,7 @@ namespace CorporateClubs.Services.Services
 
 
         //To Change  Personal Details of user
-        public Boolean Change_Personal_Details(int u_id, String FirstName, String LastName, String Gender, String MartialStatus, String About, String MiddleName, DateTime DOB, String BloodGroup)
+        public Boolean Change_Personal_Details(int u_id, String FirstName, String LastName, String Gender, String MartialStatus, String About, String MiddleName, DateTime DOB, String BloodGroup,string DisplayName)
         {
             using (var _context = new ModelContext())
             {
@@ -116,6 +118,7 @@ namespace CorporateClubs.Services.Services
                 user.MiddleName = MiddleName;
                 user.DOB = DOB;
                 user.BloodGroup = BloodGroup;
+                user.DisplayName = DisplayName;
 
                 if (_context.SaveChanges() == 1)
                     return true;
@@ -290,7 +293,7 @@ namespace CorporateClubs.Services.Services
                 }
                 catch (Exception e)
                 {
-                    return new Users();
+                    return null;
                 }
             }
         }

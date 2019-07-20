@@ -165,17 +165,22 @@ class AddClubs extends React.Component<any, any>{
       {
         clubType: newClubType,
         description: this.state.description,
-        profilePic: "1",
+        profilePic: null,
         members: Object.keys(this.state.selectedUsers).map(key => parseInt(key, 10)),
         admins: Object.keys(this.state.selectedAdmins).map(key => parseInt(key, 10)),
         clubTitle: this.state.name
       }
+      if(this.state.editor!='')
+      {
       console.log("NewClub", NewClub);
       const formData = new FormData();
       var dataURL = this.state.editor.getImageScaledToCanvas().toDataURL();
       var imageBlob: Blob = this.b64toBlob(dataURL);
       formData.append('image', imageBlob);
       await this.props.dispatch(addClub(NewClub,formData));
+      }
+      else
+      await this.props.dispatch(addClub(NewClub,null));
       await this.props.dispatch(FetchClubMembersList())
 
     }

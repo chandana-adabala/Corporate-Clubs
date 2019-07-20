@@ -7,7 +7,7 @@ const IntialState: PayLoad = {
   requests: [],
   isLoading: false,
   clubMembersList: [],
-  filteredClubMembersList: []
+  filteredClubMembersList: [],
 };
 export function ClubReducer(
   State = IntialState,

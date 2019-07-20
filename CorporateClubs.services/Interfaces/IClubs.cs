@@ -24,7 +24,9 @@ namespace CorporateClubs.Services.Interfaces
         bool MakeClubDeactive(int clubID, string reason, int currentUserID);
         bool MakeClubFavNUnFav(int clubID, int userID);
         bool MakeClubMuteNUnMute(int clubID, int userID);
-        bool MakeNCancelRequest(int clubID, int userID);
+        bool CancelRequestOfUserForClub(int clubID, int userID);
+        bool MakeRequestOfUserForClub(int clubID, int userID, string role);
+        bool AddUsertoPublicClub(int clubID, int userID, string role);
         bool RemoveUser(int clubID, int userID, int currentUserID);
         bool UpdateClub(int clubID, string ClubTitle, string description, string ImageURl);
         bool AcceptRequest(int clubID, int addedUserID, int currentUserID);

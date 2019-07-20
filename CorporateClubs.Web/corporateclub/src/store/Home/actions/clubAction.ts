@@ -257,7 +257,7 @@ export const removeUserAsAdminFailed=()=>{
 }
 // Thunk Action Creators
 
-export const fetchFavClubs = UserID=>{
+export const fetchFavClubs = ()=>{
     return function(dispatch){
         dispatch(loadingStarted())
         console.log("fetch call");
@@ -279,7 +279,7 @@ export const fetchFavClubs = UserID=>{
     
 }
 
-export const fetchMyClubs = UserID=>{
+export const fetchMyClubs = ()=>{
     return function(dispatch){
         dispatch(loadingStarted())
         console.log("fetch call");

@@ -3,36 +3,40 @@ import {Icon} from 'react-icons-kit';
 import {library} from 'react-icons-kit/icomoon/library';
 import {ic_mail} from 'react-icons-kit/md/ic_mail';
 import {phone} from 'react-icons-kit/icomoon/phone'
-export default class sentConnection extends React.Component<any,any>{
+import './receivedConnection.scss'
+export default class SentConnection extends React.Component<any,any>{
 
     render(){
         return(
-            <div className="reqWindow">
+            <div className="sentreqWindow">
+                <div className="paddingBlock"></div>
+            <div className="innerReqWindow">
                 <div className='profilePic'>
-
+                   <img className='image' src="http://localhost:3333/images/user2.jpeg"/>
                 </div>
-                <div className='body'> 
-                    <p>You Have requested {} to Connect !</p>
+                <div className='reqWindowBody'>
+                <p className="heading">You have {"viswanath"} to connect with you !</p>
                     <p className="mutualClubs">
                          <Icon icon={library}/>
-                         {}  in mutual
+                         {10}  in mutual
                     </p>
                     <p className="contact">
                         <span className='mail'>
                             <Icon icon={ic_mail}></Icon>
-                            {}
+                            {"ramagirish123@gmail.com"}
                         </span>
                         <span className='phone'>
                             <Icon icon={phone}/>
-                            {}
+                            {"+9059399747"}
                         </span>
                     </p>
                     <p className='mutualContacts'>
-                            <span>You and {} know</span>
-                            <span>{}</span>
+                            <span className="contactName">You and {"surya"} know</span>
+                            <span className="mutualContactsList">{"surya,you,others,21"}</span>
                     </p>
-                    <p className="wating">Waiting for {} to respond</p>
+                    <p>Waiting for {"viswanath"} to respond</p>
                 </div>
+            </div>
             </div>
         );
     }

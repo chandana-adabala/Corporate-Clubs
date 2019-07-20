@@ -81,6 +81,7 @@ export function GetLoggedUserDetails()
                 throw new Error("User Not Found!");
             }else{
                 console.log(data);
+                debugger;
                 dispatch(FetchLoggedUserDetails(data));
                 dispatch(loadingEnded());
             }

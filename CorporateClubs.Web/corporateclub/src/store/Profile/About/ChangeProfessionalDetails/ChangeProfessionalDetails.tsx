@@ -6,7 +6,7 @@ import { match, Router, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import IUser from '../../../../models/IUsers'
 import {DefaultUser} from '../../../../models/IUsers'
-import {UpdateUserDetails} from '../../Actions'
+import {UpdateUserDetails,FetchProfileDetails} from '../../Actions'
 interface Iprops {
     name?: string,
     status?: string,
@@ -46,14 +46,15 @@ class ChangeProfessionalDetails extends React.Component<any, any>{
 // }
 
 
- handleSubmit(event)
+ async handleSubmit(event)
   {
    const User:IUser={...this.props.User}
    console.log(User,"event")
    User.profSum=this.state.profSum;
    debugger;
    console.log(User)
-   this.props.dispatch(UpdateUserDetails(User,"professionaldetails"));;
+   await this.props.dispatch(UpdateUserDetails(User,"professionaldetails"));
+   await this.props.dispatch(FetchProfileDetails());
   }
 
 

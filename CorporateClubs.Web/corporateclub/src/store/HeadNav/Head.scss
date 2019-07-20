@@ -1,11 +1,13 @@
 .head
 {
+    a{
+        text-decoration: none
+    }
     position:fixed;
     text-decoration-color: white;
     color:white;
-    background-color: rgb(84, 62, 107);
+    background-color: rgba(84, 62, 107, 0.808);
     min-height: 56px;
-    opacity: 0.8;
     display:flex;
     width: 100%;
     justify-content: space-between;
@@ -32,8 +34,12 @@
     {   position: relative;
         display:flex;
         align-items: center;
-
-        .dropdown-content {
+        .options
+        {
+            position:relative;
+            margin-left:20px;
+        }
+        .dropdown-content-hide {
             opacity: 1;
            
             right: 0px;
@@ -45,15 +51,36 @@
             margin-top:90px;
             
           }
+          .dropdown-content-display {
+            border: none;
+            padding:0px;
+            opacity: 1;
+            bottom: -150px;
+            right: 0px;
+            display: block;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 2;
+            -webkit-transition: all .25s ease;
+            -moz-transition: all .25s ease;
+             -ms-transition: all .25s ease;
+              -o-transition: all .25s ease;
+                 transition: all .25s ease;
+                 -webkit-font-smoothing:antialiased;
+          }
           
-          .dropdown-content p {
-            
+          .dropdown-content-display p {
+            opacity: 1;
+            cursor:pointer;
             float: none;
             color:grey;
-            padding: 12px 16px;
+            padding: 12px 30px;
             text-decoration: none;
             display: block;
             text-align: left;
+            font-size:1.2em;
+         
             &:hover
             {
                 background-color: gray;
@@ -61,14 +88,15 @@
             }
           }
           
-          .dropdown-content p:active {
+          .dropdown-content-display p:active {
+            opacity: 1;
             background-color: #ddd;
             color: black;
           
           }
           &:hover
           {
-            .dropdown-content
+            .dropdown-content-display
             {
                 display: inline-block;
             }

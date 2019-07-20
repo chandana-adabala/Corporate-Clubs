@@ -32,8 +32,7 @@ import ReceivedConnection from '../receivedConnection';
                  </div>
                  <div className="chatDisplayArea">
                      <ReceivedConnection/>
-                       <SendMessage></SendMessage>
-                       <ReceivedMessage></ReceivedMessage>
+                   
                        
                  </div>
                  <div className="chatArea">

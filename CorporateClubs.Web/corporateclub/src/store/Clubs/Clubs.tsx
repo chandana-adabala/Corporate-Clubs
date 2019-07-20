@@ -126,7 +126,7 @@ handleReset()
     return(
       this.props.clubMembersList==[]?<EmptyClubs/>:
         <div className="content">
-            <div >
+            <div className="header">
              
               <div>
                 <text className="heading">All Clubs</text>

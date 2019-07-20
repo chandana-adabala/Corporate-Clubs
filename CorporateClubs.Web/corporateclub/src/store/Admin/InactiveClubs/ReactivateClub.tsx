@@ -29,10 +29,11 @@ class ReactivateClub extends React.Component<any,any> {
 
 
 
-    confirmButtonHandle(event)
+   async confirmButtonHandle(event)
     {
         debugger;
-        this.props.dispatch(reactiveClub(this.props.clubID,this.state.reason));
+        await this.props.dispatch(reactiveClub(this.props.clubID,this.state.reason));
+        await this.props.dispatch(FetchClubs())
     }
 
 

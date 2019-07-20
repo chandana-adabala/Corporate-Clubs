@@ -34,7 +34,9 @@ export enum Actions
     DELETE_USER='DELETE_USER',
     APPLY_FILTER="APPLY_FILTER",
     ADD_USER="ADD_USER",
-    FETCH_ALL_CLUBS="FETCH_ALL_CLUBS"
+    FETCH_ALL_CLUBS="FETCH_ALL_CLUBS",
+    EMAILID_ALREADY_EXISTS="EMAILID_ALREADY_EXISTS",
+    EMAILID_NOT_EXISTS="EMAILID_NOT_EXISTS"
 }
 export interface PayLoad
 {
@@ -48,6 +50,7 @@ export interface PayLoad
     status?:[];
     role?:[];
     selectedUsers?:IUsers[];
+    isEmailExists?:boolean
 
 }
 export interface ActionReturnType
@@ -230,7 +233,24 @@ function detailsOfAllClub(payload:IClubs[])
 }
 
 
-export const FetchClubs = UserID=>{
+function emailIDExists()
+{
+    return{
+        type:Actions.EMAILID_ALREADY_EXISTS,
+        payload:{isEmailExists:true}
+    }
+}
+
+function emailIDNotExists()
+{
+    return{
+        type:Actions.EMAILID_NOT_EXISTS,
+        payload:{isEmailExists:false}
+    }
+}
+
+
+export const FetchClubs =()=>{
     debugger;
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
@@ -377,7 +397,7 @@ export const deactivateUser=(userID,reason)=>
         dispatch(loadingStarted())
            var jsonObj={userID:userID,reason:reason}
            console.log(JSON.stringify(jsonObj));
-        return fetch(url+'api/users/deactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        return fetch(url+'api/users/deactivateuser',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
@@ -433,6 +453,28 @@ export function addUser(user,clubs,invitation)
             }
         })
         .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
+    }
+}
+
+
+export function checkAvailabilityOfEmail(email:string)
+{
+    debugger;
+    return function(dispatch){
+        // dispatch(loadingStarted())
+        return fetch(url+'api/users/checkWheatherEmailAvailable/'+email,{method:"get",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        .then(data => data.json())
+        .then(data =>{
+           
+                if(data)
+                dispatch(emailIDExists())
+                 else
+                 dispatch(emailIDNotExists())
+                dispatch(loadingEnded())
+            
+        })
+        .catch(error=>{dispatch(FetchFailed(error));dispatch(loadingEnded())})
+
     }
 }
 

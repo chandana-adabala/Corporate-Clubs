@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import INewClub from '../../../../models/INewClub'
 import AvatarEditor from 'react-avatar-editor'
-import {editClub} from '../../actions/clubAction'
+import {editClub,fetchMyClubInfo,fetchFavClubs,fetchMyClubs} from '../../actions/clubAction'
 class UpdateClub extends React.Component<any, any>{
   constructor(props) {
     super(props);
@@ -84,6 +84,9 @@ class UpdateClub extends React.Component<any, any>{
       }
       else
       await this.props.dispatch(editClub(editedClub,null))
+      await this.props.dispatch(fetchMyClubInfo(this.props.clubID))
+      await this.props.dispatch(fetchFavClubs())
+      await this.props.dispatch(fetchMyClubs())
 
     }
   }

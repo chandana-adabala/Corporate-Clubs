@@ -6,13 +6,15 @@ import { Interface } from "readline";
 import { number } from "prop-types";
 import { connect } from "react-redux";
 import {
-  makeAndCancelRequest,
+  makeRequest,
+  cancelRequest,
   removeUser,
-  addUserToPublicClub
+  addUserToPublicClub,FetchClubMembersList
 } from "./Actions/ClubActions";
 
 import { Link, Route, NavLink } from "react-router-dom";
 import Deactivateclub from "./DeactivateClub/DeactivateClub";
+import { async } from "q";
 
 class Club extends React.Component<any, any> {
  
@@ -31,7 +33,7 @@ class Club extends React.Component<any, any> {
         return (
           <ConnectedRequestJoinbtn
             clubID={clubMember.clubs.clubID}
-            userID={2}
+            userID={this.props.loggedUserID}
           />
         );
     }
@@ -40,11 +42,11 @@ class Club extends React.Component<any, any> {
       if (clubMember.members.ispersonBlock) return <span />;
       if (clubMember.members.isRequested)
         return (
-          <ConnectedCancelRequest clubID={clubMember.clubs.clubID} userID={2} />
+          <ConnectedCancelRequest clubID={clubMember.clubs.clubID} userID={this.props.loggedUserID} />
         );
 
       if (!clubMember.members.isRequested)
-        return <ConnectedExitbtn clubID={clubMember.clubs.clubID} userID={2} />;
+        return <ConnectedExitbtn clubID={clubMember.clubs.clubID} userID={this.props.loggedUserID} />;
     }
   }
 
@@ -145,10 +147,12 @@ class Joinbtn extends React.Component<any, any> {
     return (
       <button
         className="join"
-        onClick={() =>
-          this.props.dispatch(
-            addUserToPublicClub(this.props.userID, this.props.clubID)
-          )
+        onClick={async () =>
+          {
+           await this.props.dispatch(addUserToPublicClub(this.props.clubID, this.props.userID));
+            await this.props.dispatch(FetchClubMembersList()); 
+          }
+          
         }
       >
         Join
@@ -161,10 +165,12 @@ class CancelRequest extends React.Component<any, any> {
     return (
       <button
         className="cancelrequest"
-        onClick={() =>
-          this.props.dispatch(
-            makeAndCancelRequest(this.props.userID, this.props.clubID)
-          )
+        onClick={async () =>
+          {
+           await  this.props.dispatch(cancelRequest(this.props.clubID, this.props.userID));
+            await this.props.dispatch(FetchClubMembersList()); 
+          }
+
         }
       >
         Cancel Request
@@ -177,12 +183,12 @@ class RequestJoinbtn extends React.Component<any, any> {
     return (
       <button
         className="join"
-        onClick={() => {
-          debugger;
-          this.props.dispatch(
-            makeAndCancelRequest(this.props.userID, this.props.clubID)
-          );
-        }}
+        onClick={async () => 
+           {
+            await this.props.dispatch(makeRequest(this.props.clubID, this.props.userID));
+           await  this.props.dispatch(FetchClubMembersList()); 
+          }
+        }
       >
         Request Join
       </button>
@@ -194,8 +200,11 @@ class Exitbtn extends React.Component<any, any> {
     return (
       <button
         className="exit"
-        onClick={() =>
-          this.props.dispatch(removeUser(this.props.userID, this.props.clubID))
+        onClick={async() =>{
+          debugger;
+         await  this.props.dispatch(removeUser(this.props.clubID, this.props.userID));
+         await  this.props.dispatch(FetchClubMembersList()); 
+        }
         }
       >
         Exit Club
@@ -208,7 +217,8 @@ function mapStateToProps(State) {
   console.log(State);
   return {
     requests: State.ClubReducer.requests,
-    loggedUserRole: State.AppReducer.LoggedUser.role
+    loggedUserRole: State.AppReducer.LoggedUser.role,
+    loggedUserID:State.AppReducer.LoggedUser.userID
   };
 }
 

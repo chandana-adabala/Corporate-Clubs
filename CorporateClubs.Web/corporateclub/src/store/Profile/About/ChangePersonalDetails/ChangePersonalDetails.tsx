@@ -42,7 +42,8 @@ class ChangePersonalDetails extends React.Component<any,any>{
    User.dOB=this.state.dOB;
    debugger;
    console.log(User)
-   this.props.dispatch(UpdateUserDetails(User,"personaldetails"));
+   await this.props.dispatch(UpdateUserDetails(User,"personaldetails"));
+   await this.props.dispatch(FetchProfileDetails());
   
   }
 
