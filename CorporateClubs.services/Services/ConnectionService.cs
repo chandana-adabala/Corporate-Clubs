@@ -159,6 +159,13 @@ namespace CorporateClubs.Services.Services
                     contactRow.IsRequested = false;
                     contactRow.RowModifiedOn = DateTime.Now;
                     contactRow.RowModifiedBy = userID;
+                    Contacts NewContact = new Contacts();
+                    NewContact.UserID = connectedUserID;
+                    NewContact.ConnectedUserID = userID;
+                    NewContact.IsRequested = false;
+                    NewContact.RowCreatedBy = userID;
+                    NewContact.RowCreatedOn = DateTime.Now;
+                    _context.SaveChanges();
                     return true;
 
                 }
