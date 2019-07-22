@@ -52,7 +52,7 @@ class Club extends React.Component<any, any> {
 
 
   render() {
-    debugger;
+       
     return (
       <div className="club">
         <div className="clubhead">
@@ -201,7 +201,7 @@ class Exitbtn extends React.Component<any, any> {
       <button
         className="exit"
         onClick={async() =>{
-          debugger;
+             
          await  this.props.dispatch(removeUser(this.props.clubID, this.props.userID));
          await  this.props.dispatch(FetchClubMembersList()); 
         }
@@ -213,7 +213,7 @@ class Exitbtn extends React.Component<any, any> {
   }
 }
 function mapStateToProps(State) {
-  debugger;
+     
   console.log(State);
   return {
     requests: State.ClubReducer.requests,

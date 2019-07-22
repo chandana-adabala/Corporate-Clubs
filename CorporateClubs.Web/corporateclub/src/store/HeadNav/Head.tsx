@@ -54,7 +54,7 @@ class Head extends React.Component<any,any> {
     
     makeDropDownHide()
     {
-      debugger;
+         
       this.setState({optionsDisplay:false})
     }
 

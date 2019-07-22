@@ -25,7 +25,7 @@ export default function threadReducer(state=initialState,action:any){
                     favContacts:action.payload
                 }
         case ActionTypes.MYCONTACTS_FETCH_SUCCESS:
-            debugger;
+               
                  //("fetch my contacts success",action);
                   
                 return{
@@ -34,7 +34,8 @@ export default function threadReducer(state=initialState,action:any){
                 }
         case ActionTypes.FETCH_USERMESSAGES_SUCCESS:
              
-                         debugger;
+                         console.log("private msg",action.payload);
+                            
                 return{
                           ...state,
                            userMessages:action.payload

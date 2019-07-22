@@ -37,12 +37,17 @@ class Conversation extends React.Component<any,any>{
             showEmoji:false,
             files:[],
             sendingFileNames:[],
-            receivedFileNames:[]
+            receivedFileNames:[],
+            
             
         }
        
-        console.log("check::",this.props.userMessages);
         
+    }
+    componentWillUnmount(){
+        this.setState({
+            ismount:false
+        });
     }
 
    // message arrived at
@@ -80,7 +85,10 @@ class Conversation extends React.Component<any,any>{
     componentDidMount(){
          
         //signalr client side methods invoked from server side
-        debugger;
+           
+        this.setState({
+            ismount:true
+        })
         if(this.props.connection!=undefined){
             this.props.connection.on(
             
@@ -88,8 +96,8 @@ class Conversation extends React.Component<any,any>{
                 (userID,displayName,profilePic ,message, postedAt,fileUrls,fileNames) => {
                      console.log("message received by user");
                      
-               debugger;
-                  this.setState({
+                  
+                  this.state.ismount && this.setState({
                     userMessages:[...this.state.userMessages,{
                         userID:userID,
                         userName:displayName,
@@ -123,8 +131,8 @@ class Conversation extends React.Component<any,any>{
         
         if (this.props.connectedUserID !== prevProps.connectedUserID) {
          
-                 this.props.connection.invoke("RemoveFromGroup","user"+prevProps.connectedUserID).catch(err => console.log("REMOVEGROUPUNSUCCESS",err.toString()));
-                this.props.connection.invoke("AddToGroup","user"+this.props.connectedUserID).catch(err => console.log("ADDTOGROUPUNSUCCESS",err.toString()));
+                 this.props.connection.invoke("RemoveFromGroup",prevProps.LoggedUser.userID+"-"+prevProps.connectedUserID).catch(err => console.log("REMOVEGROUPUNSUCCESS",err.toString()));
+                this.props.connection.invoke("AddToGroup",this.props.LoggedUser.userID+"-"+this.props.connectedUserID).catch(err => console.log("ADDTOGROUPUNSUCCESS",err.toString()));
                 
         }
         if(this.props.userMessages!==prevProps.userMessages){
@@ -133,10 +141,10 @@ class Conversation extends React.Component<any,any>{
             });
   
         }
-        this.props.connection.onclose(
-            console.log("disconnected")
+        this.props.connection.onclose=()=>{
+            console.log(this.props.connection,"disconnected");
             
-         );
+        }
         //  this.props.connection.disconnected=()=>{
         //      console.log("disconnected");
              
@@ -144,11 +152,7 @@ class Conversation extends React.Component<any,any>{
         //         this.props.connection.start();
         // }, 5000);
         // }
-        if(this.props.connection.connectionState!=1 ){
-            console.log("thre conn",this.props.connection);
-            
-            this.props.connection.start();
-        }
+      
       }
 
 
@@ -162,7 +166,8 @@ class Conversation extends React.Component<any,any>{
      }
      
      sendMessage=(event)=>{
-          debugger;
+             
+         
          if(this.state.files.length!=0){
            
             const fd = new FormData();
@@ -193,7 +198,7 @@ class Conversation extends React.Component<any,any>{
            
             
          }
-         debugger;
+            
             this.props.connection.invoke("SendMessageToUser",this.props.connectedUserID,this.props.loggedUser.userID,
                                                                         this.props.loggedUser.displayName,
                                                                         this.props.loggedUser.profilePic,
@@ -259,8 +264,12 @@ class Conversation extends React.Component<any,any>{
       }
 
      render(){
-          debugger;
+             debugger;
          console.log("fsd2",this.props.connectedUserID);
+         if(this.props.userMessages.length!=0){
+             console.log(this.props.userMessages[0].connectedUserName);
+             
+         }
          return(
              <div className="chatScreen">
                  <div className="titleBar">
@@ -331,11 +340,13 @@ class Conversation extends React.Component<any,any>{
 
  
  function mapStateToProps(state){
-  debugger;
+     
     return{
        
        connection
            :state.AppReducer.connection,
+       LoggedUser
+           :state.AppReducer.LoggedUser,
     }
     
 

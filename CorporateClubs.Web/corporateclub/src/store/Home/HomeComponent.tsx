@@ -19,7 +19,7 @@ initializeIcons();
 class Home extends React.Component<any,any> {
     constructor(props){
         super(props);
-          debugger;
+             
         //establishing signalr connection
         // const connection = new signalR.HubConnectionBuilder()
         // .withUrl("http://localhost:3333/conversationhub", {
@@ -40,12 +40,12 @@ class Home extends React.Component<any,any> {
 
    
     componentDidMount(){
-        debugger;
-        if(this.props.connection!=undefined){
-            this.props.connection
-            .start({ withCredentials: false })
-            .catch(err => console.error(err));
-        }
+           
+        // if(this.props.connection!=undefined){
+        //     this.props.connection
+        //     .start({ withCredentials: false })
+        //     .catch(err => console.error(err));
+        // }
           
             this.props.dispatch(fetchFavClubs(this.props.LoggedUser.userId));
             this.props.dispatch(fetchMyClubs(this.props.LoggedUser.userId));
@@ -56,7 +56,7 @@ class Home extends React.Component<any,any> {
      }
 
     componentDidUpdate(prevProps){
-          debugger;
+             
         if(this.props.myclubs!=prevProps.myclubs && this.props.myclubs.length!=0 ){
             this.props.dispatch(fetchMyClubInfo(this.props.myclubs[0].clubID));
             this.props.dispatch(fetchMessagesOfClub(this.props.myclubs[0].clubID));
@@ -163,7 +163,7 @@ class Home extends React.Component<any,any> {
 
 
 function mapStateToProps(state){
-  debugger;
+     
      return{
          myclubs
             : state.homeReducer.myclubs,

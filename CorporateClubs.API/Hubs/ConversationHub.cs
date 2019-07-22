@@ -44,13 +44,13 @@ namespace CorporateClubs.API.Hubs
             _conversationService = conversationService;
             _env = env;
         }
-        //public override async Task OnConnectedAsync()
-        //{
-        //    string name = Context.User.Identity.Name;
+        public override async Task OnConnectedAsync()
+        {
+            //string name = Context.User.Identity.Name;
 
-        //    await Groups.AddToGroupAsync(Context.ConnectionId, name);
-        //    await base.OnConnectedAsync();
-        //}
+            //await Groups.AddToGroupAsync(Context.ConnectionId, name);
+            await base.OnConnectedAsync();
+        }
 
         public Task SendMessageToUser(int connectedUserID, int userID, string displayName, string profilePic, string message, List<string> files)
         {
@@ -66,8 +66,8 @@ namespace CorporateClubs.API.Hubs
             if (files.Count == 0)
             {
                 _conversationService.AddMessageToUser(chat);
-                Clients.Group(userID.ToString()).SendAsync("ReceiveMessageByUser", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
-                return Clients.Group("user"+connectedUserID.ToString()).SendAsync("ReceiveMessageByUser", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
+                Clients.Group(connectedUserID.ToString() +"-"+ userID.ToString()).SendAsync("ReceiveMessageByUser", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
+                return Clients.Group(userID.ToString() +"-"+ connectedUserID.ToString()).SendAsync("ReceiveMessageByUser", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
             }
             return Clients.Group(connectedUserID.ToString()).SendAsync("none");
         }

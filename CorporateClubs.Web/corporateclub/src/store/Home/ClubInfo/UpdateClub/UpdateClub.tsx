@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import INewClub from '../../../../models/INewClub'
 import AvatarEditor from 'react-avatar-editor'
-import {editClub,fetchMyClubInfo,fetchFavClubs,fetchMyClubs} from '../../actions/clubAction'
+import {editClub,fetchMyClubInfo,fetchFavClubs,fetchMyClubs} from '../../actions/homeActions'
 class UpdateClub extends React.Component<any, any>{
   constructor(props) {
     super(props);
@@ -39,7 +39,7 @@ class UpdateClub extends React.Component<any, any>{
 
 
   onImageUpload(event) {
-    debugger;
+       
     console.log(URL.createObjectURL(event.target.files[0]));
     this.setState({ image: URL.createObjectURL(event.target.files[0]), imageFile: event.target.files[0] });
   }
@@ -47,21 +47,21 @@ class UpdateClub extends React.Component<any, any>{
 
 
   onNameChange(event) {
-    debugger;
+       
     this.setState({ name: event.target.value, error: "" });
   }
 
 
 
   onDescriptionChange(event) {
-    debugger;
+       
     this.setState({ description: event.target.value, error: "" });
   }
 
 
 
   async onSubmit(event) {
-    debugger;
+       
     if (this.state.name == '' || this.state.description == '') {
       this.setState({ error: "Fields marked * are mandatory" });
     }
@@ -85,8 +85,8 @@ class UpdateClub extends React.Component<any, any>{
       else
       await this.props.dispatch(editClub(editedClub,null))
       await this.props.dispatch(fetchMyClubInfo(this.props.clubID))
-      await this.props.dispatch(fetchFavClubs())
-      await this.props.dispatch(fetchMyClubs())
+      await this.props.dispatch(fetchFavClubs(1))
+      await this.props.dispatch(fetchMyClubs(1))
 
     }
   }

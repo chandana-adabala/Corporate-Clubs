@@ -11,7 +11,7 @@ class Contact extends React.Component<any, any>{
     }
 
     // componentDidUpdate(prevProps){
-    //     debugger;
+    //        
     //     if(prevProps.contact.connectedUserID != this.props.contact.connectedUserID){
     //         this.props.connection.invoke("RemoveFromGroup",prevProps.contact.connectedUserID ).catch(err => console.log("REMOVEGROUPUNSUCCESS",err.toString()));
     //         this.props.connection.invoke("AddToGroup",this.props.contact.connectedUserID).catch(err => console.log("ADDTOGROUPUNSUCCESS",err.toString()));
@@ -20,7 +20,7 @@ class Contact extends React.Component<any, any>{
     // }
 
     onClubClick=(event)=> {
-           debugger;
+             debugger; 
         this.props.dispatch(fetchMessagesOfUser(this.props.contact.connectedUserID));
         this.props.openChat(this.props.contact.connectedUserID);
     }

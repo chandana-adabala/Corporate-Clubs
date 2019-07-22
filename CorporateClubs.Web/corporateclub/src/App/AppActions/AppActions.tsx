@@ -71,7 +71,7 @@ export function loadingEnded():ActionReturnType
 }
 
 export const storeConnectionID = (connection)=>{
-    debugger;
+       
     return{
         type:ActionTypes.STORE_CONNECTION_ID,
         Payload:connection

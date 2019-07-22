@@ -19,7 +19,7 @@ class DeactivateorActiveUser extends React.Component<any, any>  {
     }
 
     reasonHandle(event) {
-        debugger;
+           
         var Reason = event.target.value;
         this.setState({ reason: Reason })
     }
@@ -27,7 +27,7 @@ class DeactivateorActiveUser extends React.Component<any, any>  {
 
 
     async confirmButtonHandle(event) {
-        debugger;
+           
         if (this.props.isActive)
         {
             await this.props.dispatch(deactivateUser(this.props.userID, this.state.reason))

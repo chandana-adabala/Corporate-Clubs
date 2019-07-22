@@ -272,7 +272,7 @@ export const fetchMessageError = (error:string)=>{
 
 
 // Thunk Action Creators
-export const fetchFavClubs = UserID=>{
+export const fetchFavClubs =(UserID)=>{
       
     return function(dispatch){
         dispatch(loadingStarted())

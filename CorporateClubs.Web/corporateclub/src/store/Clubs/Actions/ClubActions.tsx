@@ -230,9 +230,9 @@ export const cancelRequest=(clubID,userID)=>
 
 export const makeRequest=(clubID,userID)=>
 {
-    debugger;
+       
     return function(dispatch){
-        debugger;
+           
         // dispatch(loadingStarted())
         return fetch(url+'api/clubs/MakeRequest/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{

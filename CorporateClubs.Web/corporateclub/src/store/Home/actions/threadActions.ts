@@ -79,7 +79,7 @@ export const fetchFavContacts =()=>{
 }
 
 export const fetchMyContacts =()=>{
-      debugger;
+         
     return function(dispatch){
         //dispatch(loadingStarted())
          //("fetch call");
@@ -100,7 +100,7 @@ export const fetchMyContacts =()=>{
     }
 }
 export const fetchMessagesOfUser=(connectedUserID)=>{
-     debugger;
+        
     return function(dispatch){
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/conversations/getallmessagesofuser/'+connectedUserID,{ headers: {'Authorization': 'Bearer ' + getToken()}})

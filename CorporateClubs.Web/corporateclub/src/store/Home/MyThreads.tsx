@@ -23,7 +23,7 @@ class MyThreads extends React.Component<any,any>{
     }
 
     showChat=(connectedUserID)=>{
-             debugger;
+                
         this.setState({
             isChatHide:false,
             connectedUserID:connectedUserID
@@ -44,9 +44,9 @@ class MyThreads extends React.Component<any,any>{
     }
 
     componentDidUpdate(prevProps){
-          debugger;
+             
         if(this.props.myContacts!=prevProps.myContacts && this.props.myContacts.length!=0 ){
-            debugger;
+               
             this.props.dispatch(fetchMessagesOfUser(this.props.myContacts[0].connectedUserID));
             this.setState({
                 isChatHide:false,
@@ -56,7 +56,7 @@ class MyThreads extends React.Component<any,any>{
     }
    
     render(){
-        debugger;
+           
         return(<div className="threadContainer">
             <HomeNav/>
             <div className="threadBar">
@@ -121,7 +121,7 @@ class MyThreads extends React.Component<any,any>{
 function mapStateToProps(state){
     console.log(state.threadReducer);
     
-    debugger;
+       
      return{
          myContacts
             : state.threadReducer.myContacts,

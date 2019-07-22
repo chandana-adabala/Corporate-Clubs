@@ -52,7 +52,7 @@ export const acceptConnectionRequest = (userID,connectedUserID)=>{
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/connections/acceptRequest/'+userID+'/'+connectedUserID,{method:'put',headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
-           // debugger;
+           //    
             if (!response.ok) {
                 throw new Error("Fetch Failed");
             } else {
@@ -68,7 +68,7 @@ export const declineConnectionRequest = (userID,connectedUserID)=>{
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/connections/declineRequest/'+userID+'/'+connectedUserID,{method:'put',headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
-           // debugger;
+           //    
             if (!response.ok) {
                 throw new Error("Fetch Failed");
             } else {

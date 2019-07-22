@@ -42,7 +42,7 @@ export default class ReceivedMessage extends React.Component<any,any>{
             <div className='receivedMessage'>
                 <div className='messageHeader'>
                          <img src={this.props.message.profilePic}/>
-                         <div className="displayname">{this.props.message.userName}</div>
+                         <div className="displayname">{this.props.message.connectedUserName}</div>
                         <div className="time">{this.props.time}</div>
                         
                         

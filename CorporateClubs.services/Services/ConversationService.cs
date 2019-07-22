@@ -156,8 +156,8 @@ namespace CorporateClubs.Services.Services
                         {
                             userID = msg.UserID,
                             connectedUserID = msg.ConnectedUserID,
-                            userName = connectedUserInfo.DisplayName,
-                            connectedUserName = userInfo.DisplayName,
+                            userName = userInfo.DisplayName,
+                            connectedUserName =  connectedUserInfo.DisplayName,
                             profilePic = connectedUserInfo.ProfilePic,
                             message = msg.Message,
                             postedOn = msg.PostedOn,

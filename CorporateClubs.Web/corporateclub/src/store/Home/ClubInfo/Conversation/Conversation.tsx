@@ -25,7 +25,7 @@ import IMsgWithAttach from '../../../../models/IMsgWithAttach';
 
 
 class Conversation extends React.Component<any,any>{
-   debugger;
+      
     constructor(props){
     
         super(props);
@@ -78,7 +78,10 @@ class Conversation extends React.Component<any,any>{
     }
  
     componentDidMount(){
-         debugger;
+            
+         this.setState({
+            ismount:true
+        });
         //signalr client side methods invoked from server side
         if(this.props.connection!=undefined){  
         this.props.connection.on(
@@ -88,7 +91,7 @@ class Conversation extends React.Component<any,any>{
                  console.log("message received by club");
                  
            
-              this.setState({
+              this.state.ismount && this.setState({
                 messages:[...this.state.messages,{
                     userID:userID,
                     userName:displayName,
@@ -110,15 +113,33 @@ class Conversation extends React.Component<any,any>{
         //         this.props.connection.start();
         //     }
         //   );
-        }
+      
+        
+        this.props.connection.onclose(async () => {
+            await this.start();
+        });
+            }
         }
         
-     
+        start=async ()=> {
+            debugger;
+            try {
+                await this.props.connection.start();
+                console.log("connected w");
+            } catch (err) {
+                console.log(err);
+                setTimeout(() => this.start(), 5000);
+            }
+        };
     
-    
+        componentWillUnmount(){
+            this.setState({
+                ismount:false
+            });
+        }
     componentDidUpdate(prevProps) {
-         //this.debugger;
-        debugger;
+         //this.   
+           
         if (this.props.club.clubID !== prevProps.club.clubID) {
             if(this.props.connection!=undefined){
                  this.props.connection.invoke("RemoveFromGroup","club"+prevProps.club.clubID).catch(err => console.log("REMOVEGROUPUNSUCCESS",err.toString()));
@@ -131,14 +152,7 @@ class Conversation extends React.Component<any,any>{
             });
   
         }
-        this.props.connection.onclose(function(){
-            console.log('connecition closed');
-         });
-        if(this.props.connection.connectionState!=1 ){
-            console.log("club conn",this.props.connection);
-            
-            this.props.connection.start();
-        }
+      
         
       }
 
@@ -157,7 +171,8 @@ class Conversation extends React.Component<any,any>{
      }
      
      sendMessage=(event)=>{
-          debugger;
+             
+        
          if(this.state.files.length!=0){
            
             const fd = new FormData();
@@ -188,13 +203,14 @@ class Conversation extends React.Component<any,any>{
            
             
          }
-      
+       
             this.props.connection.invoke("SendMessageToClub",this.props.club.clubID,this.props.loggedUser.userID,
-                                                                        this.props.loggedUser.displayName,
-                                                                        this.props.loggedUser.profilePic,
-                                                                        this.state.message,
-                                                                        this.state.sendingFileNames)
-                                    .catch(err => console.error(err.toString()));
+            this.props.loggedUser.displayName,
+            this.props.loggedUser.profilePic,
+            this.state.message,
+            this.state.sendingFileNames)
+            .catch(err => console.error(err.toString()));
+          
        
         
          this.setState({
@@ -255,7 +271,7 @@ class Conversation extends React.Component<any,any>{
       }
 
      render(){
-          debugger;
+             
          console.log("fsd",this.state.messages);
          return(
              <div className="chatScreen">
