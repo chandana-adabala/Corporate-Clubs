@@ -21,17 +21,18 @@ class DeleteClub extends React.Component<any,any> {
     }
     reasonHandle(event)
     {
-         
+        debugger;
         var Reason=event.target.value;
         this.setState({reason:Reason})
     }   
 
 
 
-    confirmButtonHandle(event)
+   async  confirmButtonHandle(event)
     {
-         
-        this.props.dispatch(deleteClub(this.props.clubID,this.state.reason));
+        debugger;
+       await  this.props.dispatch(deleteClub(this.props.clubID,this.state.reason));
+       await this.props.dispatch(FetchClubs())
     }
     
     render()

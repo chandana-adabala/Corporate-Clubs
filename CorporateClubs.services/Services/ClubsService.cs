@@ -366,23 +366,152 @@ namespace CorporateClubs.Services.Services
             }
         }
 
-        public bool MakeNCancelRequest(int clubID, int userID)
+        public bool CancelRequestOfUserForClub(int clubID, int userID)
         {
             using (var _context = new ModelContext())
             {
                 try
                 {
                     ClubMembers c = (from x in _context.ClubMembers
-                                     where x.ClubID == clubID && x.UserID == userID
+                                     where x.ClubID == clubID && x.UserID == userID && x.RowDeletedBy==null  && x.IsPersonBlock==false &&x.IsRequested==true
                                      select x).First();
-                    c.IsRequested = !(c.IsRequested);
+                    c.IsRequested = false;
+                    c.RowDeletedBy = userID;
+                    c.RowDeletedOn = DateTime.Now;
                     _context.SaveChanges();
                 }
-                catch
+                catch(Exception E)
                 {
                     return false;
                 }
                 return true;
+            }
+        }
+
+
+
+        public bool MakeRequestOfUserForClub(int clubID, int userID,string role)
+        {
+            try
+            {
+                using (var _context = new ModelContext())
+                {
+                    if (IsClubPublicClosed(clubID))
+                    {
+                        var member = _context.ClubMembers.Single(c => c.ClubID == clubID && c.UserID == userID);
+                        if (member != null)
+                        {
+                            member.IsRequested = true;
+                            member.RowModifiedBy = userID;
+                            member.RowModifiedOn = DateTime.Now;
+                            member.RowDeletedBy = null;
+                            _context.SaveChanges();
+                            return true;
+                        }
+                       
+                           
+                        
+                    }
+                    return false;
+                }
+            }
+            catch(Exception E)
+            {
+                try
+                {
+                    using (var _context = new ModelContext())
+                    {
+                        var member = new ClubMembers
+                        {
+                            ClubID = clubID,
+                            UserID = userID,
+                            Role = role,
+                            JoiningDate = DateTime.Now,
+                            IsFavouriteClub = false,
+                            IsPersonBlock = false,
+                            IsRequested = true,
+                            IsClubMute = false,
+                            LastSeen = DateTime.Now,
+                            RowCreatedOn = DateTime.Now,
+                            RowCreatedBy = userID,
+                            RowDeletedBy = null
+
+                        };
+                        _context.Add(member);
+                        _context.SaveChanges();
+                        return true;
+                    }
+                }
+                catch(Exception e)
+                {
+                    return true;
+                }
+            }
+        }
+
+        public bool AddUsertoPublicClub(int clubID, int userID, string role)
+        {
+            try
+            {
+                using (var _context = new ModelContext())
+                {
+                    if (IsClubPublicOpen(clubID))
+                    {
+                        var member = _context.ClubMembers.Single(c => c.ClubID == clubID && c.UserID == userID);
+                        if (member != null)
+                        {
+                            member.IsRequested = false;
+                            member.Role = role;
+                            member.JoiningDate = DateTime.Now;
+                            member.IsFavouriteClub = false;
+                            member.IsPersonBlock = false;
+                            member.IsRequested = false;
+                            member.IsClubMute = false;
+                            member.LastSeen = DateTime.Now;
+                            member.RowCreatedOn = DateTime.Now;
+                            member.RowCreatedBy = userID;
+                            member.RowDeletedBy = null;
+                            _context.SaveChanges();
+                            return true;
+                        }
+
+                     
+
+                    }
+                    return false;
+                }
+            }
+            catch (Exception E)
+            {
+                try
+                {
+                    using (var _context = new ModelContext())
+                    {
+                        var member = new ClubMembers
+                        {
+                            ClubID = clubID,
+                            UserID = userID,
+                            Role = role,
+                            JoiningDate = DateTime.Now,
+                            IsFavouriteClub = false,
+                            IsPersonBlock = false,
+                            IsRequested = false,
+                            IsClubMute = false,
+                            LastSeen = DateTime.Now,
+                            RowCreatedOn = DateTime.Now,
+                            RowCreatedBy = userID,
+                            RowDeletedBy = null
+
+                        };
+                        _context.Add(member);
+                        _context.SaveChanges();
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    return true;
+                }
             }
         }
 

@@ -52,29 +52,29 @@ class AddClubs extends React.Component<any, any>{
 
 
   onImageUpload(event) {
-      
-     //(URL.createObjectURL(event.target.files[0]));
+    debugger;
+    console.log(URL.createObjectURL(event.target.files[0]));
     this.setState({ image: URL.createObjectURL(event.target.files[0]), imageFile: event.target.files[0] });
   }
 
 
 
   onNameChange(event) {
-      
+    debugger;
     this.setState({ name: event.target.value, error: "" });
   }
 
 
 
   onDescriptionChange(event) {
-      
+    debugger;
     this.setState({ description: event.target.value, error: "" });
   }
 
 
 
   onToggleChange(isToggled: boolean) {
-      
+    debugger;
     this.setState({ isToggled: isToggled, error: "" })
   }
 
@@ -88,13 +88,13 @@ class AddClubs extends React.Component<any, any>{
 
   onRadioChange(event) {
     this.setState({ clubType: event.key, error: "" });
-     //(this.state);
+    console.log(this.state);
   }
 
 
 
   addUser(event) {
-      
+    debugger;
     var selectedUsers = this.state.selectedUsers;
     var displayAdmins=this.state.displayAdmins.filter(user=>user.userID!=event.currentTarget.id)
     var displayUsers=this.state.displayUsers.filter(user=>user.userID!=event.currentTarget.id)
@@ -105,7 +105,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   removeUser(event) {
-      
+    debugger;
     var selectedUsers = this.state.selectedUsers;
     delete selectedUsers[event.currentTarget.id];
     var removedUser=this.props.users.filter(user=>user.userID==event.currentTarget.id)
@@ -124,7 +124,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   removeAdmin(event) {
-      
+    debugger;
     var selectedAdmins = this.state.selectedAdmins;
     delete selectedAdmins[event.currentTarget.id];
     var removedUser=this.props.users.filter(user=>user.userID==event.currentTarget.id)
@@ -143,7 +143,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   addAdmin(event) {
-      
+    debugger;
     var selectedAdmins = this.state.selectedAdmins;
     var selectedAdmin=this.props.users.filter(user=>user.userID==event.currentTarget.id)
     var displayAdmins=this.state.displayAdmins.filter(user=>user.userID!=event.currentTarget.id)
@@ -154,7 +154,7 @@ class AddClubs extends React.Component<any, any>{
 
 
   async onSubmit(event) {
-      
+    debugger;
     if (this.state.name == '' || this.state.description == '') {
       this.setState({ error: "Fields marked * are mandatory" });
     }
@@ -165,17 +165,22 @@ class AddClubs extends React.Component<any, any>{
       {
         clubType: newClubType,
         description: this.state.description,
-        profilePic: "1",
+        profilePic: null,
         members: Object.keys(this.state.selectedUsers).map(key => parseInt(key, 10)),
         admins: Object.keys(this.state.selectedAdmins).map(key => parseInt(key, 10)),
         clubTitle: this.state.name
       }
-       //("NewClub", NewClub);
+      if(this.state.editor!='')
+      {
+      console.log("NewClub", NewClub);
       const formData = new FormData();
       var dataURL = this.state.editor.getImageScaledToCanvas().toDataURL();
       var imageBlob: Blob = this.b64toBlob(dataURL);
       formData.append('image', imageBlob);
       await this.props.dispatch(addClub(NewClub,formData));
+      }
+      else
+      await this.props.dispatch(addClub(NewClub,null));
       await this.props.dispatch(FetchClubMembersList())
 
     }
@@ -184,9 +189,9 @@ class AddClubs extends React.Component<any, any>{
   //imageUpload
 
   imageUploadHandler = () => {
-      
+    debugger;
 
-     //("image upload");
+    console.log("image upload");
 
     const fd = new FormData();
     var dataURL = this.state.editor.getImageScaledToCanvas().toDataURL();
@@ -195,7 +200,7 @@ class AddClubs extends React.Component<any, any>{
     axios.post('http://localhost:3333/api/clubs/UploadImage/7',
       fd, { headers: { 'Content-Type': "multipart/form-data" } })
       .then(res => {
-         //(res);
+        console.log(res);
       })
 
   }
@@ -324,8 +329,8 @@ class AddClubs extends React.Component<any, any>{
 }
 
 function mapStateToProps(State) {
-    
-   //(State)
+  debugger;
+  console.log(State)
   return {
     users: State.ClubReducer.users,
 

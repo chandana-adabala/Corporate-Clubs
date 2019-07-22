@@ -7,7 +7,8 @@ const IntialState:PayLoad=
     clubs:[],
     isLoading:false,
     selectedUsers:[],
-    allClubs:[]
+    allClubs:[],
+    isEmailExists:false
 
 }
 export function AdminPageReducer(State=IntialState,Action:ActionReturnType):PayLoad
@@ -21,7 +22,6 @@ export function AdminPageReducer(State=IntialState,Action:ActionReturnType):PayL
         case Actions.DETAILS_OF_USER:
             State.users=Action.payload.users;
             State.selectedUsers=Action.payload.users;
-            State.isLoading=false
             return{...State}
         case Actions.DELETE_CLUB:
             return{...State} 
@@ -43,6 +43,12 @@ export function AdminPageReducer(State=IntialState,Action:ActionReturnType):PayL
             return {...State}
         case Actions.DELETE_USER:
              //("delete user");
+            return {...State}
+        case Actions.EMAILID_ALREADY_EXISTS:
+            State.isEmailExists=true
+            return {...State}
+        case Actions.EMAILID_NOT_EXISTS:
+            State.isEmailExists=false
             return {...State}
         default:
             return{...State}

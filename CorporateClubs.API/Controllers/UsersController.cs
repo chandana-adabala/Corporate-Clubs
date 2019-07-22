@@ -167,7 +167,7 @@ namespace CorporateClubs.API.Controllers
             {
                 if (_users.IsAdmin(requestedUser.UserID))
                 {
-                    int userID = _users.AddUser(userDetails.user);
+                    int userID = _users.AddUser(userDetails.user,requestedUser.UserID);
                     foreach (int i in userDetails.clubs)
                     {
                         _clubs.Addmember(i, userID, requestedUser.UserID);
@@ -197,7 +197,7 @@ namespace CorporateClubs.API.Controllers
                 Users requestedUser = _users.GetUserByEmailId(uniqueId);
                 if (_users.IsUser(requestedUser.UserID) && requestedUser.UserID == user.UserID)
                 {
-                    if (_users.Change_Personal_Details(user.UserID, user.FirstName, user.LastName, user.Gender, user.MartialStatus, user.About, user.MiddleName, user.DOB, user.BloodGroup) == true)
+                    if (_users.Change_Personal_Details(user.UserID, user.FirstName, user.LastName, user.Gender, user.MartialStatus, user.About, user.MiddleName, user.DOB, user.BloodGroup,user.DisplayName) == true)
                         return Ok();
                     return BadRequest();
                 }
@@ -422,6 +422,27 @@ namespace CorporateClubs.API.Controllers
 
 
         }
+        [HttpGet]
+        [Route("checkWheatherEmailAvailable/{emailID}")]
+        public ActionResult<bool> CheckWheatherEmailIDAvailble(string emailID)
+        {
+            try
+            {
+
+              if (_users.GetUserByEmailId(emailID)!=null)
+                {
+                    return true;
+                }
+                return false ;
+            }
+            catch (Exception e)
+            {
+                return true;
+            }
+
+
+        }
+
 
 
 

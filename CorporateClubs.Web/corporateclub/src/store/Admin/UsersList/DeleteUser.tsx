@@ -3,7 +3,7 @@ import './DeactivateorActivateUser.scss';
 import { Icon } from 'react-icons-kit'
 import {ic_close} from 'react-icons-kit/md/ic_close'
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
-import {deleteUser} from '../Actions/Actions';
+import {deleteUser,FetchUsers} from '../Actions/Actions';
 import {connect} from 'react-redux';
 import { getNativeProps } from '@uifabric/utilities';
 import { ReactComponent } from '*.svg';
@@ -28,11 +28,12 @@ class DeleteUser extends React.Component<any,any> {
         }   
     
     
-    
-        confirmButtonHandle(event)
+        async confirmButtonHandle(event)
         {
             
-             this.props.dispatch(deleteUser(this.props.userID,this.state.reason))
+             await this.props.dispatch(deleteUser(this.props.userID,this.state.reason))
+             await this.props.dispatch(FetchUsers())
+
     
         }
 

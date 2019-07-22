@@ -103,7 +103,7 @@ namespace CorporateClubs.API.Controllers
             {
                 if (_users.IsUser(requestedUser.UserID) == true)
                     return _connections.GetMySuggestions(requestedUser.UserID);
-                    return Unauthorized();
+                return Unauthorized();
             }
             catch (Exception e)
             {
@@ -121,7 +121,7 @@ namespace CorporateClubs.API.Controllers
             try
             {
                 if (_users.IsUser(requestedUser.UserID) == true)
-                    if (_connections.AddContact( newContactUserID, requestedUser.UserID))
+                    if (_connections.AddContact(newContactUserID, requestedUser.UserID))
                         return Ok();
                 return BadRequest();
 
@@ -132,6 +132,51 @@ namespace CorporateClubs.API.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("acceptRequest /{userID:int}/{connectedUserID:int}")]
+        public ActionResult AcceptRequest(int userID,int connectedUserID)
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if (_users.IsUser(requestedUser.UserID) == true)
+                    if (_connections.AcceptRequest(userID, connectedUserID))
+                        return Ok();
+                    else
+                        return BadRequest();
+                else
+                    return Unauthorized();
+            }
+            catch(Exception E)
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpPut]
+        [Route("declineRequest/{userID:int}/{connectedUserID:int}")]
+        public ActionResult DeclineRequest(int userID, int connectedUserID)
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if (_users.IsUser(requestedUser.UserID) == true)
+                    if (_connections.DeclineRequest(userID, connectedUserID))
+                        return Ok();
+                    else
+                        return BadRequest();
+                else
+                    return Unauthorized();
+            }
+            catch (Exception E)
+            {
+                return BadRequest();
+            }
+
+        }
 
 
 

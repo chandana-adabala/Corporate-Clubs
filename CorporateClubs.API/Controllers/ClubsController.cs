@@ -397,8 +397,8 @@ namespace CorporateClubs.API.Controllers
 
 
         [HttpPut]
-        [Route("MakeNCancelRequest/{ClubID:int}/{UserID:int}")]
-        public ActionResult MakeNCancelRequest(int clubID, int userID)
+        [Route("CancelRequest/{ClubID:int}/{UserID:int}")]
+        public ActionResult CancelRequest(int clubID, int userID)
         {
             var uniqueId = HttpContext.User.Identity.Name;
             Users requestedUser = _users.GetUserByEmailId(uniqueId);
@@ -406,7 +406,7 @@ namespace CorporateClubs.API.Controllers
             {
                 if (_users.IsUser(requestedUser.UserID) == true)
                 {
-                    if (_clubs.MakeNCancelRequest(clubID, userID) == true)
+                    if (_clubs.CancelRequestOfUserForClub(clubID, userID) == true)
                         return Ok();
                     return BadRequest();
                 }
@@ -423,7 +423,66 @@ namespace CorporateClubs.API.Controllers
 
 
         [HttpPut]
-        [Route("RemoveUser/{userID:int}/{clubID:int}")]
+        [Route("MakeRequest/{ClubID:int}/{UserID:int}")]
+        public ActionResult MakeRequest(int clubID, int userID)
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if (_users.IsUser(requestedUser.UserID) == true)
+                {
+                    Users addedUser = _users.GetUserById(userID);
+                    if (addedUser!=null)
+                    {
+                        if (_clubs.MakeRequestOfUserForClub(clubID, userID,addedUser.Role) == true)
+                            return Ok();
+                    }
+                    return BadRequest();
+                }
+
+                return Unauthorized();
+            }
+
+
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [Route("AddToPublicClub/{ClubID:int}/{UserID:int}")]
+        public ActionResult AddUserToPublicClub(int clubID, int userID)
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if (_users.IsUser(requestedUser.UserID) == true)
+                {
+                    Users addedUser = _users.GetUserById(userID);
+                    if (addedUser != null)
+                    {
+                        if (_clubs.AddUsertoPublicClub(clubID, userID, addedUser.Role) == true)
+                            return Ok();
+                    }
+                    return BadRequest();
+                }
+
+                return Unauthorized();
+            }
+
+
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPut]
+        [Route("RemoveUser/{clubID:int}/{userID:int}")]
         public ActionResult RemoveUser(int clubID,int userID)
         {
             var uniqueId = HttpContext.User.Identity.Name;

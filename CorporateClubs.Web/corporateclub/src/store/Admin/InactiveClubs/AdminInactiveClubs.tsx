@@ -37,7 +37,7 @@ class InactiveClubs extends React.Component<any, any>{
   }
 
   componentWillMount() {
-    this.props.dispatch(FetchClubs(2));
+    this.props.dispatch(FetchClubs());
     this.props.dispatch(FetchUsers());
   }
 

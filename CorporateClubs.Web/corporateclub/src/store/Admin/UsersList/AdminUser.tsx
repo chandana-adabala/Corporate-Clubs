@@ -220,12 +220,12 @@ class DatatablePage extends React.Component<any, any>
             <span className="menuIcon">
             <Icon icon={ic_more_vert} size={30} />
             <span className="menu-content2">
-              <Link to="/Admin/DeactivateorActiveUser"><p>{user.isActive ? "Deactivate" : "Reactivate"}</p></Link>
-              <Link to="/Admin/DeleteUser">
+              <Link to={"/Admin/DeactivateorActiveUser/"+user.userID}><p>{user.isActive ? "Deactivate" : "Reactivate"}</p></Link>
+              <Link to={"/Admin/DeleteUser/"+user.userID}>
                 <p>Delete Permenantly</p>
               </Link>
-              <Route exact path="/Admin/DeactivateorActiveUser" component={() => <DeactivateorActiveUser userID={user.userID} isActive={user.isActive} displayName={user.displayName} to="/Admin" />} />
-              <Route exact path="/Admin/DeleteUser" component={() => <DeleteUser userID={user.userID} isActive={user.isActive} displayName={user.displayName} to="/Admin" />} />
+              <Route exact path={"/Admin/DeactivateorActiveUser/"+user.userID} component={() => <DeactivateorActiveUser userID={user.userID} isActive={user.isActive} displayName={user.displayName} to="/Admin" />} />
+              <Route exact path={"/Admin/DeleteUser/"+user.userID} component={() => <DeleteUser userID={user.userID} isActive={user.isActive} displayName={user.displayName} to="/Admin" />} />
             </span>
             </span>
           </span></td>

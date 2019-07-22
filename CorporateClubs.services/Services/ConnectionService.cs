@@ -128,14 +128,14 @@ namespace CorporateClubs.Services.Services
 
 
 
-        public Boolean AddContact(int ConnectedUserID, int requestID)
+        public Boolean AddContact(int connectedUserID, int requestID)
         {
             try
             {
                 using (var _context = new ModelContext())
                 {
                     Contacts newConnection = new Contacts();
-                    newConnection.ConnectedUserID = ConnectedUserID;
+                    newConnection.ConnectedUserID = connectedUserID;
                     newConnection.UserID = requestID;
                     newConnection.ConnectedDate = DateTime.Now;
                     newConnection.IsRequested = true;
@@ -146,9 +146,26 @@ namespace CorporateClubs.Services.Services
                     return true;
                 }
             }
-            catch (Exception E)
+            catch (Exception e)
             {
-                return false;
+                try
+                {
+                    using (var _context =new ModelContext())
+                    {
+                        var contact = _context.Contacts.Single(c => c.UserID == requestID && c.ConnectedUserID == connectedUserID);
+                        contact.RowDeletedBy = null;
+                        contact.IsRequested = true;
+                        contact.RowModifiedBy = requestID;
+                        contact.RowModifiedOn = DateTime.Now;
+                        _context.SaveChanges();
+                        return true;
+                    }
+                }
+                catch(Exception E)
+                {
+                    return false;
+                }
+
             }
 
         }
@@ -194,6 +211,61 @@ namespace CorporateClubs.Services.Services
                 return new List<FrontEndContacts>();
             }
         }
+
+
+        public bool AcceptRequest(int userID, int connectedUserID)
+        {
+            using (var _context = new ModelContext())
+            {
+                try
+                {
+                    var contactRow = _context.Contacts.Single(c => c.UserID == userID && c.ConnectedUserID == connectedUserID && c.IsRequested == true && c.RowDeletedBy == null);
+                    contactRow.IsRequested = false;
+                    contactRow.RowModifiedOn = DateTime.Now;
+                    contactRow.RowModifiedBy = userID;
+                    Contacts NewContact = new Contacts();
+                    NewContact.UserID = connectedUserID;
+                    NewContact.ConnectedUserID = userID;
+                    NewContact.IsRequested = false;
+                    NewContact.RowCreatedBy = userID;
+                    NewContact.RowCreatedOn = DateTime.Now;
+                    _context.SaveChanges();
+                    return true;
+
+                }
+
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+        }
+
+
+        public bool DeclineRequest(int userID, int connectedUserID)
+        {
+            using (var _context = new ModelContext())
+            {
+                try
+                {
+                    var contactRow = _context.Contacts.Single(c => c.UserID == userID && c.ConnectedUserID == connectedUserID && c.IsRequested == true && c.RowDeletedBy == null);
+                    contactRow.IsRequested = false;
+                    contactRow.RowDeletedBy = userID;
+                    contactRow.RowModifiedBy = userID;
+                    contactRow.RowDeletedOn = DateTime.Now;
+                    contactRow.RowModifiedOn = DateTime.Now;
+                    contactRow.RowModifiedBy = userID;
+                    return true;
+
+                }
+
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+        }
+
     }
 
 }
