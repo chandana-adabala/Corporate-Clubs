@@ -1,18 +1,12 @@
 import React from 'react';
-import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
-import {initializeIcons} from 'office-ui-fabric-react/lib/Icons';
 import {search} from 'react-icons-kit/icomoon/search'
-import './Home.scss';
-import ClubInfo from './ClubInfo/ClubInfo';
+import './MyThreads.scss';
 import { Icon } from 'react-icons-kit';
-import Club from './ClubInfo/MyClubs/Club';
+import Contact from './contacts/MyContact';
 import {connect} from 'react-redux';
-import Istate from './reducers/homeReducer';
-import { fetchFavClubs, fetchMyClubs } from './actions/homeActions';
-import IClubs from '../../models/IClubs';
+import { fetchFavContacts, fetchMyContacts, fetchMessagesOfUser } from './actions/threadActions';
 import HomeNav from './HomeBar/HomeNav';
-import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
-// import Conversation from './connect/Conversation/Conversation'
+import Conversation from './ThreadConversation/Conversation/Conversation'
 
 
 class MyThreads extends React.Component<any,any>{
@@ -20,50 +14,59 @@ class MyThreads extends React.Component<any,any>{
         super(props);
         this.state={
             searchTerm:'',
-            currentClubs:this.props.myclubs,
-            isClubHide:this.props.isClubHide
+            currentContacts:this.props.myContacts,
+            primaryContact:this.props.myContacts[0],
+            isChatHide:false,
+            connectedUserID:0
         };
-     this.onInputChange = this.onInputChange.bind(this);
+ 
     }
-    onInputChange(event){
+
+    showChat=(connectedUserID)=>{
+             debugger;
+        this.setState({
+            isChatHide:false,
+            connectedUserID:connectedUserID
+    });
+}
+    onInputChange=(event)=>{
         
         
-        let searchClub = (this.props.myclubs).filter(club=>club.clubTitle.toLowerCase().includes((event.target.value).toLowerCase()));
+        let searchContacts = (this.props.myContacts).filter(contact=>contact.connectedUserDisplayName.toLowerCase().includes((event.target.value).toLowerCase()));
         this.setState({
             searchTerm:event.target.value,
-            currentClubs:searchClub
+            currentContacts:searchContacts
         });
     }
     componentDidMount(){
-        console.log('mounting success');
-        //  
-        this.props.dispatch(fetchFavClubs(1));
-        this.props.dispatch(fetchMyClubs(1));
-        
-    
+        this.props.dispatch(fetchFavContacts());
+        this.props.dispatch(fetchMyContacts());
     }
 
-    hideClubInfo=()=>{
+    componentDidUpdate(prevProps){
+          debugger;
+        if(this.props.myContacts!=prevProps.myContacts && this.props.myContacts.length!=0 ){
+            debugger;
+            this.props.dispatch(fetchMessagesOfUser(this.props.myContacts[0].connectedUserID));
             this.setState({
-                    isClubHide:true
-            });
-    }
-    showClubInfo=()=>{
-        this.setState({
-            isClubHide:false
+                isChatHide:false,
+                connectedUserID:this.props.myContacts[0].connectedUserID
         });
+        }
     }
+   
     render(){
-        return(<div className="homeContainer">
+        debugger;
+        return(<div className="threadContainer">
             <HomeNav/>
-            <div className="homeBar">
+            <div className="threadBar">
                         My Threads
                         <button className="createBtn">Create New</button>
                     </div>
-                    <div className="homeBody">
+                    <div className="threadBody">
 
                     
-                    <div className="homeClubs">
+                    <div className="threads">
                    
                                 <div style={{ color: '#e3e5e6' }} className="searchBar">
                                     <Icon size={14} icon={search}/>
@@ -72,32 +75,39 @@ class MyThreads extends React.Component<any,any>{
                                 <div className="favTitle">
                                     FAVORITES
                                 </div>
-                                <div className="favClubs">
+                                <div className="favThreads">
                              
-                                {(this.props.favclubs!="") ?(
-                                    this.props.favclubs.map(club=>(
-                                        <Club club={club} key={club.clubID} show={this.showClubInfo}/>
-                                            ))):(<h4>no fav</h4>)}
+                                {(this.props.favContacts!="") ?(
+                                    this.props.favContacts.map(contact=>(
+                                        <Contact contact={contact} key={contact.connectedUserID} openChat={this.showChat}/>
+                                            ))):(<h4>no favorites</h4>)}
                                 
                                    
                                 </div>
                                 <div className="favTitle">
                                     CHATS
                                 </div>
-                                <div className="clubs">
-                                    {this.state.currentClubs!=""?(
-                                    this.state.currentClubs.map(club=>(
-                                        <Club club={club} key={club.clubID} show={this.showClubInfo}/>
-                                            ))):(this.props.myclubs!=""?(
-                                                this.props.myclubs.map(club=>(
-                                                    <Club club={club} key={club.clubID} show={this.showClubInfo}/>
-                                                        ))):(<h4>no chats</h4>))} 
+                                <div className="myThreads">
+                                    {this.state.currentContacts!=""?(
+                                    this.state.currentContacts.map(contact=>(
+                                        <Contact contact={contact} key={contact.connectedUserID} openChat={this.showChat}/>
+                                            ))):(this.props.myContacts!=""?(
+                                                this.props.myContacts.map(contact=>(
+                                                    <Contact contact={contact} key={contact.connectedUserID} openChat={this.showChat}/>
+                                                        ))):(<h4>no contacts</h4>))} 
                                 </div>
                     </div>
-                    <div className="homeArena">
-                        {/* <Conversation/> */}
-                    {this.state.isClubHide==false?(<ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} nUsers={this.props.nUsers} users={this.props.users} hide={this.hideClubInfo} currentUser={2}/>)
-                                                :(<span></span>)}
+                    <div className="threadArena">
+                    
+                    
+                    {this.props.connection==undefined?
+                    (<span></span>)
+                    :(this.state.isChatHide==false ?
+                        (this.state.primaryClub!=""?
+                                (<Conversation  userMessages={this.props.userMessages} loggedUser={this.props.LoggedUser} connectedUserID={this.state.connectedUserID}/>)
+                                :(<span>Loading...</span>))
+                        :(<Conversation  userMessages={this.props.userMessages} loggedUser={this.props.LoggedUser} connectedUserID={this.state.connectedUserID}/>) )}
+                 
                     
                     </div>
                 </div> 
@@ -108,32 +118,23 @@ class MyThreads extends React.Component<any,any>{
 
 
 
-
-
-
-
-
 function mapStateToProps(state){
-     
-     console.log('mapstattoprops',state.homeReducer);
+    console.log(state.threadReducer);
+    
+    debugger;
      return{
-         myclubs
-            : state.homeReducer.myclubs,
-        favclubs
-            : state.homeReducer.favclubs,
-        club
-            : state.homeReducer.club,
-        cUsers
-            : state.homeReducer.cUsers,
-        rUsers
-            : state.homeReducer.rUsers,
-        nUsers
-            : state.homeReducer.nUsers,
-        users
-            : state.homeReducer.users,
-        isClubHide
-            : state.homeReducer.hide
-     }
+         myContacts
+            : state.threadReducer.myContacts,
+        favContacts
+            : state.threadReducer.favContacts,
+        connection
+            :state.AppReducer.connection,
+        LoggedUser
+            :state.AppReducer.LoggedUser,
+        userMessages
+            :state.threadReducer.userMessages,
+        
+   }
      
 
    }

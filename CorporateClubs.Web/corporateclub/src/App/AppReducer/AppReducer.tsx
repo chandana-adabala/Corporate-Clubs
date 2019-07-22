@@ -6,10 +6,12 @@ const IntialState:PayloadType=
     message:"",
     error:"not mounted",
     isLoading:true,
+    connection:null
 }
 
 export default function AppPageReducer(State=IntialState,Action:ActionReturnType):PayloadType
 {
+    debugger;
     switch(Action.type)
     {
         case ActionTypes.USER_EXIST:
@@ -31,6 +33,13 @@ export default function AppPageReducer(State=IntialState,Action:ActionReturnType
         case ActionTypes.LOADING_ENDED:
             State.isLoading=false
             return {...State}
+
+          case ActionTypes.STORE_CONNECTION_ID:
+            debugger;
+            return{
+                 ...State,
+                   connection:Action.Payload
+                 }
 
         default:
             return State

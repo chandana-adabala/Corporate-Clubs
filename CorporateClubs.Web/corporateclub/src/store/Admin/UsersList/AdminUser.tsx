@@ -44,7 +44,7 @@ class User extends React.Component<any, any> {
 
   onlyUnique(value, index, self) {
      
-    console.log(self.indexOf(value));
+     //(self.indexOf(value));
     return self.indexOf(value) === index;
   }
 

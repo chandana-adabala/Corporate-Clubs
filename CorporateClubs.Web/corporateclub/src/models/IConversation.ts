@@ -9,3 +9,12 @@ export default interface IConversation{
     // attachmentNames:string
 
 }
+
+export interface IPrivateConversation{
+    postedOn:number,
+    connectedUserID:number,
+    userID:number,
+    message:string,
+    profilePic:string,
+    userName:string,
+}

@@ -11,5 +11,7 @@ namespace CorporateClubs.Services.Interfaces
     {
        bool AddMessageToClub(Conversation c);
         List<MessageSenderInfo> GetAllMessagesOfClub(int clubID);
+        List<OneToOneMessages> GetAllMessagesOfUser(int connectionID,int userID);
+        bool AddMessageToUser(OneToOneConversation c);
     }
 }

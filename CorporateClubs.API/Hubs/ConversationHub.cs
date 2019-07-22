@@ -10,6 +10,29 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 
+
+//namespace BasicChat
+//{
+//    [Authorize]
+//    public class ChatHub : Hub
+//    {
+//        public void SendChatMessage(string who, string message)
+//        {
+//            string name = Context.User.Identity.Name;
+
+//            Clients.Group(who).addChatMessage(name + ": " + message);
+//        }
+
+//        public override Task OnConnected()
+//        {
+//            string name = Context.User.Identity.Name;
+
+//            Groups.Add(Context.ConnectionId, name);
+
+//            return base.OnConnected();
+//        }
+//    }
+//}
 namespace CorporateClubs.API.Hubs
 {
     public class ConversationHub:Hub
@@ -21,28 +44,32 @@ namespace CorporateClubs.API.Hubs
             _conversationService = conversationService;
             _env = env;
         }
+        //public override async Task OnConnectedAsync()
+        //{
+        //    string name = Context.User.Identity.Name;
 
+        //    await Groups.AddToGroupAsync(Context.ConnectionId, name);
+        //    await base.OnConnectedAsync();
+        //}
 
-
-      
-
-        public Task SendMessageToAll(int clubID, int userID, string message,List<string> files)
+        public Task SendMessageToUser(int connectedUserID, int userID, string displayName, string profilePic, string message, List<string> files)
         {
-            Conversation chat = new Conversation()
+            OneToOneConversation chat = new OneToOneConversation()
             {
-                ClubID = clubID,
+                ConnectedUserID = connectedUserID,
                 UserID = userID,
                 Message = message,
                 PostedOn = DateTimeOffset.Now,
-                RowCreatedOn = DateTime.Now
-              
+                RowCreatedOn = DateTime.Now,
+
             };
-            if(files.Count > 0)
+            if (files.Count == 0)
             {
-                return Clients.All.SendAsync("ReceiveMessage", chat.UserID, chat.Message, chat.PostedOn,files);
+                _conversationService.AddMessageToUser(chat);
+                Clients.Group(userID.ToString()).SendAsync("ReceiveMessageByUser", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
+                return Clients.Group("user"+connectedUserID.ToString()).SendAsync("ReceiveMessageByUser", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
             }
-            _conversationService.AddMessageToClub(chat);
-            return Clients.All.SendAsync("ReceiveMessage", chat.UserID, chat.Message, chat.PostedOn);
+            return Clients.Group(connectedUserID.ToString()).SendAsync("none");
         }
 
         public Task SendMessageToClub(int clubID, int userID, string displayName, string profilePic, string message, List<string> files)
@@ -59,16 +86,12 @@ namespace CorporateClubs.API.Hubs
             if (files.Count == 0)
             {
                 _conversationService.AddMessageToClub(chat);
-                return Clients.Group(clubID.ToString()).SendAsync("ReceiveMessage", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
+                return Clients.Group("club"+clubID.ToString()).SendAsync("ReceiveMessage", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
             }
             return Clients.Group(clubID.ToString()).SendAsync("none");
         }
 
-        //public Task SendMessageToClubWithAttach(int clubID, int userID, string displayName, string profilePic, string message, string[] attachMentUrls,string[] attachmentNames)
-        //{
-            
-        //    return Clients.Group(clubID.ToString()).SendAsync("ReceiveMessage", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
-        //}
+
         public async Task AddToGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);

@@ -5,8 +5,8 @@ import {ic_close} from 'react-icons-kit/md/ic_close'
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 import { getNativeProps } from '@uifabric/utilities';
 import {connect} from 'react-redux';
-import {removeUserAsAdmin,fetchClubMembers} from '../../actions/clubAction'
-// import {exitFromClub} from '../../actions/clubAction'
+import {removeUserAsAdmin,fetchClubMembers} from '../../actions/homeActions'
+// import {exitFromClub} from '../../actions/homeActions'
 interface Iprops{
     name?:string;
 }

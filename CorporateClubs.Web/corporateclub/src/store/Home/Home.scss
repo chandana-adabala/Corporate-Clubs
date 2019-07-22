@@ -63,7 +63,7 @@ $homeBorderStyle: 0.08rem solid #dad9d9;
               padding: 0.5rem 0.5rem 0.5rem 0;
               flex: 1;
               padding-left: 1rem;
-              width: 94%;
+              width: 90%;
               &:focus{
                 outline:none
             }
@@ -78,7 +78,12 @@ $homeBorderStyle: 0.08rem solid #dad9d9;
          .favClubs,.clubs{
           border-bottom: $homeBorderStyle;
           background-color: white;
-         
+              h4{
+                color: #a4aab2;
+                font-family: sans-serif;
+                padding: 5rem;
+            
+              }
          }
          
          

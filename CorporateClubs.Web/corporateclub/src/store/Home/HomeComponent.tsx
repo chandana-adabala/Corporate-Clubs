@@ -6,10 +6,11 @@ import ClubInfo from './ClubInfo/ClubInfo';
 import { Icon } from 'react-icons-kit';
 import Club from './ClubInfo/MyClubs/Club';
 import {connect} from 'react-redux';
-import { fetchFavClubs, fetchMyClubs } from './actions/homeActions';
+import { fetchFavClubs, fetchMyClubs, fetchMyClubInfo, fetchMessagesOfClub} from './actions/homeActions';
 import HomeNav from './HomeBar/HomeNav';
 import Conversation from './ClubInfo/Conversation/Conversation'
-import * as signalR from "@aspnet/signalr";
+import { Link, Route } from 'react-router-dom';
+import AddClubs from '../Clubs/AddClubs/AddClubs';
 
 initializeIcons();
 
@@ -18,35 +19,49 @@ initializeIcons();
 class Home extends React.Component<any,any> {
     constructor(props){
         super(props);
+          debugger;
         //establishing signalr connection
-        const connection = new signalR.HubConnectionBuilder()
-        .withUrl("http://localhost:3333/conversationhub", {
-            skipNegotiation: true,
-            transport: signalR.HttpTransportType.WebSockets
-          })
-        .configureLogging(signalR.LogLevel.Trace)
-        .build();
+        // const connection = new signalR.HubConnectionBuilder()
+        // .withUrl("http://localhost:3333/conversationhub", {
+        //     skipNegotiation: true,
+        //     transport: signalR.HttpTransportType.WebSockets
+        //   })
+        // .configureLogging(signalR.LogLevel.Trace)
+        // .build();
         this.state={
             searchTerm:'',
             currentClubs:this.props.myclubs,
-            isClubHide:this.props.isClubHide,
-            isChatHide:false,
-            connection:connection
+            isClubHide:true,
+            isChatHide:true,
+            primaryClub:this.props.myclubs[0]
         };
-  
 
     }
 
    
     componentDidMount(){
-            this.props.dispatch(fetchFavClubs(this.props.LoggedUser.userId));
-            this.props.dispatch(fetchMyClubs(this.props.LoggedUser.userId));
-        
-            //starting signalr connection
-            this.state.connection
+        debugger;
+        if(this.props.connection!=undefined){
+            this.props.connection
             .start({ withCredentials: false })
             .catch(err => console.error(err));
+        }
+          
+            this.props.dispatch(fetchFavClubs(this.props.LoggedUser.userId));
+            this.props.dispatch(fetchMyClubs(this.props.LoggedUser.userId));
+            
+            //starting signalr connection
+            
+           
      }
+
+    componentDidUpdate(prevProps){
+          debugger;
+        if(this.props.myclubs!=prevProps.myclubs && this.props.myclubs.length!=0 ){
+            this.props.dispatch(fetchMyClubInfo(this.props.myclubs[0].clubID));
+            this.props.dispatch(fetchMessagesOfClub(this.props.myclubs[0].clubID));
+        }
+    }
     showChat=()=>{
              
             this.setState({
@@ -64,13 +79,16 @@ class Home extends React.Component<any,any> {
             currentClubs:searchClub
         });
     }
+
     hideClubInfo=()=>{
-         
             this.setState({
                     isClubHide:true,
                     isChatHide:false
             });
     }
+
+    
+
     showClubInfo=()=>{
          
         this.setState({
@@ -80,15 +98,14 @@ class Home extends React.Component<any,any> {
     }
 
     render(){
-       
-        
+          
         return(
             <div className="homeContainer">
                 <HomeNav/>
                
                     <div className="homeBar">
                         My Clubs
-                        <button className="createBtn">Create New</button>
+                        <Link to="/addclub"><button className="createBtn">Create New</button></Link>
                     </div>
                     <div className="homeBody">
                         <div className="homeClubs">
@@ -105,7 +122,7 @@ class Home extends React.Component<any,any> {
                                     {(this.props.favclubs!="") ?(
                                         this.props.favclubs.map(club=>(
                                             <Club club={club} key={club.clubID} openChat={this.showChat}/>
-                                                ))):(<h4>no fav clubs</h4>)}
+                                                ))):(<h4>No favorite clubs</h4>)}
                                 
                                    
                                 </div>
@@ -123,15 +140,18 @@ class Home extends React.Component<any,any> {
                                 </div>
                     </div>
                     <div className="homeArena">
-                        {this.state.isChatHide==false?(<Conversation connection={this.state.connection} club={this.props.club} messages={this.props.messages} show={this.showClubInfo} loggedUser={this.props.LoggedUser}/>)
-                                                    :(
-                                                    this.state.isClubHide==false?
-                                                    (<ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} nUsers={this.props.nUsers} users={this.props.users} hide={this.hideClubInfo}/>)
-                                                    :(<span>choose a club</span>))
-                           }
+                     
+                           {this.state.isChatHide==true &&  this.state.isClubHide==true?
+                                        (this.state.primaryClub!=""?
+                                                (<Conversation  club={this.props.club} messages={this.props.messages} show={this.showClubInfo} loggedUser={this.props.LoggedUser}/>)
+                                                :(<span>Loading...</span>))
+                                        :(this.state.isChatHide==false?
+                                             (<Conversation  club={this.props.club} messages={this.props.messages} show={this.showClubInfo} loggedUser={this.props.LoggedUser}/>)
+                                            :(<ClubInfo club={this.props.club} cUsers={this.props.cUsers} rUsers={this.props.rUsers} nUsers={this.props.nUsers} users={this.props.users} hide={this.hideClubInfo}/>))
+                                        }
                     </div>
                 </div> 
-
+                <Route path="/addclub" component={()=><AddClubs from="/"/>}/>
         </div>
     
         );
@@ -143,7 +163,7 @@ class Home extends React.Component<any,any> {
 
 
 function mapStateToProps(state){
-  
+  debugger;
      return{
          myclubs
             : state.homeReducer.myclubs,
@@ -164,7 +184,9 @@ function mapStateToProps(state){
         LoggedUser
             :state.AppReducer.LoggedUser,
         messages
-            :state.homeReducer.messages
+            :state.homeReducer.messages,
+        connection
+            :state.AppReducer.connection,
      }
      
 

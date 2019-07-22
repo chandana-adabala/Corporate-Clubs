@@ -63,6 +63,25 @@ namespace CorporateClubs.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("getallmessagesofuser/{connectedUserID:int}")]
+        public ActionResult<List<OneToOneMessages>> GetAllMessagesOfUser(int connectedUserID)
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if (_users.IsUser(requestedUser.UserID) == true)
+
+                    return _conversation.GetAllMessagesOfUser(connectedUserID, requestedUser.UserID);
+                else
+                    return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
 
 
         [HttpPost]
@@ -115,6 +134,62 @@ namespace CorporateClubs.API.Controllers
 
             }
             catch(Exception e)
+            {
+                return $"Error:{e.Message}";
+            }
+            return "Files uploaded";
+        }
+
+
+        [HttpPost]
+        [Route("uploadattachmentstochat/{userID:int}/{connectedUserID:int}")]
+        public async Task<string> UploadAttachmentsToThread([FromForm] IFormFileCollection files, int userID, int connectedUserID)
+        {
+            var webroot = _env.WebRootPath;
+            try
+            {
+                if (true)
+                {
+                    string msgInfo;
+                    using (var reader = new StreamReader(files[0].OpenReadStream()))
+                    {
+                        msgInfo = reader.ReadToEnd();
+                    }
+                    JObject msg = JObject.Parse(msgInfo);
+                    MessageSenderInfo messageSenderInfo = msg.ToObject<MessageSenderInfo>();
+                    OneToOneConversation chat = msg.ToObject<OneToOneConversation>();
+                    chat.PostedOn = DateTimeOffset.Now;
+                    chat.RowCreatedOn = DateTime.Now;
+
+                    string url = "http://localhost:3333/root/files/";
+
+                    for (int i = 1; i < files.Count(); i++)
+                    {
+                        string fileType = '.' + files[i].ContentType.Split('/')[1];
+                        string name = i + "-" + connectedUserID + "-" + userID + "-" + chat.PostedOn.ToString("yyyy-MM-ddTHH-mm-ss") + fileType;
+                        var filepath = System.IO.Path.Combine(webroot + "//files", name);
+                        using (var stream = new FileStream(filepath, FileMode.Create))
+                        {
+                            await files[i].CopyToAsync(stream);
+                        }
+                        chat.AttachmentUrls += url + '/' + name + " ";
+                        chat.AttachmentNames += files[i].FileName + "/";
+                    }
+                    chat.AttachmentUrls = chat.AttachmentUrls.Substring(0, (chat.AttachmentUrls.Count() - 1));
+                    chat.AttachmentNames = chat.AttachmentNames.Substring(0, (chat.AttachmentNames.Count() - 1));
+                    _conversationService.AddMessageToUser(chat);
+
+                    string[] urls;
+                    string[] names;
+                    urls = chat.AttachmentUrls.Split(" ");
+                    names = chat.AttachmentNames.Split("/");
+                    await _hubContext.Clients.Group(connectedUserID.ToString()).SendAsync("ReceiveMessageByUser", userID, messageSenderInfo.userName, messageSenderInfo.profilePic, chat.Message, chat.PostedOn, urls, names);
+
+                }
+
+
+            }
+            catch (Exception e)
             {
                 return $"Error:{e.Message}";
             }

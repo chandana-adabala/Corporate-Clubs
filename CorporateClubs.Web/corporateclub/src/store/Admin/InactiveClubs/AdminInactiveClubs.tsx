@@ -47,7 +47,7 @@ class InactiveClubs extends React.Component<any, any>{
   }
   onlyUnique(value, index, self) {
      
-    console.log(self.indexOf(value));
+     //(self.indexOf(value));
     return self.indexOf(value) === index;
   }
 
@@ -58,7 +58,7 @@ myFilter(clubRow)
   { 
     if(clubRow.clubType==this.state.clubs[i]&&clubRow.clubTitle.toLowerCase().includes(this.state.search))
     {
-      console.log("true");
+       //("true");
     return true
     }
   }
@@ -96,7 +96,7 @@ myFilter(clubRow)
     { 
       if(clubRow.clubType==clubs[i]&&clubRow.clubTitle.toLowerCase().includes(search))
       {
-        console.log("true");
+         //("true");
       return true
       }
     }
@@ -143,7 +143,7 @@ myFilter(clubRow)
       { 
         if(clubRow.clubType==clubs[i]&&clubRow.clubTitle.toLowerCase().includes(search))
         {
-          console.log("true");
+           //("true");
         return true
         }
       }
@@ -191,7 +191,7 @@ handleClubClose(event)
   { 
     if(clubRow.clubType==clubs[i]&&clubRow.clubTitle.toLowerCase().includes(search))
     {
-      console.log("true");
+       //("true");
     return true
     }
   }
@@ -240,7 +240,7 @@ handleUserClose(event)
   { 
     if(clubRow.clubType==clubs[i]&&clubRow.clubTitle.toLowerCase().includes(search))
     {
-      console.log("true");
+       //("true");
     return true
     }
   }
@@ -299,7 +299,7 @@ searchHandle(event)
     { 
       if(clubRow.clubType==clubs[i]&&clubRow.clubTitle.toLowerCase().includes(search))
       {
-        console.log("true");
+         //("true");
       return true
       }
     }
@@ -339,7 +339,7 @@ this.setState({selectedList:selectedList });
       {
      selectedUsers[user.userID]=user.displayName;
     }}))[0]);
-console.log(selectedUsers,"v");
+ //(selectedUsers,"v");
 
 
 
@@ -431,7 +431,7 @@ class DatatablePage extends React.Component<any,any>{
             <td className="rows">
               <div>
               {this.props.UsersList!=undefined?this.props.UsersList.map((user)=>{
-                   console.log(user.UserID,clubs.clubsID)
+                    //(user.UserID,clubs.clubsID)
                   if(user.userID==clubs.clubCreatedBy)
                   return (<p>{user.displayName}</p>)
                 }):<span></span>}
@@ -442,7 +442,7 @@ class DatatablePage extends React.Component<any,any>{
             <td className="rows">
               <div>
                 {this.props.UsersList!=undefined?this.props.UsersList.map((user)=>{
-                   console.log(user.UserID,clubs.clubsID)
+                    //(user.UserID,clubs.clubsID)
                   if(user.userID==clubs.clubDeactiveBy)
                   return (<p>{user.displayName}</p>)
                 }):<span></span>}

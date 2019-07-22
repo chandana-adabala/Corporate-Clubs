@@ -49,10 +49,10 @@ class ChangeProfessionalDetails extends React.Component<any, any>{
  handleSubmit(event)
   {
    const User:IUser={...this.props.User}
-   console.log(User,"event")
+    //(User,"event")
    User.profSum=this.state.profSum;
     
-   console.log(User)
+    //(User)
    this.props.dispatch(UpdateUserDetails(User,"professionaldetails"));;
   }
 
@@ -60,7 +60,7 @@ class ChangeProfessionalDetails extends React.Component<any, any>{
   handleChange(event)
   {
     this.setState({profSum:event.target.value})
-    console.log(this.state)
+     //(this.state)
   }
 
     render() {
@@ -100,7 +100,7 @@ class ChangeProfessionalDetails extends React.Component<any, any>{
 
 function mapStatetoProps(state) {
      
-    console.log("changecontactDetails");
+     //("changecontactDetails");
      
     return {
         User: state.ProfilePageReducer.User

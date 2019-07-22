@@ -31,10 +31,10 @@ export function AdminPageReducer(State=IntialState,Action:ActionReturnType):PayL
         case Actions.REACTIVATE_CLUB:
             return {...State}
         case Actions.ACTIVATE_USER:
-            console.log("userActivated");
+             //("userActivated");
             return {...State};
         case Actions.DEACTIVATE_USER:
-            console.log("user Deactivated");
+             //("user Deactivated");
             return {...State}
         case Actions.FETCH_ALL_CLUBS:
             State.allClubs=Action.payload.allClubs;
@@ -42,7 +42,7 @@ export function AdminPageReducer(State=IntialState,Action:ActionReturnType):PayL
         case Actions.ADD_USER:
             return {...State}
         case Actions.DELETE_USER:
-            console.log("delete user");
+             //("delete user");
             return {...State}
         default:
             return{...State}

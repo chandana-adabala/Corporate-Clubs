@@ -1,4 +1,5 @@
 ﻿
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -15,6 +16,7 @@ namespace CorporateClubs.Services.Models
         public DbSet<Club> Clubs { get; set; }
         public DbSet<ClubMembers> ClubMembers { get; set; }
         public DbSet<Conversation> Conversation { get; set; }
+        public DbSet<OneToOneConversation> OneToOneConversation { get; set; }
         public DbSet<Contacts> Contacts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -51,6 +53,22 @@ namespace CorporateClubs.Services.Models
                 .HasForeignKey("ClubID")
                 ;
 
+            modelBuilder.Entity<OneToOneConversation>()
+                .HasKey(o => new { o.PostedOn, o.ConnectedUserID, o.UserID })
+                ;
+
+            modelBuilder.Entity<OneToOneConversation>()
+                .HasOne(typeof(Users))
+                .WithMany()
+                .HasForeignKey("UserID")
+                ;
+
+            modelBuilder.Entity<OneToOneConversation>()
+                .HasOne(typeof(Club))
+                .WithMany()
+                .HasForeignKey("ClubID")
+                ;
+
             modelBuilder.Entity<ClubMembers>()
                 .HasOne(typeof(Users))
                 .WithMany()
@@ -80,6 +98,10 @@ namespace CorporateClubs.Services.Models
                 .ValueGeneratedOnAdd()
                 ;
 
+            modelBuilder.Entity<OneToOneConversation>()
+               .Property(p => p.PostedOn)
+               .ValueGeneratedOnAdd()
+               ;
 
             modelBuilder.Entity<Users>()
                 .HasOne(typeof(Users))
@@ -133,6 +155,20 @@ namespace CorporateClubs.Services.Models
                .HasForeignKey("RowDeletedBy")
                .OnDelete(DeleteBehavior.Restrict)
                ;
+
+            modelBuilder.Entity<OneToOneConversation>()
+               .HasOne(typeof(Users))
+               .WithMany()
+               .HasForeignKey("RowCreatedBy")
+               .OnDelete(DeleteBehavior.Restrict)
+               ;
+
+            modelBuilder.Entity<OneToOneConversation>()
+               .HasOne(typeof(Users))
+               .WithMany()
+               .HasForeignKey("RowDeletedBy")
+               .OnDelete(DeleteBehavior.Restrict)
+               ;
             modelBuilder.Entity<Club>()
               .HasOne(typeof(Users))
               .WithMany()
@@ -171,6 +207,13 @@ namespace CorporateClubs.Services.Models
                .HasForeignKey("RowModifiedBy")
                .OnDelete(DeleteBehavior.Restrict)
                ;
+
+            modelBuilder.Entity<OneToOneConversation>()
+              .HasOne(typeof(Users))
+              .WithMany()
+              .HasForeignKey("RowModifiedBy")
+              .OnDelete(DeleteBehavior.Restrict)
+              ;
             modelBuilder.Entity<ClubMembers>()
                .HasOne(typeof(Users))
                .WithMany()

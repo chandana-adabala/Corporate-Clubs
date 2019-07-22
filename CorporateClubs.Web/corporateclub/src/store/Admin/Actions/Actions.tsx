@@ -91,7 +91,7 @@ function SearchInactiveClubs(payload:PayLoad):ActionReturnType{
     }
 }
 export function DetailsOfClub(payload:IClubs[]):ActionReturnType{
-    debugger;
+      
     return{
         type:Actions.DETAILS_OF_CLUB,
         payload:{clubs:payload},
@@ -158,7 +158,7 @@ function SearchUser(payload:PayLoad):ActionReturnType{
     }
 }
 export function DetailsOfUser(payload:IUsers[]):ActionReturnType{
-    debugger;
+      
     return{
         type:Actions.DETAILS_OF_USER,
         payload:{users:payload},
@@ -231,18 +231,18 @@ function detailsOfAllClub(payload:IClubs[])
 
 
 export const FetchClubs = UserID=>{
-    debugger;
+      
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         dispatch(loadingStarted())
-        console.log("fetch call");
+         //("fetch call");
         return fetch(url+'api/clubs/getInactiveClubs/',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(DetailsOfClub(data));
                 dispatch(loadingEnded())
             }
@@ -253,18 +253,18 @@ export const FetchClubs = UserID=>{
 }
 
 export const fetchAllClubs = UserID=>{
-    debugger;
+      
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         dispatch(loadingStarted())
-        console.log("fetch call");
+         //("fetch call");
         return fetch(url+'api/clubs/getallclubs/',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(detailsOfAllClub(data));
                 dispatch(loadingEnded())
             }
@@ -275,19 +275,19 @@ export const fetchAllClubs = UserID=>{
 }
 
 export const FetchUsers =()=>{
-    debugger;
+      
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         dispatch(loadingStarted())
-        debugger;
-        console.log("fetch call");
+          
+         //("fetch call");
         return fetch(url+'api/Users/GetAllUsers',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(DetailsOfUser(data));
                 dispatch(loadingEnded())
             }
@@ -300,18 +300,18 @@ export const FetchUsers =()=>{
 
 
 export const deleteClub =(clubID,reason)=>{
-    debugger;
+      
     return function(dispatch){
         dispatch(loadingStarted())
            var jsonObj={clubID:clubID,reason:reason}
-           console.log(JSON.stringify(jsonObj));
+            //(JSON.stringify(jsonObj));
         return fetch(url+'api/clubs/deleteclub/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(DeleteClub(data));
                 dispatch(loadingEnded())
             }
@@ -323,18 +323,18 @@ export const deleteClub =(clubID,reason)=>{
 
 
 export const reactiveClub =(clubID,reason)=>{
-    debugger;
+      
     return function(dispatch){
         dispatch(loadingStarted())
            var jsonObj={clubID:clubID,reason:reason}
-           console.log(JSON.stringify(jsonObj));
+            //(JSON.stringify(jsonObj));
         return fetch(url+'api/clubs/makeclubactive',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.status !=200){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(ReactivateClub(data));
                 dispatch(loadingEnded())
             }
@@ -347,18 +347,18 @@ export const reactiveClub =(clubID,reason)=>{
 
 export const activateUser=(userID,reason)=>
 {
-    debugger;
+      
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
            var jsonObj={userID:userID,reason:reason}
-           console.log(JSON.stringify(jsonObj));
+            //(JSON.stringify(jsonObj));
         return fetch(url+'api/users/reactivateuser',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
             }else{
-                console.log(response.status);
+                 //(response.status);
                 dispatch(userActivated(response.statusText));
                 dispatch(loadingEnded())
             }
@@ -371,18 +371,18 @@ export const activateUser=(userID,reason)=>
 
 export const deactivateUser=(userID,reason)=>
 {
-    debugger;
+      
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
            var jsonObj={userID:userID,reason:reason}
-           console.log(JSON.stringify(jsonObj));
+            //(JSON.stringify(jsonObj));
         return fetch(url+'api/users/deactivateuser/2',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
             }else{
-                console.log(response.status);
+                 //(response.status);
                 dispatch(userDeactivated(response.statusText));
                 dispatch(loadingEnded())
             }
@@ -393,18 +393,18 @@ export const deactivateUser=(userID,reason)=>
  
 export const deleteUser=(userID,reason)=>
 {
-    debugger;
+      
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
            var jsonObj={userID:userID,reason:reason}
-           console.log(JSON.stringify(jsonObj));
+            //(JSON.stringify(jsonObj));
         return fetch(url+'api/users/deleteuser',{method:"put",body:JSON.stringify(jsonObj),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
             }else{
-                console.log(response.status);
+                 //(response.status);
                 dispatch(userDeleted(response.statusText));
                 dispatch(loadingEnded())
             }
@@ -416,18 +416,18 @@ export const deleteUser=(userID,reason)=>
 
 export function addUser(user,clubs,invitation)
 {
-    debugger;
+      
     var user_details={user:user,clubs:clubs,invitaion:invitation}
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
-         console.log(JSON.stringify(user));
+          //(JSON.stringify(user));
         return fetch(url+'api/users/adduser',{method:"post",body:JSON.stringify(user_details),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("user added failed");
             }else{
-                console.log(response.status);
+                 //(response.status);
                 dispatch(userAdded(response.statusText));
                 dispatch(loadingEnded())
             }
@@ -471,7 +471,7 @@ export function filtration(users,role,status,search)
         if(role.length==0&&status.length==0)
           if(userRow.displayName.toLowerCase().includes(search))
            return true;
-           console.log(userRow.displayName.toLowerCase().includes(search),"search result");
+            //(userRow.displayName.toLowerCase().includes(search),"search result");
         return false;
          
     }

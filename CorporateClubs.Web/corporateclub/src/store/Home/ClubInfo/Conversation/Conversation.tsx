@@ -25,7 +25,7 @@ import IMsgWithAttach from '../../../../models/IMsgWithAttach';
 
 
 class Conversation extends React.Component<any,any>{
-   
+   debugger;
     constructor(props){
     
         super(props);
@@ -78,13 +78,14 @@ class Conversation extends React.Component<any,any>{
     }
  
     componentDidMount(){
-         
+         debugger;
         //signalr client side methods invoked from server side
-         
+        if(this.props.connection!=undefined){  
         this.props.connection.on(
             
             "ReceiveMessage",
             (userID,displayName,profilePic ,message, postedAt,fileUrls,fileNames) => {
+                 console.log("message received by club");
                  
            
               this.setState({
@@ -101,34 +102,42 @@ class Conversation extends React.Component<any,any>{
               });
             }
           );
-          this.props.connection.on(
+        //   this.props.connection.on(
            
-            "Disconnected",
-            (e) => {
+        //     "Disconnected",
+        //     (e) => {             
                  
-                this.state.connection.start();
-            }
-          );
-         
+        //         this.props.connection.start();
+        //     }
+        //   );
+        }
         }
         
      
     
     
     componentDidUpdate(prevProps) {
-         
-        
+         //this.debugger;
+        debugger;
         if (this.props.club.clubID !== prevProps.club.clubID) {
-         
-                 this.props.connection.invoke("RemoveFromGroup",prevProps.club.clubID).catch(err => console.log("REMOVEGROUPUNSUCCESS",err.toString()));
-                this.props.connection.invoke("AddToGroup",this.props.club.clubID).catch(err => console.log("ADDTOGROUPUNSUCCESS",err.toString()));
-                
+            if(this.props.connection!=undefined){
+                 this.props.connection.invoke("RemoveFromGroup","club"+prevProps.club.clubID).catch(err => console.log("REMOVEGROUPUNSUCCESS",err.toString()));
+                this.props.connection.invoke("AddToGroup","club"+this.props.club.clubID).catch(err => console.log("ADDTOGROUPUNSUCCESS",err.toString()));
+            }
         }
         if(this.props.messages!==prevProps.messages){
             this.setState({
                 messages:this.props.messages
             });
   
+        }
+        this.props.connection.onclose(function(){
+            console.log('connecition closed');
+         });
+        if(this.props.connection.connectionState!=1 ){
+            console.log("club conn",this.props.connection);
+            
+            this.props.connection.start();
         }
         
       }
@@ -148,8 +157,8 @@ class Conversation extends React.Component<any,any>{
      }
      
      sendMessage=(event)=>{
-          
-         if(this.state.files!=[]){
+          debugger;
+         if(this.state.files.length!=0){
            
             const fd = new FormData();
             
@@ -179,13 +188,14 @@ class Conversation extends React.Component<any,any>{
            
             
          }
-        
+      
             this.props.connection.invoke("SendMessageToClub",this.props.club.clubID,this.props.loggedUser.userID,
                                                                         this.props.loggedUser.displayName,
                                                                         this.props.loggedUser.profilePic,
                                                                         this.state.message,
                                                                         this.state.sendingFileNames)
                                     .catch(err => console.error(err.toString()));
+       
         
          this.setState({
                 message:"",
@@ -245,7 +255,7 @@ class Conversation extends React.Component<any,any>{
       }
 
      render(){
-          
+          debugger;
          console.log("fsd",this.state.messages);
          return(
              <div className="chatScreen">
@@ -314,6 +324,15 @@ class Conversation extends React.Component<any,any>{
          );
      }
  }
+ function mapStateToProps(state){
+  
+    return{
+       
+       connection
+           :state.AppReducer.connection,
+    }
+    
 
+  }
  
- export default connect()(Conversation);
+ export default connect(mapStateToProps)(Conversation);

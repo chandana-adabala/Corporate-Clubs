@@ -1,15 +1,10 @@
 import IUsers from '../../../models/IUsers'
 import IClubs from '../../../models/IClubs'
-import IClubMembers from '../../../models/IClubMembers'
-import { type } from 'os';
 import {getToken} from '../../../Configure'
-<<<<<<<< HEAD:CorporateClubs.Web/corporateclub/src/store/Home/actions/homeActions.ts
 import IConversation from '../../../models/IConversation';
-========
 import {loadingStarted,loadingEnded} from '../../../App/AppActions/AppActions'
 import INewClub from '../../../models/INewClub'
 import axios from 'axios';
->>>>>>>> origin/girish:CorporateClubs.Web/corporateclub/src/store/Home/actions/clubAction.ts
 
 //Action Types
 export enum ActionTypes{
@@ -37,11 +32,9 @@ export enum ActionTypes{
     MUTE_N_UNMUTE_CLUB='MUTE_N_UNMUTE_CLUB',
     ADD_MEMBER_SUCCESS='ADD_MEMBER_SUCCESS',
     ADD_MEMBER_ERROR='ADD_MEMBER_ERROR',
-<<<<<<<< HEAD:CorporateClubs.Web/corporateclub/src/store/Home/actions/homeActions.ts
     FETCH_MESSAGES_SUCCESS = 'FETCH_MESSAGES_SUCCESS',
     FETCH_MESSAGES_ERROR = 'FETCH_MESSAGES_ERROR',
 
-========
     EXIT_FROM_CLUB_SUCCESS='EXIT_FROM_CLUB_SUCCESS',
     EXIT_FROM_CLUB_FAILED='EXIT_FROM_CLUB_FAILED',
     BLOCK_OR_UNBLOCK_USER_SUCCESS='BLOCK_USER_SUCCESS',
@@ -49,16 +42,16 @@ export enum ActionTypes{
     REMOVE_USER_AS_ADMIN_SUCCESS='REMOVE_USER_AS_ADMIN_SUCCESS',
     REMOVE_USER_AS_ADMIN_FAILED='REMOVE_USER_AS_ADMIN_FAILED',
     CLUB_DETAILS_UPDATED='CLUB_DETAILS_UPDATED',
-    CLUB_DETAILS_UPDATION_FAILED='CLUB_DETAILS_UPDATION_FAILED'
->>>>>>>> origin/girish:CorporateClubs.Web/corporateclub/src/store/Home/actions/clubAction.ts
+    CLUB_DETAILS_UPDATION_FAILED='CLUB_DETAILS_UPDATION_FAILED',
+  
 }
 
 
 
 //Action creators
 export const fetchFavClubsSuccess =(clubs:IClubs)=>{
-    debugger;
-    console.log("fetchsuccessAC",clubs);
+      
+     //("fetchsuccessAC",clubs);
     return{
         type:ActionTypes.FAVCLUBS_FETCH_SUCCESS,
         payload:clubs
@@ -71,7 +64,7 @@ export const fetchFavClubsError =(error:string)=>({
 })
 
 export const fetchMyClubsSuccess =(clubs:IClubs)=>{
-    console.log("fetchsuccessAC",clubs);
+     //("fetchsuccessAC",clubs);
     return{
         type:ActionTypes.MYCLUBS_FETCH_SUCCESS,
         payload:clubs
@@ -83,7 +76,7 @@ export const fetchMyClubsError =(error:string)=>({
     payload:{error}
 })
 export const fetchClubInfoSuccess =(clubs:IClubs,hide=true)=>{
-    console.log("fetchsuccessAC",clubs);
+     //("fetchsuccessAC",clubs);
     return{
         type:ActionTypes.CLUBINFO_FETCH_SUCCESS,
         payload:clubs,
@@ -98,7 +91,7 @@ export const fetchClubInfoError =(error:string)=>({
 })
 
 export const fetchClubMemberSuccess =(users:IUsers)=>{
-    console.log("fetchsuccessAC",users);
+     //("fetchsuccessAC",users);
     return{
         type:ActionTypes.CLUBMEMBERS_FETCH_SUCCESS,
         payload:users
@@ -110,7 +103,7 @@ export const fetchClubMembersError =(error:string)=>({
     payload:{error}
 })
 export const fetchClubRequestedMembersSuccess =(rUsers:IUsers)=>{
-    console.log("fetchsuccessAC",rUsers);
+     //("fetchsuccessAC",rUsers);
     return{
         type:ActionTypes.REQCLUBMEM_FETCH_SUCCESS,
         payload:rUsers
@@ -122,7 +115,7 @@ export const fetchClubRequestedMembersError =(error:string)=>({
     payload:{error}
 })
 export const fetchNonClubMembersSuccess =(nUsers:IUsers)=>{
-     console.log("fetchsuccessnonusers",nUsers);
+      //("fetchsuccessnonusers",nUsers);
      return{
          type:ActionTypes.NONCLUBMEM_FETCH_SUCCESS,
          payload:nUsers
@@ -134,7 +127,7 @@ export const fetchNonClubMembersSuccess =(nUsers:IUsers)=>{
      payload:{error}
  })
 export const fetchAllUsersSuccess =(users:IUsers)=>{
-    console.log("fetchsuccessAC",users);
+     //("fetchsuccessAC",users);
     return{
         type:ActionTypes.AllUSERS_FETCH_SUCCESS,
         payload:users
@@ -204,8 +197,6 @@ export const addNewMembersError=(error:string)=>{
     }
 }
 
-<<<<<<<< HEAD:CorporateClubs.Web/corporateclub/src/store/Home/actions/homeActions.ts
-========
 export const exitFromClubSuccess=()=>{
     return{
         type:ActionTypes.EXIT_FROM_CLUB_SUCCESS,
@@ -263,8 +254,7 @@ export const removeUserAsAdminFailed=()=>{
     payload:"removeUserAsAdminFailed"
 }
 }
-// Thunk Action Creators
->>>>>>>> origin/girish:CorporateClubs.Web/corporateclub/src/store/Home/actions/clubAction.ts
+
 
 export const fetchMessageSuccess = (message:IConversation)=>{
     return{
@@ -283,10 +273,10 @@ export const fetchMessageError = (error:string)=>{
 
 // Thunk Action Creators
 export const fetchFavClubs = UserID=>{
-    debugger;
+      
     return function(dispatch){
         dispatch(loadingStarted())
-        console.log("fetch call");
+         //("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/getallfavclubsofuser/',{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
@@ -294,7 +284,7 @@ export const fetchFavClubs = UserID=>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(fetchFavClubsSuccess(data));
                 dispatch(loadingEnded())
             }
@@ -306,10 +296,10 @@ export const fetchFavClubs = UserID=>{
 }
 
 export const fetchMyClubs = UserID=>{
-    debugger;
+      
     return function(dispatch){
         dispatch(loadingStarted())
-        console.log("fetch call");
+         //("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/getallclubsofusers/',{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
@@ -317,7 +307,7 @@ export const fetchMyClubs = UserID=>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(fetchMyClubsSuccess(data));
                 dispatch(loadingEnded())
             }
@@ -328,22 +318,19 @@ export const fetchMyClubs = UserID=>{
 }
 
 export const fetchMyClubInfo = clubID=>{
-<<<<<<<< HEAD:CorporateClubs.Web/corporateclub/src/store/Home/actions/homeActions.ts
      
-========
-    debugger;
->>>>>>>> origin/girish:CorporateClubs.Web/corporateclub/src/store/Home/actions/clubAction.ts
+      
     return function(dispatch){
-        console.log("fetch call");
+         //("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
-        console.log('http://localhost:3333/api/clubs/getclubbyid/'+clubID);
+         //('http://localhost:3333/api/clubs/getclubbyid/'+clubID);
         return fetch('http://localhost:3333/api/clubs/getclubbyid/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(fetchClubInfoSuccess(data));
                 dispatch(fetchClubMembers(clubID));
                 dispatch(fetchClubRequestedMembers(clubID));
@@ -357,7 +344,7 @@ export const fetchMyClubInfo = clubID=>{
 }
 export const fetchClubMembers = clubID=>{
     return function(dispatch){
-        console.log("fetch call");
+         //("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/users/getallusersbyclub/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
@@ -365,7 +352,7 @@ export const fetchClubMembers = clubID=>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(fetchClubMemberSuccess(data));
                 
             }
@@ -376,7 +363,7 @@ export const fetchClubMembers = clubID=>{
 }
 export const fetchAllUsers = ()=>{
     return function(dispatch){
-        console.log("fetch call");
+         //("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/users/getallusers/',{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
@@ -384,7 +371,7 @@ export const fetchAllUsers = ()=>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(fetchAllUsersSuccess(data));
                
             }
@@ -395,7 +382,7 @@ export const fetchAllUsers = ()=>{
 }
 export const fetchClubRequestedMembers = clubID=>{
     return function(dispatch){
-        console.log("fetch call");
+         //("fetch call");
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/getallrequestedmembers/'+clubID,{ headers: {'Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
@@ -403,7 +390,7 @@ export const fetchClubRequestedMembers = clubID=>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(fetchClubRequestedMembersSuccess(data));
                
             }
@@ -511,7 +498,6 @@ export const addNewMembers=(clubID,userList,requestID)=>{
         }
 }
 
-<<<<<<<< HEAD:CorporateClubs.Web/corporateclub/src/store/Home/actions/homeActions.ts
 export const fetchMessagesOfClub=(clubID)=>{
      
    return function(dispatch){
@@ -529,10 +515,10 @@ export const fetchMessagesOfClub=(clubID)=>{
        .catch(error=>dispatch(fetchMessageError(error)))
 
    }
-========
+}
 
 export const exitFromClub=(userID,clubID)=>{
-    debugger;
+      
     return function(dispatch){
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/RemoveUser/'+userID+'/'+clubID,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
@@ -549,7 +535,7 @@ export const exitFromClub=(userID,clubID)=>{
 
 export const blockOrUnblockUser=(userID,clubID)=>
 {
-    debugger;
+      
     return function(dispatch){
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/blockorunblockuserInAClub/'+clubID+'/'+userID,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
@@ -566,7 +552,7 @@ export const blockOrUnblockUser=(userID,clubID)=>
 
 export const removeUserAsAdmin=(userID,clubID)=>
 {
-    debugger;
+      
     return function(dispatch){
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch('http://localhost:3333/api/clubs/RemoveAsAdmin/'+clubID+'/'+userID,{method:'put',headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
@@ -583,9 +569,9 @@ export const removeUserAsAdmin=(userID,clubID)=>
 
 export function editClub(editedClub:INewClub,formData:FormData|null)
 {
-    debugger;
+      
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
         return fetch('http://localhost:3333/'+'api/clubs/updateclub',{method:"put",body:JSON.stringify(editedClub),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response=>{
@@ -604,11 +590,11 @@ export function editClub(editedClub:INewClub,formData:FormData|null)
                 else
                 {
                     dispatch(clubUpdated());
+                    dispatch(fetchMyClubInfo(editedClub.clubID));
                     dispatch(loadingEnded());
                 }
             }
         })
         .catch(error=>{dispatch(clubUpdationFailed());dispatch(loadingEnded())})
-}
->>>>>>>> origin/girish:CorporateClubs.Web/corporateclub/src/store/Home/actions/clubAction.ts
+        }
 }

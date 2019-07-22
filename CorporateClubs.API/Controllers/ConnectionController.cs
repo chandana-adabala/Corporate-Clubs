@@ -27,6 +27,51 @@ namespace CorporateClubs.API.Controllers
             _users = users;
 
         }
+
+        //BY chandana
+        [HttpGet]
+        [Route("getAllConnnectionsOfUser")]
+        public ActionResult<List<ConnectedUser>> GetAllContactsOfUser()
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if (_users.IsUser(requestedUser.UserID) == true)
+                    return _connections.GetAllContactsOfUser(requestedUser.UserID);
+                else
+                    return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpGet]
+        [Route("getFavConnnectionsOfUser")]
+        public ActionResult<List<ConnectedUser>> GetFavContactsOfUser()
+        {
+            var uniqueId = HttpContext.User.Identity.Name;
+            Users requestedUser = _users.GetUserByEmailId(uniqueId);
+            try
+            {
+                if (_users.IsUser(requestedUser.UserID) == true)
+                    return _connections.GetFavContactsOfUser(requestedUser.UserID);
+                else
+                    return Unauthorized();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+
+
+
+        //By Girish
         [HttpGet]
         [Route("getmycontacts")]
         public ActionResult<List<FrontEndContacts>> GetUserContacts()

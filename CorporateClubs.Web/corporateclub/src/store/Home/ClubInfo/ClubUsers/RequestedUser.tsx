@@ -46,7 +46,7 @@ class RequestedUser extends React.Component<any,{}>{
 }
 function mapStateToProps(state){
      
-    console.log('mapstattoprops',state.homeReducer);
+     //('mapstattoprops',state.homeReducer);
     return{
         myclubs
            : state.homeReducer.myclubs,

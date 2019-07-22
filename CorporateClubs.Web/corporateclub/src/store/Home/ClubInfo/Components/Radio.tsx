@@ -40,7 +40,7 @@ interface IChoiceGroupBasicExampleState {
       this.setState({publicClubType:this.props.publicClubType})
     }
     public render() {
-      console.log(this.props.onChange,'change',this.props.hide,"hide");
+       //(this.props.onChange,'change',this.props.hide,"hide");
       return (
         <div>
           <ChoiceGroup

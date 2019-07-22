@@ -17,7 +17,7 @@ import Deactivateclub from "./DeactivateClub/DeactivateClub";
 class Club extends React.Component<any, any> {
  
   componentDidMount() {
-    console.log("did mount");
+     //("did mount");
   }
 
 
@@ -205,7 +205,7 @@ class Exitbtn extends React.Component<any, any> {
 }
 function mapStateToProps(State) {
    
-  console.log(State);
+   //(State);
   return {
     requests: State.ClubReducer.requests,
     loggedUserRole: State.AppReducer.LoggedUser.role

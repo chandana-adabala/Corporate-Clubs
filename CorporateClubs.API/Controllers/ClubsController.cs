@@ -535,10 +535,10 @@ namespace CorporateClubs.API.Controllers
                 Users requestedUser = _users.GetUserByEmailId(uniqueId);
                 if (image.Length > 0)
                 {
-                    var url = "http://localhost:3333/images";
+                    var url = "http://localhost:3333/root/images";
                     var fileType = '.' + image.ContentType.Split('/')[1];
                     var name = "club" + clubID + fileType;
-                    var file1 = System.IO.Path.Combine(webRoot, name);
+                    var file1 = System.IO.Path.Combine(webRoot+"/images", name);
                     using (var stream = new FileStream(file1, FileMode.Create))
                     {
                         await image.CopyToAsync(stream);

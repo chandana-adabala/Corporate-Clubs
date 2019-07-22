@@ -1,48 +1,54 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Navigate from "../store/HeadNav/Navigate";
 import Admin from "../store/Admin/Admin";
 import Clubs from "../store/Clubs/Clubs";
-import User from "../store/Admin/UsersList/AdminUser";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "../store/Home/HomeComponent";
-import { runWithAdal } from "react-adal";
-import { authContext } from "../Configure";
 import Head from "../store/HeadNav/Head";
 import Profile_Head from "../store/Profile/ProfilePage";
-import Nav from "../store/HeadNav/Navigate";
-import { getToken } from "../Configure";
-import { fetchFavClubs } from "../store/Home/actions/clubAction";
 import { connect } from "react-redux";
 import MyThreads from "../store/Home/MyThreads";
-import Forbidden from "../store/ForbiddenPage/Forbidden";
-import { GetLoggedUserDetails } from "./AppActions/AppActions";
+import { GetLoggedUserDetails, storeConnectionID } from "./AppActions/AppActions";
 import Connections from "../store/Connections/Connections";
 import { withRouter } from "react-router-dom";
 import Loading from "./LoadingPage/Loading";
+import * as signalR from "@aspnet/signalr";
 
 class App extends React.Component<any, any> {
+  
   constructor(props)
   {
     super(props);
-    this.state={NavigatewithLocation:null}
+    const connection = new signalR.HubConnectionBuilder()
+    .withUrl("http://localhost:3333/conversationhub", {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+      })
+    .configureLogging(signalR.LogLevel.Trace)
+    .build();
+    this.state={
+      NavigatewithLocation:null,
+      connection:connection
+    }
+
 
   }
   componentWillMount() {
     this.props.dispatch(GetLoggedUserDetails());
+    this.props.dispatch(storeConnectionID(this.state.connection));
      this.setState({NavigatewithLocation:withRouter(props => <Navigate {...props} />)});
   }
 
   render() {
     
-    debugger;
+      
     //returning loading page if fetch call is not resolved
-    if(this.props.error=="not mounted")
-     return <Loading/>
-    if (this.props.error != "") {
-      return <Forbidden />;
-    } else {
+    // if(this.props.error=="not mounted")
+    //  return <Loading/>
+    // if (this.props.error != "") {
+    //   return <Forbidden />;
+    // } else {
       return (
         <div className="app">
           <Router>
@@ -65,19 +71,20 @@ class App extends React.Component<any, any> {
               </Switch>
             </div>
           </Router>
-          {this.props.isLoading?<Loading/>:<span/>}
+          {/* {this.props.isLoading?<Loading/>:<span/>} */}
         </div>
       );
     }
   }
-}
+
 
 function mapStatetoProps(state) {
-  debugger;
+    
   return {
     LoggedUser: state.AppReducer.LoggedUser,
     error: state.AppReducer.error,
-    isLoading: state.AppReducer.isLoading
+    isLoading: state.AppReducer.isLoading,
+    connectionID:state.AppReducer.connectionID
   };
 }
 

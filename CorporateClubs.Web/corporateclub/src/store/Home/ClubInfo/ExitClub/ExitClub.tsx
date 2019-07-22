@@ -5,7 +5,7 @@ import {ic_close} from 'react-icons-kit/md/ic_close'
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 import { getNativeProps } from '@uifabric/utilities';
 import {connect} from 'react-redux';
-import {exitFromClub} from '../../actions/clubAction'
+import {exitFromClub} from '../../actions/homeActions'
 interface Iprops{
     name?:string;
 }
@@ -22,7 +22,7 @@ class ExitClub extends React.Component<any,any> {
 
     confirmButtonHandle(event)
     {
-        debugger;
+          
         this.props.dispatch(exitFromClub(this.props.LoggedUserID,this.props.clubID));
     }
 

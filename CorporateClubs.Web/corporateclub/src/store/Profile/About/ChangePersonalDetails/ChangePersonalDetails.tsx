@@ -30,7 +30,7 @@ class ChangePersonalDetails extends React.Component<any,any>{
   {
      
    const User:IUser={...this.props.User}
-   console.log(User,"event")
+    //(User,"event")
    User.firstName=this.state.firstName;
    User.lastName=this.state.lastName;
    User.middleName=this.state.middleName;
@@ -41,7 +41,7 @@ class ChangePersonalDetails extends React.Component<any,any>{
    User.bloodGroup=this.state.bloodGroup;
    User.dOB=this.state.dOB;
     
-   console.log(User)
+    //(User)
    this.props.dispatch(UpdateUserDetails(User,"personaldetails"));
   
   }
@@ -80,7 +80,7 @@ class ChangePersonalDetails extends React.Component<any,any>{
     if(event.target.name=="DateofBirth")
     this.setState({dOB:new Date(event.target.value)})
      
-    console.log(this.state)
+     //(this.state)
   }
     render()
     { 
@@ -149,7 +149,7 @@ class ChangePersonalDetails extends React.Component<any,any>{
 
 function mapStatetoProps(state) {
      
-    console.log("cChangePersonalDetails");
+     //("cChangePersonalDetails");
      
     return {
         User: state.ProfilePageReducer.User

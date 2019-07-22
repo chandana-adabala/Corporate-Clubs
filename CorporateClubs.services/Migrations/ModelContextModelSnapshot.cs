@@ -204,6 +204,52 @@ namespace CorporateClubs.services.Migrations
                     b.ToTable("Conversation");
                 });
 
+            modelBuilder.Entity("CorporateClubs.Services.Models.OneToOneConversation", b =>
+                {
+                    b.Property<DateTimeOffset>("PostedOn")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ConnectedUserID");
+
+                    b.Property<int>("UserID");
+
+                    b.Property<string>("AttachmentNames");
+
+                    b.Property<string>("AttachmentUrls");
+
+                    b.Property<int?>("ClubID");
+
+                    b.Property<string>("Message");
+
+                    b.Property<int?>("RowCreatedBy");
+
+                    b.Property<DateTime?>("RowCreatedOn");
+
+                    b.Property<int?>("RowDeletedBy");
+
+                    b.Property<DateTime?>("RowDeletedOn");
+
+                    b.Property<int?>("RowModifiedBy");
+
+                    b.Property<DateTime?>("RowModifiedOn");
+
+                    b.HasKey("PostedOn", "ConnectedUserID", "UserID");
+
+                    b.HasAlternateKey("ConnectedUserID", "PostedOn", "UserID");
+
+                    b.HasIndex("ClubID");
+
+                    b.HasIndex("RowCreatedBy");
+
+                    b.HasIndex("RowDeletedBy");
+
+                    b.HasIndex("RowModifiedBy");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("OneToOneConversation");
+                });
+
             modelBuilder.Entity("CorporateClubs.Services.Models.Users", b =>
                 {
                     b.Property<int>("UserID")
@@ -379,6 +425,33 @@ namespace CorporateClubs.services.Migrations
                         .WithMany()
                         .HasForeignKey("ClubID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CorporateClubs.Services.Models.Users")
+                        .WithMany()
+                        .HasForeignKey("RowCreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("CorporateClubs.Services.Models.Users")
+                        .WithMany()
+                        .HasForeignKey("RowDeletedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("CorporateClubs.Services.Models.Users")
+                        .WithMany()
+                        .HasForeignKey("RowModifiedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("CorporateClubs.Services.Models.Users")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("CorporateClubs.Services.Models.OneToOneConversation", b =>
+                {
+                    b.HasOne("CorporateClubs.Services.Models.Club")
+                        .WithMany()
+                        .HasForeignKey("ClubID");
 
                     b.HasOne("CorporateClubs.Services.Models.Users")
                         .WithMany()

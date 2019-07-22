@@ -25,7 +25,7 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
         this.b64toBlob=this.b64toBlob.bind(this);
       }
       imageSelectHandler=(ev)=>{
-        console.log(ev.target.files[0]);
+         //(ev.target.files[0]);
         this.setState({
             selectedImage:ev.target.files[0]
         });
@@ -51,15 +51,15 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
     imageUploadHandler=(ev)=>{
         
         var imageBlob:Blob=this.b64toBlob(this.state.preview)
-        console.log("image upload");
+         //("image upload");
         
         const fd = new FormData();
         fd.append('image',imageBlob);
-        // console.log(fd.get('image'),this.state.selectedImage,this.state.selectedImage.name);
+        //  //(fd.get('image'),this.state.selectedImage,this.state.selectedImage.name);
         axios.post('http://localhost:3333/api/users/UploadImage/2',
         fd ,{headers: {'Content-Type': "multipart/form-data", 'Authorization': 'Bearer ' + getToken()}})
         .then(res=>{
-            console.log(res);
+             //(res);
         })
 
     }
@@ -71,7 +71,7 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
 
       
       onCrop(preview) {
-            debugger;
+              
          if(preview!="")
         this.setState({preview})
       }
@@ -172,7 +172,7 @@ export class ChangeProfilePicture extends React.Component<Iprops,any>{
     }
 
     imageSelectHandler=(ev)=>{
-        console.log(ev.target.files[0]);
+         //(ev.target.files[0]);
         this.setState({
             selectedImage:ev.target.files[0]
         });
@@ -181,16 +181,16 @@ export class ChangeProfilePicture extends React.Component<Iprops,any>{
 
     imageUploadHandler=(ev)=>{
         ;
-        console.log("image upload");
+         //("image upload");
         
         const fd = new FormData();
         fd.append('image',this.state.selectedImage);
-        console.log(fd.get('image'),this.state.selectedImage,this.state.selectedImage.name);
+         //(fd.get('image'),this.state.selectedImage,this.state.selectedImage.name);
         
         axios.post('http://localhost:3333/api/users/api/UploadImage/4',
         fd ,{headers: {'Content-Type': "multipart/form-data"}})
         .then(res=>{
-            console.log(res);
+             //(res);
         })
 
     }

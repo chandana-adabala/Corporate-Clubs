@@ -8,7 +8,7 @@ import {cross} from 'react-icons-kit/metrize/cross'
 import { connect } from 'react-redux';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'; 
 import './NonClubUser.scss'
-import { acceptRequest, rejectRequest, fetchMyClubInfo } from '../../actions/clubAction';
+import { acceptRequest, rejectRequest, fetchMyClubInfo } from '../../actions/homeActions';
 export default class NonClubUser extends React.Component<any,any>{
     constructor(props)
     {
@@ -28,7 +28,7 @@ export default class NonClubUser extends React.Component<any,any>{
   }
     render(){
  
-        debugger;
+          
         return(
             <div className="nonUser">
             

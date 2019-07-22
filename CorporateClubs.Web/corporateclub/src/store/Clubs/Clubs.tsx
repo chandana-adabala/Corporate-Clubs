@@ -36,7 +36,7 @@ class Clubs extends React.Component<any,any>{
 onlyUnique(value, index, self)
  {
    
-  console.log(self.indexOf(value));
+   //(self.indexOf(value));
   return self.indexOf(value) === index;
 }
 
@@ -194,7 +194,7 @@ handleReset()
 function mapStateToProps(State)
   {
      
-    console.log(State)
+     //(State)
     return{
        clubs:State.ClubReducer.clubs,
       users:State.ClubReducer.users,
