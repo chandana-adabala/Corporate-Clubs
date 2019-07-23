@@ -122,7 +122,7 @@ class Conversation extends React.Component<any,any>{
         }
         
         start=async ()=> {
-            debugger;
+                
             try {
                 await this.props.connection.start();
                 console.log("connected w");

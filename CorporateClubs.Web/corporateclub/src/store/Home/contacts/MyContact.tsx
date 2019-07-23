@@ -20,7 +20,7 @@ class Contact extends React.Component<any, any>{
     // }
 
     onClubClick=(event)=> {
-             debugger; 
+                  
         this.props.dispatch(fetchMessagesOfUser(this.props.contact.connectedUserID));
         this.props.openChat(this.props.contact.connectedUserID);
     }

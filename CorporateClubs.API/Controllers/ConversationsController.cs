@@ -127,7 +127,7 @@ namespace CorporateClubs.API.Controllers
                     string[] names;
                     urls =chat.AttachmentUrls.Split(" ");
                     names =chat.AttachmentNames.Split("/");
-                    await _hubContext.Clients.Group(clubID.ToString()).SendAsync("ReceiveMessage", userID, messageSenderInfo.userName, messageSenderInfo.profilePic, chat.Message, chat.PostedOn, urls, names);
+                    await _hubContext.Clients.Group("club"+clubID.ToString()).SendAsync("ReceiveMessage", userID, messageSenderInfo.userName, messageSenderInfo.profilePic, chat.Message, chat.PostedOn, urls, names);
 
                 }
                 
@@ -142,8 +142,8 @@ namespace CorporateClubs.API.Controllers
 
 
         [HttpPost]
-        [Route("uploadattachmentstochat/{userID:int}/{connectedUserID:int}")]
-        public async Task<string> UploadAttachmentsToThread([FromForm] IFormFileCollection files, int userID, int connectedUserID)
+        [Route("uploadattachmentstochat/{connectedUserID:int}/{userID:int}")]
+        public async Task<string> UploadAttachmentsToThread([FromForm] IFormFileCollection files, int connectedUserID, int userID)
         {
             var webroot = _env.WebRootPath;
             try
@@ -156,7 +156,7 @@ namespace CorporateClubs.API.Controllers
                         msgInfo = reader.ReadToEnd();
                     }
                     JObject msg = JObject.Parse(msgInfo);
-                    MessageSenderInfo messageSenderInfo = msg.ToObject<MessageSenderInfo>();
+                    OneToOneMessages messageSenderInfo = msg.ToObject<OneToOneMessages>();
                     OneToOneConversation chat = msg.ToObject<OneToOneConversation>();
                     chat.PostedOn = DateTimeOffset.Now;
                     chat.RowCreatedOn = DateTime.Now;
@@ -183,7 +183,10 @@ namespace CorporateClubs.API.Controllers
                     string[] names;
                     urls = chat.AttachmentUrls.Split(" ");
                     names = chat.AttachmentNames.Split("/");
-                    await _hubContext.Clients.Group(connectedUserID.ToString()).SendAsync("ReceiveMessageByUser", userID, messageSenderInfo.userName, messageSenderInfo.profilePic, chat.Message, chat.PostedOn, urls, names);
+                   // Clients.Group(connectedUserID.ToString() + "-" + userID.ToString()).SendAsync("ReceiveMessageByUser", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
+                  //  return Clients.Group(userID.ToString() + "-" + connectedUserID.ToString()).SendAsync("ReceiveMessageByUser", chat.UserID, displayName, profilePic, chat.Message, chat.PostedOn, files);
+                    await _hubContext.Clients.Group(connectedUserID.ToString() + "-" + userID.ToString()).SendAsync("ReceiveMessageByUser", userID,connectedUserID, messageSenderInfo.userName, messageSenderInfo.profilePic, chat.Message, chat.PostedOn, urls, names);
+                    await _hubContext.Clients.Group(userID.ToString() + "-" + connectedUserID.ToString()).SendAsync("ReceiveMessageByUser", userID,connectedUserID, messageSenderInfo.userName, messageSenderInfo.profilePic, chat.Message, chat.PostedOn, urls, names);
 
                 }
 

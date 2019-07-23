@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import { fetchFavContacts, fetchMyContacts, fetchMessagesOfUser } from './actions/threadActions';
 import HomeNav from './HomeBar/HomeNav';
 import Conversation from './ThreadConversation/Conversation/Conversation'
+import { Link, Route } from 'react-router-dom';
+import { NewConnection } from '../Connections/NewConnection/NewConnection';
 
 
 class MyThreads extends React.Component<any,any>{
@@ -22,11 +24,12 @@ class MyThreads extends React.Component<any,any>{
  
     }
 
-    showChat=(connectedUserID)=>{
+    showChat=(connectedUserID,profilePic)=>{
                 
         this.setState({
             isChatHide:false,
-            connectedUserID:connectedUserID
+            connectedUserID:connectedUserID,
+            connectedUserProfilePic:profilePic
     });
 }
     onInputChange=(event)=>{
@@ -61,7 +64,9 @@ class MyThreads extends React.Component<any,any>{
             <HomeNav/>
             <div className="threadBar">
                         My Threads
+                        <Link to="/Home/MyThreads/newconnection">
                         <button className="createBtn">Create New</button>
+                        </Link>
                     </div>
                     <div className="threadBody">
 
@@ -106,11 +111,12 @@ class MyThreads extends React.Component<any,any>{
                         (this.state.primaryClub!=""?
                                 (<Conversation  userMessages={this.props.userMessages} loggedUser={this.props.LoggedUser} connectedUserID={this.state.connectedUserID}/>)
                                 :(<span>Loading...</span>))
-                        :(<Conversation  userMessages={this.props.userMessages} loggedUser={this.props.LoggedUser} connectedUserID={this.state.connectedUserID}/>) )}
+                        :(<Conversation  userMessages={this.props.userMessages} loggedUser={this.props.LoggedUser} connectedUserID={this.state.connectedUserID} />) )}
                  
                     
                     </div>
                 </div> 
+                <Route  path="/Home/MyThreads/newconnection" component={()=><NewConnection userSuggestions={this.props.userSuggestions} from="/Home/MyThreads"/>}/>
         </div>);
       
     }
@@ -133,6 +139,8 @@ function mapStateToProps(state){
             :state.AppReducer.LoggedUser,
         userMessages
             :state.threadReducer.userMessages,
+        userSuggestions
+            :state.ConnectionsReducer.userSuggestions
         
    }
      

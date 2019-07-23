@@ -93,9 +93,9 @@ class Conversation extends React.Component<any,any>{
             this.props.connection.on(
             
                 "ReceiveMessageByUser",
-                (userID,displayName,profilePic ,message, postedAt,fileUrls,fileNames) => {
-                     console.log("message received by user");
-                     
+                (userID,connectedUserID,displayName,profilePic ,message, postedAt,fileUrls,fileNames) => {
+                     console.log("message received by user",this.state);
+                     debugger;
                   
                   this.state.ismount && this.setState({
                     userMessages:[...this.state.userMessages,{
@@ -111,13 +111,7 @@ class Conversation extends React.Component<any,any>{
                   });
                 }
               );
-            //   this.props.connection.on(
-            //     "Disconnected",
-            //     (e) => {
-            //          console.log("called disconnected");
-            //          this.props.connection.start();
-            //     }
-            //   );
+         
         }
         
          
@@ -145,13 +139,7 @@ class Conversation extends React.Component<any,any>{
             console.log(this.props.connection,"disconnected");
             
         }
-        //  this.props.connection.disconnected=()=>{
-        //      console.log("disconnected");
-             
-        //     setTimeout(() =>{
-        //         this.props.connection.start();
-        // }, 5000);
-        // }
+    
       
       }
 
@@ -175,7 +163,7 @@ class Conversation extends React.Component<any,any>{
              
             let conversation : IPrivateMsgWithAttach={
                
-                ConnectedUserID:this.props.messages[0].connectedUserID,
+                ConnectedUserID:this.props.connectedUserID,
                 UserID:this.props.loggedUser.userID,
                 Message:this.state.message,
                 ProfilePic:this.props.loggedUser.profilePic,
@@ -264,7 +252,7 @@ class Conversation extends React.Component<any,any>{
       }
 
      render(){
-             debugger;
+                 
          console.log("fsd2",this.props.connectedUserID);
          if(this.props.userMessages.length!=0){
              console.log(this.props.userMessages[0].connectedUserName);
@@ -280,7 +268,7 @@ class Conversation extends React.Component<any,any>{
                             
                               <p> <Icon size={24} icon={ic_notifications_off} style={{ color: 'gray',paddingRight:'0.5rem' }} /> Mute Notifications</p>
                               <p> <Icon size={24} icon={ic_favorite} style={{ color: 'gray',paddingRight:'0.5rem' }} />Mark Favorite</p>
-                              <p> <Icon size={24} icon={ic_flight_takeoff} style={{ color: 'gray',paddingRight:'0.5rem' }} />Exit Club</p>
+                              <p> <Icon size={24} icon={ic_flight_takeoff} style={{ color: 'gray',paddingRight:'0.5rem' }} />Block Contact</p>
 
                           </div>
                     </nav>

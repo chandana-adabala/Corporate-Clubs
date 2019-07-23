@@ -38,7 +38,7 @@ export class NewConnection extends React.Component<any, any>
                 <div className="modal-content">
                     <div className='header'>
                         <span className="newConnectionHeading">New Connection</span>
-                        <Link to="/connections">
+                        <Link to={this.props.from}>
                             <Icon icon={ic_close} size={30} />
                         </Link>
                     </div>

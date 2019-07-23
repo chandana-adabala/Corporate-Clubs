@@ -48,6 +48,7 @@ namespace CorporateClubs.Models.Models
         public int connectedUserID;
         public string connectedUserProfilePic;
         public string connectedUserDisplayName;
+        public bool isRequested;
         //public string recentMsg;
         //public string recentMsgTime;
     }

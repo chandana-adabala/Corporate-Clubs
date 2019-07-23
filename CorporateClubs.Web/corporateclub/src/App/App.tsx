@@ -37,14 +37,14 @@ class App extends React.Component<any, any> {
 
   }
   componentWillMount() {
-    debugger;
+        
 
     this.props.dispatch(GetLoggedUserDetails());
     this.props.dispatch(storeConnectionID(this.state.connection));
      this.setState({NavigatewithLocation:withRouter(props => <Navigate {...props} />)});
   }
 // componentWillUnmount(){
-//   debugger;
+//       
 //   this.state.connection.stop();
 // }
   render() {

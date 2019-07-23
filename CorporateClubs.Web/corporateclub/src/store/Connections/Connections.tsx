@@ -166,7 +166,7 @@ handleReset()
       <div className="connection_tiles">  
       {this.props.filtereduserContacts.map(userContact=>(<User displayName={userContact.displayName} email={userContact.email} mobileNumber={userContact.mobileNumber} mutualClubs={userContact.mutualClubs} about={userContact.about} profilePic={userContact.profilePic} />))}
       </div>  
-      <Route  path="/connections/newconnection" component={()=><NewConnection userSuggestions={this.props.userSuggestions}/>}/>
+      <Route  path="/connections/newconnection" component={()=><NewConnection userSuggestions={this.props.userSuggestions} from="/connections"/>}/>
         </div>
        
         

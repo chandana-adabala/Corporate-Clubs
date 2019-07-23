@@ -20,7 +20,7 @@ namespace CorporateClubs.Services.Services
             
                 using (var _context = new ModelContext())
                 {
-                    var contactList= _context.Contacts.Where(contact => contact.RowDeletedBy == null && contact.UserID == userID && contact.IsRequested == false && contact.IsBlock==false).ToList();
+                    var contactList= _context.Contacts.Where(contact => contact.RowDeletedBy == null && contact.UserID == userID  && contact.IsBlock==false).ToList();
                     foreach(var contact in contactList)
                     {
                         try
@@ -30,6 +30,7 @@ namespace CorporateClubs.Services.Services
                         userConnection.connectedUserDisplayName = connectedUserInfo.DisplayName;
                         userConnection.connectedUserID = connectedUserInfo.UserID;
                         userConnection.connectedUserProfilePic = connectedUserInfo.ProfilePic;
+                        userConnection.isRequested = contact.IsRequested;
                         userConnections.Add(userConnection);
                         }
                     
