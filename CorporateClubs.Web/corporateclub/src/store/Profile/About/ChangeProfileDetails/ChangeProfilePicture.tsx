@@ -5,24 +5,27 @@ import { Icon } from 'react-icons-kit'
 import {match,Router,Link} from 'react-router-dom'
 import axios from 'axios';
 import Avatar from 'react-avatar-edit';
- import {getToken} from '../../../../Configure'
+import {FetchProfileDetails} from '../../Actions'
+import {getToken} from '../../../../Configure'
+import {GetLoggedUserDetails} from '../../../../App/AppActions/AppActions'
+import {connect} from 'react-redux'
 
 
 
-
-export default class ChangeProfilePicture extends React.Component<any,any>{
+ class ChangeProfilePicture extends React.Component<any,any>{
     constructor(props) {
         super(props)
         this.state = {
             selectedImage:null,
-          preview: this.props.profilePic,
-          src:this.props.profilePic,
+          preview: null,
+          src:null,
           name:null,
         }
         this.onCrop = this.onCrop.bind(this);
         this.onClose = this.onClose.bind(this);
         this.onFileLoad=this.onFileLoad.bind(this);
         this.b64toBlob=this.b64toBlob.bind(this);
+        this. imageUploadHandler=this. imageUploadHandler.bind(this)
       }
       imageSelectHandler=(ev)=>{
         console.log(ev.target.files[0]);
@@ -48,19 +51,26 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
 
 
 
-    imageUploadHandler=(ev)=>{
+     async imageUploadHandler(ev)
+     {
+        if(this.state.preview!=null)
         
-        var imageBlob:Blob=this.b64toBlob(this.state.preview)
+       { 
+           var imageBlob:Blob=this.b64toBlob(this.state.preview)
         console.log("image upload");
         
         const fd = new FormData();
         fd.append('image',imageBlob);
         // console.log(fd.get('image'),this.state.selectedImage,this.state.selectedImage.name);
-        axios.post('http://localhost:3333/api/users/UploadImage/2',
+        await axios.post('http://localhost:3333/api/users/UploadImage/2',
         fd ,{headers: {'Content-Type': "multipart/form-data", 'Authorization': 'Bearer ' + getToken()}})
         .then(res=>{
             console.log(res);
         })
+
+         await this.props.dispatch(FetchProfileDetails());
+         await this.props.dispatch(GetLoggedUserDetails())
+       }
 
     }
      
@@ -71,8 +81,6 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
 
       
       onCrop(preview) {
-            debugger;
-         if(preview!="")
         this.setState({preview})
       }
 
@@ -80,6 +88,7 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
 
     onFileLoad(event)
     {
+        debugger;
         this.setState({name:event.name})
     }
 
@@ -111,7 +120,6 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
           width={300}
           height={200}
           imageWidth={300}
-          src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
           onCrop={this.onCrop}
           onClose={this.onClose}
           lineWidth={0}
@@ -135,7 +143,7 @@ export default class ChangeProfilePicture extends React.Component<any,any>{
     }
 }
 
-
+export default connect()(ChangeProfilePicture)
 {/* interface Iprops
 {
     userID?:number,

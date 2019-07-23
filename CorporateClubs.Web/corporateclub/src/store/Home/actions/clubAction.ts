@@ -533,10 +533,10 @@ export const removeUserAsAdmin=(userID,clubID)=>
 export function editClub(editedClub:INewClub,formData:FormData|null)
 {
     debugger;
-    return function(dispatch){
+    return async function(dispatch){
         debugger;
         dispatch(loadingStarted())
-        return fetch('http://localhost:3333/'+'api/clubs/updateclub',{method:"put",body:JSON.stringify(editedClub),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
+        return await fetch('http://localhost:3333/'+'api/clubs/updateclub',{method:"put",body:JSON.stringify(editedClub),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response=>{
             if(!response.ok){
                 throw new Error("User Not Found!");

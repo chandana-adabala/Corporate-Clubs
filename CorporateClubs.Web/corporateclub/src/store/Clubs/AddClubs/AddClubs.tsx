@@ -173,11 +173,17 @@ class AddClubs extends React.Component<any, any>{
       }
       console.log("NewClub", NewClub);
       const formData = new FormData();
-      var dataURL = this.state.editor.getImageScaledToCanvas().toDataURL();
-      var imageBlob: Blob = this.b64toBlob(dataURL);
-      formData.append('image', imageBlob);
-      await this.props.dispatch(addClub(NewClub,formData));
-      await this.props.dispatch(FetchClubMembersList())
+      if(this.state.editor!='')
+      {
+        var dataURL = this.state.editor.getImageScaledToCanvas().toDataURL();
+        var imageBlob: Blob = this.b64toBlob(dataURL);
+        formData.append('image', imageBlob);
+        await this.props.dispatch(addClub(NewClub,formData));
+        await this.props.dispatch(FetchClubMembersList())
+      }
+        await this.props.dispatch(addClub(NewClub,null));
+        await this.props.dispatch(FetchClubMembersList())
+
 
     }
   }
@@ -212,7 +218,7 @@ class AddClubs extends React.Component<any, any>{
   render() {
     return (
 
-      <div className="AddUser" >
+      <div className="addClub" >
         <header className="adduser_head">
           <text>Add New Club</text>
           <Link to={this.props.from}>

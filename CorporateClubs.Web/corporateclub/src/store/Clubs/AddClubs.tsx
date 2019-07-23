@@ -216,7 +216,7 @@ class AddClubs extends React.Component<any, any>{
   render() {
     return (
 
-      <div className="AddUser" >
+      <div className="addClub" >
         <header className="adduser_head">
           <text>Add New Club</text>
           <Link to={this.props.from}>

@@ -4,7 +4,7 @@ import {library} from 'react-icons-kit/icomoon/library';
 import {ic_mail} from 'react-icons-kit/md/ic_mail';
 import {phone} from 'react-icons-kit/icomoon/phone'
 import './receivedConnection.scss'
-import {acceptConnectionRequest,declineConnectionRequest} from '../actions/threadActions'
+import {acceptConnectionRequest,declineConnectionRequest} from '../actions/threadActionsMod'
 export default class ReceivedConnection extends React.Component<any,any>{
     constructor(props)
     {

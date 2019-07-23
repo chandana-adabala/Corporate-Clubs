@@ -1,5 +1,9 @@
-.AddUser
+.addClub
  {
+    .dropdown
+    {
+        position: unset;
+    }
  /* Hidden by default *///display: none;
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -167,7 +171,7 @@
      }
      .addUsersDropdown
      {
-    
+   
         .dropdown-content {
             width: 100%;
             bottom: -101px;
@@ -228,7 +232,6 @@
      {
         flex-wrap: wrap;
     width:80%;
-     position:relative;
      margin-bottom:2rem;
       border-bottom: 2px solid rgb(170, 170, 170);
       input:focus
