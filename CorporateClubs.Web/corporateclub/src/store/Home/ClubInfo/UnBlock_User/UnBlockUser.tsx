@@ -5,7 +5,7 @@ import {ic_close} from 'react-icons-kit/md/ic_close'
 import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom';
 import { getNativeProps } from '@uifabric/utilities';
 import {connect} from 'react-redux';
-import {blockOrUnblockUser,fetchClubMembers} from '../../actions/clubAction'
+import {blockOrUnblockUser,fetchClubMembers} from '../../actions/homeActions'
 interface Iprops{
     name?:string;
 }
@@ -22,7 +22,7 @@ class UnBlockUser extends React.Component<any,any> {
 
    async confirmButtonHandle(event)
     {
-        debugger;
+          
     await this.props.dispatch(blockOrUnblockUser(this.props.userID,this.props.clubID));
     await this.props.dispatch(fetchClubMembers(this.props.clubID))
     }

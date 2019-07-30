@@ -1,6 +1,4 @@
 import React from 'react'
-import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
-import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import { search } from 'react-icons-kit/icomoon/search'
 import './ClubInfo.scss';
 import { Icon } from 'react-icons-kit';
@@ -11,14 +9,12 @@ import { user_add } from 'react-icons-kit/ikons/user_add'
 import ExitClub from './ExitClub/ExitClub'
 import User from './ClubUsers/User'
 import RequestedUser from './ClubUsers/RequestedUser'
-import MyToggle from './Components/Toggle'
 import MyRadio from './Components/Radio'
-import MyCheckbox from './Components/CheckBox'
 import IUsers from '../../../models/IUsers';
 import { connect } from 'react-redux';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'; 
-import { changeClubType, fetchMyClubInfo, muteNunmuteClub, addNewMembers, fetchNonClubMembers } from '../actions/clubAction';
+import { changeClubType, fetchMyClubInfo, muteNunmuteClub, addNewMembers, fetchNonClubMembers } from '../actions/homeActions';
 import NonClubUser from './ClubUsers/NonClubUser';
 import DeactivateClub from '../../Clubs/DeactivateClub/DeactivateClub'
 import {Link,Route} from 'react-router-dom';
@@ -57,26 +53,26 @@ class ClubInfo extends React.Component<any, any>{
             searchTerm: event.target.value,
             userArrayFilter: this.searchMem
         });
-        console.log('on input change', event.target.value, this.state.userArrayFilter, this.uA, this.searchMem);
+         //('on input change', event.target.value, this.state.userArrayFilter, this.uA, this.searchMem);
 
         //this.getSearchData(event);
 
     }
     getNewClub(event) {
-        console.log('on blur called');
+         //('on blur called');
 
         this.setState({
             searchTerm: event.target.value,
             userArrayFilter: ""
         });
         event.target.value = "";
-        console.log("onBlur", this.state.userArrayFilter);
+         //("onBlur", this.state.userArrayFilter);
 
     }
 
     handleToggle=(event: React.MouseEvent<HTMLElement>, checked: boolean|undefined)=>{
-        console.log('handle toggle');
-        debugger;
+         //('handle toggle');
+          
         if(checked==true){
             this.setState({
                 hideClubSubTypes:false
@@ -111,7 +107,7 @@ class ClubInfo extends React.Component<any, any>{
                 newMemList:[...this.state.newMemList,newUser.userID]
             });
         if(!checked){
-            console.log("checked pop",this.state.newMemList.filter(user=>user!=newUser.userID));
+             //("checked pop",this.state.newMemList.filter(user=>user!=newUser.userID));
             this.setState({
                 newMemCount:this.state.newMemCount-1,
                 //prevState.data.filter(el => el != id )
@@ -121,7 +117,7 @@ class ClubInfo extends React.Component<any, any>{
         
     }
     addMembers=()=>{
-        debugger;
+          
         this.props.dispatch(addNewMembers(this.props.club.clubID,this.state.newMemList,this.props.currentUser));
         this.props.dispatch(fetchMyClubInfo(this.props.club.clubID));
         this.setState({
@@ -139,7 +135,7 @@ class ClubInfo extends React.Component<any, any>{
       
     }
     componentWillReceiveProps(nextProps){
-        debugger;
+          
         this.setState({
             nonUsers:nextProps.nUsers,
             newMemCount:0,
@@ -158,7 +154,7 @@ class ClubInfo extends React.Component<any, any>{
         }
         if(this.state.currentUserRole==''&&nextProps.club!=undefined&&nextProps.cUsers!=undefined)
         {
-            debugger;
+              
             var user=nextProps.cUsers.filter(cUser=>cUser.clubID==nextProps.club.clubID&&cUser.userID==nextProps.LoggedUserID)
             if(user[0]!=undefined)
             {
@@ -169,8 +165,8 @@ class ClubInfo extends React.Component<any, any>{
     }
     
     render() {
-  debugger;
-console.log("non user",this.state.nonUsers);
+    
+ //("non user",this.state.nonUsers);
         return (
             <div className="clubInfo">
                 <div className="clubTitle">
@@ -241,14 +237,14 @@ console.log("non user",this.state.nonUsers);
                             {this.props.cUsers != "" ? (
                                 this.props.cUsers.map((cuser) => {
                                     return this.state.userArrayFilter != "" ? (this.state.userArrayFilter.map((user) => {
-                                        console.log("user filter", user);
+                                         //("user filter", user);
 
                                         if (cuser.userID == user.userID)
-                                            return <User user={user} key={user.userID} cuser={cuser} />
+                                            return <User user={user} key={user.userID} cuser={cuser} clubID={this.props.club.clubID}  />
                                     }
                                     )) : (
                                             this.props.users.map((user) => {
-                                                // console.log('role',cuser.role);
+                                                //  //('role',cuser.role);
 
                                                 if (cuser.userID == user.userID)
                                                     return <User user={user} key={user.userID} cuser={cuser} clubID={this.props.club.clubID} />
@@ -274,7 +270,7 @@ console.log("non user",this.state.nonUsers);
                                             return <RequestedUser user={user} key={user.userID} ruser={ruser} />
                                     })
                                 }))
-                                : (<h4>no req members</h4>)}
+                                : (<h4>No Requests</h4>)}
 
                         </div>
                         <div className="gs">Group Settings</div>

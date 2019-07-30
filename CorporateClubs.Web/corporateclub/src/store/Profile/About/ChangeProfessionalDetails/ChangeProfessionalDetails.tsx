@@ -37,11 +37,11 @@ class ChangeProfessionalDetails extends React.Component<any, any>{
     this.state = {profSum:this.props.User.profSum};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    debugger;
+       
       }
 // componentDidUpdate()
 // {
-//     debugger;
+//        
 //     this.state = {mobileNumber:this.props.User.mobileNumber,"email":this.props.User.email,"address":this.props.User.address};
 // }
 
@@ -51,7 +51,7 @@ class ChangeProfessionalDetails extends React.Component<any, any>{
    const User:IUser={...this.props.User}
    console.log(User,"event")
    User.profSum=this.state.profSum;
-   debugger;
+      
    console.log(User)
    await this.props.dispatch(UpdateUserDetails(User,"professionaldetails"));
    await this.props.dispatch(FetchProfileDetails());
@@ -65,7 +65,7 @@ class ChangeProfessionalDetails extends React.Component<any, any>{
   }
 
     render() {
-        debugger;
+           
         return (
             <div id="ChangeProfeesionalDetailsModal" >
                 { <div id="content">
@@ -100,9 +100,9 @@ class ChangeProfessionalDetails extends React.Component<any, any>{
 
 
 function mapStatetoProps(state) {
-    debugger;
+       
     console.log("changecontactDetails");
-    debugger;
+       
     return {
         User: state.ProfilePageReducer.User
     }

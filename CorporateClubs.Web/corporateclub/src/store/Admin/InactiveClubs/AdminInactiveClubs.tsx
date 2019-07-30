@@ -33,7 +33,7 @@ class InactiveClubs extends React.Component<any, any>{
     this.reset = this.reset.bind(this);
     this.searchHandle=this.searchHandle.bind(this);
     this.state = { clubs:[],users:{},selectedList:[],search:""};
-    debugger;
+     
   }
 
   componentWillMount() {
@@ -46,8 +46,8 @@ class InactiveClubs extends React.Component<any, any>{
     this.setState({selectedList:this.props.clubs});
   }
   onlyUnique(value, index, self) {
-    debugger;
-    console.log(self.indexOf(value));
+     
+     //(self.indexOf(value));
     return self.indexOf(value) === index;
   }
 
@@ -58,7 +58,7 @@ myFilter(clubRow)
   { 
     if(clubRow.clubType==this.state.clubs[i]&&clubRow.clubTitle.toLowerCase().includes(this.state.search))
     {
-      console.log("true");
+       //("true");
     return true
     }
   }
@@ -96,7 +96,7 @@ myFilter(clubRow)
     { 
       if(clubRow.clubType==clubs[i]&&clubRow.clubTitle.toLowerCase().includes(search))
       {
-        console.log("true");
+         //("true");
       return true
       }
     }
@@ -143,7 +143,7 @@ myFilter(clubRow)
       { 
         if(clubRow.clubType==clubs[i]&&clubRow.clubTitle.toLowerCase().includes(search))
         {
-          console.log("true");
+           //("true");
         return true
         }
       }
@@ -191,7 +191,7 @@ handleClubClose(event)
   { 
     if(clubRow.clubType==clubs[i]&&clubRow.clubTitle.toLowerCase().includes(search))
     {
-      console.log("true");
+       //("true");
     return true
     }
   }
@@ -215,7 +215,7 @@ handleClubClose(event)
   var users=this.state.users;
   var search=this.state.search
   clubs=clubs.filter(value=>value!=(event.currentTarget.id));
-  debugger;
+   
   this.setState({ clubs: clubs });
   this.forceUpdate();
   let selectedList=this.props.clubs.filter(myFilter);
@@ -240,7 +240,7 @@ handleUserClose(event)
   { 
     if(clubRow.clubType==clubs[i]&&clubRow.clubTitle.toLowerCase().includes(search))
     {
-      console.log("true");
+       //("true");
     return true
     }
   }
@@ -264,7 +264,7 @@ handleUserClose(event)
   var users=this.state.users;
   var search=this.state.search
   delete users[event.currentTarget.id]
-  debugger;
+   
   this.setState({ users: users });
   this.forceUpdate();
   let selectedList=this.props.clubs.filter(myFilter)
@@ -292,14 +292,14 @@ reset()
 searchHandle(event)
 {
   function  myFilter(clubRow)
-  {debugger;
+  { 
     let i=0;
   
     for (i=0;i<clubs.length;i++) 
     { 
       if(clubRow.clubType==clubs[i]&&clubRow.clubTitle.toLowerCase().includes(search))
       {
-        console.log("true");
+         //("true");
       return true
       }
     }
@@ -339,7 +339,7 @@ this.setState({selectedList:selectedList });
       {
      selectedUsers[user.userID]=user.displayName;
     }}))[0]);
-console.log(selectedUsers,"v");
+ //(selectedUsers,"v");
 
 
 
@@ -431,7 +431,7 @@ class DatatablePage extends React.Component<any,any>{
             <td className="rows">
               <div>
               {this.props.UsersList!=undefined?this.props.UsersList.map((user)=>{
-                   console.log(user.UserID,clubs.clubsID)
+                    //(user.UserID,clubs.clubsID)
                   if(user.userID==clubs.clubCreatedBy)
                   return (<p>{user.displayName}</p>)
                 }):<span></span>}
@@ -442,7 +442,7 @@ class DatatablePage extends React.Component<any,any>{
             <td className="rows">
               <div>
                 {this.props.UsersList!=undefined?this.props.UsersList.map((user)=>{
-                   console.log(user.UserID,clubs.clubsID)
+                    //(user.UserID,clubs.clubsID)
                   if(user.userID==clubs.clubDeactiveBy)
                   return (<p>{user.displayName}</p>)
                 }):<span></span>}
@@ -469,7 +469,7 @@ class DatatablePage extends React.Component<any,any>{
   }
 }
 function mapStateToProps(State) {
-  debugger;
+   
   return {
     clubs: State.AdminPageReducer.clubs,
     users:State.AdminPageReducer.users

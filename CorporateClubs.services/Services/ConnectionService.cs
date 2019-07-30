@@ -5,13 +5,78 @@ using System.Threading.Tasks;
 using CorporateClubs.Services.Models;
 using CorporateClubs.Models.Models;
 using CorporateClubs.Services.Interfaces;
-using NLog;
+
 
 namespace CorporateClubs.Services.Services
 {
     public class ConnectionService : IConnections
     {
-        private static Logger logger = LogManager.GetCurrentClassLogger();
+        
+
+        //By Chandana
+        public List<ConnectedUser> GetAllContactsOfUser(int userID)
+        {
+            List<ConnectedUser> userConnections = new List<ConnectedUser>();
+            
+                using (var _context = new ModelContext())
+                {
+                    var contactList= _context.Contacts.Where(contact => contact.RowDeletedBy == null && contact.UserID == userID  && contact.IsBlock==false).ToList();
+                    foreach(var contact in contactList)
+                    {
+                        try
+                        {
+                        var connectedUserInfo = _context.Users.Single(user => user.UserID == contact.ConnectedUserID && user.RowDeletedBy == null && user.IsActive == true);
+                        ConnectedUser userConnection = new ConnectedUser();
+                        userConnection.connectedUserDisplayName = connectedUserInfo.DisplayName;
+                        userConnection.connectedUserID = connectedUserInfo.UserID;
+                        userConnection.connectedUserProfilePic = connectedUserInfo.ProfilePic;
+                        userConnection.isRequested = contact.IsRequested;
+                        userConnections.Add(userConnection);
+                        }
+                    
+                        catch (Exception e)
+                        {
+                        continue;
+                        }
+                }
+                    return userConnections;
+                }
+            
+            
+        }
+
+        public List<ConnectedUser> GetFavContactsOfUser(int userID)
+        {
+            List<ConnectedUser> userConnections = new List<ConnectedUser>();
+
+            using (var _context = new ModelContext())
+            {
+                var contactList = _context.Contacts.Where(contact => contact.RowDeletedBy == null && contact.UserID == userID && contact.IsFavourite==true &&contact.IsRequested == false && contact.IsBlock == false).ToList();
+                foreach (var contact in contactList)
+                {
+                    try
+                    {
+                        var connectedUserInfo = _context.Users.Single(user => user.UserID == contact.ConnectedUserID && user.RowDeletedBy == null && user.IsActive == true);
+                        ConnectedUser userConnection = new ConnectedUser();
+                        userConnection.connectedUserDisplayName = connectedUserInfo.DisplayName;
+                        userConnection.connectedUserID = connectedUserInfo.UserID;
+                        userConnection.connectedUserProfilePic = connectedUserInfo.ProfilePic;
+                        userConnections.Add(userConnection);
+                    }
+
+                    catch (Exception e)
+                    {
+                        continue;
+                    }
+                }
+                return userConnections;
+            }
+
+        }
+
+
+
+        // By girish
         public List<FrontEndContacts> GetMyContacts(int userID)
         {
             try
@@ -137,7 +202,7 @@ namespace CorporateClubs.Services.Services
                         suggestedUser.MutualClubs = userClubs.Count();
                         suggestedUsers.Add(suggestedUser);
                     }
-                    logger.Error("in getting user connections");
+                  
                     return suggestedUsers;
                 }
             }

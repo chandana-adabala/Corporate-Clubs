@@ -139,7 +139,15 @@
 
         }
         .attachmentArea{
-
+            .attachments{
+              width: fit-content;
+              display: -webkit-inline-box;
+              padding: 0.2rem;
+              font-size: 0.8rem;
+              margin: 0.5rem;
+              background-color: #e6e6e6;
+              border-radius: 32px;
+            }
         }
     }
 }

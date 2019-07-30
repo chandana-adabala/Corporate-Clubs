@@ -5,6 +5,9 @@ namespace CorporateClubs.Services.Interfaces
 {
     public interface IConnections
     {
+
+        List<ConnectedUser> GetAllContactsOfUser(int userID);
+        List<ConnectedUser> GetFavContactsOfUser(int userID);
         bool AddContact(int ConnectedUserID, int requestID);
         List<FrontEndContacts> GetMyContacts(int userID);
         List<FrontEndContacts> GetMySuggestions(int userID);

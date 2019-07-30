@@ -12,9 +12,56 @@ namespace CorporateClubs.Models.Models
         public int count { get; set; }
     }
 
-    //user modals
+    //conversation models  - by chandana
+
+    public class MessageSenderInfo
+    {
+        public int userID;
+        public int clubID;
+        public string message;
+        public DateTimeOffset postedOn;
+        public string userName;
+        public string profilePic;
+        public string[] attachmentUrls;
+        public string[] attachmentNames;
+
+    }
+
+    public class OneToOneMessages
+    {
+
+        public int userID;
+        public int connectedUserID;
+        public string message;
+        public DateTimeOffset postedOn;
+        public string userName;
+        public string connectedUserName;
+        public string profilePic;
+        public string[] attachmentUrls;
+        public string[] attachmentNames;
+    }
+
+    // connection models - by chandana
+
+    public class ConnectedUser    {
+        
+        public int connectedUserID;
+        public string connectedUserProfilePic;
+        public string connectedUserDisplayName;
+        public bool isRequested;
+        //public string recentMsg;
+        //public string recentMsgTime;
+    }
+
+    public class UserConnection
+    {
+        public int userID;
+        public string connectionID;
+    }
 
 
+    
+    //user modals - by girish
 
 
     public class userTypechangeReason

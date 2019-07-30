@@ -69,7 +69,7 @@ return{
 export const fetchContacts = ()=>{
     return function(dispatch){
         const headers = { 'Authorization': 'Bearer ' + getToken() };
-        console.log("fetch call");
+         //("fetch call");
         dispatch(loadingStarted())
         return fetch(url+'api/connection/getmycontacts',{headers:headers})
         .then(data => data.json())
@@ -77,7 +77,7 @@ export const fetchContacts = ()=>{
             if(data.message == "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(fetchUserContacts(data));
                 dispatch(loadingEnded())
             }
@@ -91,7 +91,7 @@ export const fetchContacts = ()=>{
 export const fetchSuggestions = ()=>{
     return function(dispatch){
         const headers = { 'Authorization': 'Bearer ' + getToken() };
-        console.log("fetch call");
+         //("fetch call");
         dispatch(loadingStarted())
         return fetch(url+'api/connection/getmysuggestions',{headers:headers})
         .then(data => data.json())
@@ -99,7 +99,7 @@ export const fetchSuggestions = ()=>{
             if(data.message == "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(fetchUserSuggestions(data));
                 dispatch(loadingEnded())
             }
@@ -112,12 +112,12 @@ export const fetchSuggestions = ()=>{
 
 export const addNewConnection = (requestID)=>{
     return function(dispatch){
-        console.log("fetch call");
+         //("fetch call");
         dispatch(loadingStarted())
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch(url+'api/connection/addcontact/'+requestID, {method: "post",headers:{'Authorization': 'Bearer ' + getToken()}})
         .then(response => {
-            debugger;
+             
             if (!response.ok) {
                 throw new Error("Fetch Failed");
             } else {
@@ -128,7 +128,7 @@ export const addNewConnection = (requestID)=>{
                     if(data.message == "Not Found"){
                         throw new Error("User Not Found!");
                     }else{
-                        console.log(data);
+                         //(data);
                         dispatch(fetchUserSuggestions(data));
                         dispatch(loadingEnded())
                     }

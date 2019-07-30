@@ -78,14 +78,14 @@ class AddUser extends React.Component<any, any>{
     addClub(event)
 
     {
-        debugger; 
+          
         var selectedClubs=this.state.selectedClubs;
         selectedClubs[event.currentTarget.id]=event.target.textContent;
         this.setState({selectedClubs:selectedClubs,clubSelection:"",displayClubs:this.props.allClubs});
     }
     removeClub(event)
     {
-        debugger;
+         
         var selectedClubs=this.state.selectedClubs;
         delete selectedClubs[event.currentTarget.id];
         this.setState({selectedClubs:selectedClubs});
@@ -113,7 +113,7 @@ class AddUser extends React.Component<any, any>{
 
 changeDisplayClubs(event)
 {
-    debugger;
+     
 var displayClubs=this.props.allClubs;
 displayClubs=displayClubs.filter(club=>club.clubTitle.toLowerCase().includes(event.target.value.toLowerCase()))
 this.setState({clubSelection:event.target.value,displayClubs:displayClubs})

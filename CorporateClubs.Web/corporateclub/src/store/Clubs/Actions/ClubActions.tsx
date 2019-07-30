@@ -141,19 +141,19 @@ function filtrationSuccess(payload:IClubMembersList[]):ActionReturnType
 
 
 export const FetchUsers =()=>{
-    debugger;
+      
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
-        console.log("fetch call");
+         //("fetch call");
         return fetch(url+'api/Users/GetAllUsers',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(DetailsOfUser(data));
                 dispatch(loadingEnded())
             }
@@ -163,19 +163,19 @@ export const FetchUsers =()=>{
     }
 }
 export const FetchMembers =()=>{
-    debugger;
+      
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
-        console.log("fetch call");
+         //("fetch call");
         return fetch(url+'api/clubs/getallclubsofusers',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(DetailsOfMembers(data));
                 dispatch(loadingEnded())
             }
@@ -187,19 +187,19 @@ export const FetchMembers =()=>{
 
 
 export const FetchClubMembersList =()=>{
-    debugger;
+      
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
         const headers = { 'Authorization': 'Bearer ' + getToken() };
-        console.log("fetch call");
+         //("fetch call");
         return fetch(url+'api/clubs/getclubmemberslist',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(clubMembersListFetch(data));
                 dispatch(loadingEnded())
             }
@@ -210,16 +210,16 @@ export const FetchClubMembersList =()=>{
 
 export const cancelRequest=(clubID,userID)=>
 {
-    debugger;
+      
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
         return fetch(url+'api/clubs/CancelRequest/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
             }else{
-                console.log(response.status);
+                 //(response.status);
                 dispatch(requestChanged(response.statusText));
                 dispatch(loadingEnded())
             }
@@ -230,9 +230,9 @@ export const cancelRequest=(clubID,userID)=>
 
 export const makeRequest=(clubID,userID)=>
 {
-    debugger;
+       
     return function(dispatch){
-        debugger;
+           
         // dispatch(loadingStarted())
         return fetch(url+'api/clubs/MakeRequest/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
@@ -250,16 +250,16 @@ export const makeRequest=(clubID,userID)=>
 
 export const removeUser=(clubID,userID)=>
 {
-    debugger;
+      
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
         return fetch(url+'api/clubs/removeuser/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
             }else{
-                console.log(response.status);
+                 //(response.status);
                 dispatch(userDeleted(response.statusText));
                 dispatch(loadingEnded())
             }
@@ -270,16 +270,16 @@ export const removeUser=(clubID,userID)=>
 
 export const addUserToPublicClub=(clubID,userID)=>
 {
-    debugger;
+      
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
         return fetch(url+'api/clubs/AddToPublicClub/'+clubID+'/'+userID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("User Not Found!");
             }else{
-                console.log(response.status);
+                 //(response.status);
                 dispatch(userAdded(response.statusText));
                 dispatch(loadingEnded())
             }
@@ -290,9 +290,9 @@ export const addUserToPublicClub=(clubID,userID)=>
 
 export function addClub(newClub:INewClub,formData:FormData|null)
 {
-    debugger;
+      
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
         return fetch(url+'api/clubs/addclub',{method:"post",body:JSON.stringify(newClub),headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(data => data.json())
@@ -317,16 +317,16 @@ export function addClub(newClub:INewClub,formData:FormData|null)
 
 export function deactivateClub(clubID:number,reason:string)
 {
-    debugger;
+      
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
         return fetch(url+'api/clubs/makeclubdeactive/'+clubID,{method:"put",headers:{'Content-Type': 'application/json','Authorization': 'Bearer ' + getToken()}})
         .then(response =>{
             if(!response.ok){
                 throw new Error("FetchFailed!");
             }else{
-                console.log(response.status);
+                 //(response.status);
                 dispatch(deactivateSuccess(response.statusText));
                 dispatch(loadingEnded())
             }

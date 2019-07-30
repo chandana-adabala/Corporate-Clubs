@@ -37,11 +37,11 @@ class ChangeContactDetails extends React.Component<any, any>{
     this.state = {mobileNumber:this.props.User.mobileNumber,"email":this.props.User.email,"address":this.props.User.address};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    debugger;
+     
       }
 // componentDidUpdate()
 // {
-//     debugger;
+//      
 //     this.state = {mobileNumber:this.props.User.mobileNumber,"email":this.props.User.email,"address":this.props.User.address};
 // }
 
@@ -49,12 +49,12 @@ class ChangeContactDetails extends React.Component<any, any>{
  async handleSubmit(event)
   {
    const User:IUser={...this.props.User}
-   console.log(User,"event")
+    //(User,"event")
    User.mobileNumber=this.state.mobileNumber;
    User.email=this.state.email;
    User.address=this.state.address;
-   debugger;
-   console.log(User)
+    
+    //(User)
    await this.props.dispatch(UpdateUserDetails(User,"contactdetails"));
    await this.props.dispatch(FetchProfileDetails())
   }
@@ -68,11 +68,11 @@ class ChangeContactDetails extends React.Component<any, any>{
     this.setState({email:event.target.value})
     if(event.target.name=="address")
     this.setState({address:event.target.value})
-    console.log(this.state)
+     //(this.state)
   }
 
     render() {
-        debugger;
+         
         return (
             <div id="ChangeContactDetailsModal" >
                 { <div id="content">
@@ -110,9 +110,9 @@ class ChangeContactDetails extends React.Component<any, any>{
 
 
 function mapStatetoProps(state) {
-    debugger;
-    console.log("changecontactDetails");
-    debugger;
+     
+     //("changecontactDetails");
+     
     return {
         User: state.ProfilePageReducer.User,
         error:state.ProfilePageReducer.error,

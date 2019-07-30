@@ -76,7 +76,7 @@ function FetchFavouriteClubsSuccess(Payload: IClubs[]): ActionReturnType {
 }
 
 function ChangeDetailsSuccess(Payload: IUsers): ActionReturnType {
-    debugger;
+      
     return {
         type: ActionsTypes.ChangeSuccessful,
         Payload: { User: Payload }
@@ -119,18 +119,18 @@ function FetchDetailsOfAllClubs(Payload:IClubs[]):ActionReturnType
 
 export function FetchProfileDetails() {
     return (dispatch) => {
-        console.log("fetch call");
-        debugger;
+         //("fetch call");
+          
         dispatch(loadingStarted())
         const headers = { 'Authorization': 'Bearer ' + getToken() };
         return fetch(url+'api/users/getuserbytoken',{headers:headers})
             .then(data => data.json())
             .then(data => {
-                debugger;
+                  
                 if (data.message === "Not Found") {
                     throw new Error("User Not Found!");
                 } else {
-                    console.log(data);
+                     //(data);
                     dispatch(FetchProfileDetailsSuccess(data));
                     dispatch(loadingEnded())
                 }
@@ -142,18 +142,18 @@ export function FetchProfileDetails() {
 
 
 export function UpdateUserDetails(user: IUsers, sender: string) {
-    debugger;
+      
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     switch (sender) {
         case "contactdetails":
             return (dispatch) => {
-                debugger;
+                  
                 dispatch(loadingStarted())
-                console.log("fetch call");
-                console.log(JSON.stringify(user));
+                 //("fetch call");
+                 //(JSON.stringify(user));
                 return fetch(url+'api/users/changecontactdetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken()} })
                     .then(response => {
-                        debugger;
+                          
                         if (!response.ok) {
                             throw new Error("Fetch Failed");
                         } else {
@@ -165,13 +165,13 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
             }
         case "personaldetails":
             return (dispatch) => {
-                debugger;
+                  
                 dispatch(loadingStarted())
-                console.log("fetch call");
-                console.log(JSON.stringify(user));
+                 //("fetch call");
+                 //(JSON.stringify(user));
                 return fetch(url+'api/users/ChangePersonalDetails', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken()} })
                     .then(response => {
-                        debugger;
+                          
                         if (!response.ok) {
                             throw new Error("Fetch Failed");
                         } else {
@@ -183,13 +183,13 @@ export function UpdateUserDetails(user: IUsers, sender: string) {
             }
         case "professionaldetails":
             return (dispatch) => {
-                debugger;
+                  
                 dispatch(loadingStarted())
-                console.log("fetch call");
-                console.log(JSON.stringify(user));
+                 //("fetch call");
+                 //(JSON.stringify(user));
                 return fetch(url+'api/users/ChangeProfessionalSummary', { method: "put", body: JSON.stringify(user), headers: { "content-type": "application/json",'Authorization': 'Bearer ' + getToken() } })
                     .then(response => {
-                        debugger;
+                          
                         if (!response.ok) {
                             throw new Error("Fetch Failed");
                         } else {
@@ -214,7 +214,7 @@ export function FetchFavouriteClubDetails() {
                 if (data.message === "Not Found") {
                     throw new Error("Fetch Failed!");
                 } else {
-                    console.log(data);
+                     //(data);
                     dispatch(FetchFavouriteClubsSuccess(data));
                     dispatch(loadingEnded())
                 }
@@ -226,19 +226,19 @@ export function FetchFavouriteClubDetails() {
 
 
 export const FetchUsers =()=>{
-    debugger;
+      
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
-        debugger;
+          
         dispatch(loadingStarted())
-        console.log("fetch call");
+         //("fetch call");
         return fetch(url+'api/Users/GetAllUsers',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
                 throw new Error("Fetch Failed!");
             }else{
-                console.log(data);
+                 //(data);
                 dispatch(DetailsOfUser(data));
                 dispatch(loadingEnded())
             }
@@ -258,7 +258,7 @@ export function FetchAllClubDetails() {
                 if (data.message === "Not Found") {
                     throw new Error("Fetch Failed");
                 } else {
-                    console.log(data);
+                     //(data);
                     dispatch(FetchDetailsOfAllClubs(data));
                     dispatch(loadingEnded())
                 }

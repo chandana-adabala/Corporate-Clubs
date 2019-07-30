@@ -28,7 +28,7 @@ export class NewConnection extends React.Component<any, any>
 
     onSearchChange(event)
     {
-        debugger;
+         
         let selecteduserSuggestions=this.props.userSuggestions.filter(userSuggestion=>userSuggestion.displayName.toLowerCase().includes(event.target.value.toLowerCase()));
         this.setState({selecteduserSuggestions:selecteduserSuggestions,search:event.target.value})
     }
@@ -38,7 +38,7 @@ export class NewConnection extends React.Component<any, any>
                 <div className="modal-content">
                     <div className='header'>
                         <span className="newConnectionHeading">New Connection</span>
-                        <Link to="/connections">
+                        <Link to={this.props.from}>
                             <Icon icon={ic_close} size={30} />
                         </Link>
                     </div>
@@ -71,7 +71,7 @@ class SuggestedUser extends React.Component<any, any>
 
     newConnectionRequest()
     {
-        debugger;
+         
       this.props.dispatch(addNewConnection(this.props.userID));
     }
     

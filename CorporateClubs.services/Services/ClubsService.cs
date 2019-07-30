@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CorporateClubs.Services.Models;
 using CorporateClubs.Models.Models;
 
 namespace CorporateClubs.Services.Services
@@ -34,13 +33,13 @@ namespace CorporateClubs.Services.Services
 
             using (var _context = new ModelContext())
             {
-                var clubs = _context.ClubMembers.Where(c => c.UserID == userID).Select(c => new
+                var clubs = _context.ClubMembers.Where(c => c.UserID == userID && c.RowDeletedBy == null).Select(c => new
                 {
                     clubid = c.ClubID
                 });
                 foreach (var club in clubs)
                 {
-                    Club GetClub = _context.Clubs.Single(c => c.ClubID == club.clubid);
+                    Club GetClub = _context.Clubs.Single(c => c.ClubID == club.clubid && c.RowDeletedBy == null);
                     ClubDetails.Add(GetClub);
                 }
 
@@ -55,7 +54,7 @@ namespace CorporateClubs.Services.Services
 
             using (var _context = new ModelContext())
             {
-                Club club = _context.Clubs.Single(c => c.ClubID == clubID);
+                Club club = _context.Clubs.Single(c => c.ClubID == clubID && c.RowDeletedBy == null);
 
                 return club;
 
@@ -73,7 +72,7 @@ namespace CorporateClubs.Services.Services
 
             using (var _context = new ModelContext())
             {
-                var clubs = _context.ClubMembers.Where(c => c.UserID == userID && c.IsFavouriteClub == true).Select(c => new
+                var clubs = _context.ClubMembers.Where(c => c.UserID == userID && c.IsFavouriteClub == true && c.RowDeletedBy == null).Select(c => new
                 {
                     clubid = c.ClubID
                 });

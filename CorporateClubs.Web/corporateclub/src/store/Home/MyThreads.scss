@@ -1,0 +1,113 @@
+$bodyColor:#e3e5e6;
+$homeBorderStyle: 0.08rem solid #dad9d9;
+.threadContainer{
+  a{
+    text-decoration: none
+  }
+  .ms-Label{
+    display:none;
+  }
+    flex-grow: 2;
+    overflow: auto;
+    font-family: Ebrima;
+
+    .threadBar{
+ 
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.6rem;
+        margin : 2rem 1rem 0rem 2rem;
+        
+        .createBtn{
+          height:3rem;
+            background-color: #76618b;
+        color: white;
+        border-radius: 0.4rem;
+        width: 7rem;
+        a:-webkit-any-link{
+          text-decoration: none;
+          color:white;
+        }
+        }
+    }
+
+    .threadBody{
+        grid-template-columns: 32% 68%;
+        box-sizing: border-box;
+        border: $homeBorderStyle;
+        display: grid;
+      
+        margin-left: 2.4%;
+        margin-right: 1%;
+        margin-top: 1.5%;
+        margin-bottom: 2rem;
+      
+        .threads{
+            border: $homeBorderStyle;
+            display: grid;
+            grid-template-rows: 3rem 2rem auto 2rem 16.5rem;
+            box-sizing: border-box;
+            overflow-y:auto;
+            max-height:44rem;
+          .searchBar{
+            border-bottom: $homeBorderStyle;
+            background-color: #fff;
+            color: rgb(227, 229, 230);
+            padding: 0.5rem 0rem 0.5rem 1rem;
+
+           
+            .searchBox {
+              
+            
+              border: 0;
+              padding: 0.5rem 0.5rem 0.5rem 0;
+              flex: 1;
+              padding-left: 1rem;
+              width: 90%;
+              &:focus{
+                outline:none
+            }
+            }
+
+          }
+
+          .favTitle{
+            padding:0.5rem 0rem 1rem 1rem;
+            font-size: 0.6rem;
+          }
+         .favThreads,.myThreads{
+          border-bottom: $homeBorderStyle;
+          background-color: white;
+              h4{
+                color: #a4aab2;
+                font-family: sans-serif;
+                padding: 5rem;
+            
+              }
+         }
+         
+         
+        }
+        .threadArena{
+          border: $homeBorderStyle;
+          border-left: 0;
+          height: 40rem;
+         
+        }
+       
+        .threads::-webkit-scrollbar {
+          width: 0.3rem;
+        }
+        
+        .threads::-webkit-scrollbar-thumb {
+          border-radius: 0.8rem;
+          background-color: $bodyColor;
+       
+        }
+        
+      
+    }
+}
+
+
+

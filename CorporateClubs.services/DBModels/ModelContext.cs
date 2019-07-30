@@ -1,4 +1,5 @@
 ﻿
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -15,15 +16,17 @@ namespace CorporateClubs.Services.Models
         public DbSet<Club> Clubs { get; set; }
         public DbSet<ClubMembers> ClubMembers { get; set; }
         public DbSet<Conversation> Conversation { get; set; }
+        public DbSet<OneToOneConversation> OneToOneConversation { get; set; }
         public DbSet<Contacts> Contacts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("C:\\Users\\ramgirish.k\\copy of newrepo\\Corporate-Clubs\\CorporateClubs.services\\appsettings.json")
+            .AddJsonFile("C:\\Users\\chandana.a\\source\\repos\\AprojectCorporateClubs\\Corporate-Clubs\\CorporateClubs.services\\appsettings.json")
             .Build();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("CorporateClubsDB"));
+            //AprojectCorporateClubs\Corporate-Clubs\CorporateClubs.services
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,7 +38,7 @@ namespace CorporateClubs.Services.Models
                 .HasKey(o => new { o.UserID, o.ConnectedUserID })
                 ;
             modelBuilder.Entity<Conversation>()
-                .HasKey(o => new { o.Timestamp, o.ClubID, o.UserID })
+                .HasKey(o => new { o.PostedOn, o.ClubID, o.UserID })
                 ;
 
             modelBuilder.Entity<Conversation>()
@@ -45,6 +48,22 @@ namespace CorporateClubs.Services.Models
                 ;
 
             modelBuilder.Entity<Conversation>()
+                .HasOne(typeof(Club))
+                .WithMany()
+                .HasForeignKey("ClubID")
+                ;
+
+            modelBuilder.Entity<OneToOneConversation>()
+                .HasKey(o => new { o.PostedOn, o.ConnectedUserID, o.UserID })
+                ;
+
+            modelBuilder.Entity<OneToOneConversation>()
+                .HasOne(typeof(Users))
+                .WithMany()
+                .HasForeignKey("UserID")
+                ;
+
+            modelBuilder.Entity<OneToOneConversation>()
                 .HasOne(typeof(Club))
                 .WithMany()
                 .HasForeignKey("ClubID")
@@ -75,10 +94,14 @@ namespace CorporateClubs.Services.Models
 
 
             modelBuilder.Entity<Conversation>()
-                .Property(p => p.Timestamp)
+                .Property(p => p.PostedOn)
                 .ValueGeneratedOnAdd()
                 ;
 
+            modelBuilder.Entity<OneToOneConversation>()
+               .Property(p => p.PostedOn)
+               .ValueGeneratedOnAdd()
+               ;
 
             modelBuilder.Entity<Users>()
                 .HasOne(typeof(Users))
@@ -132,6 +155,20 @@ namespace CorporateClubs.Services.Models
                .HasForeignKey("RowDeletedBy")
                .OnDelete(DeleteBehavior.Restrict)
                ;
+
+            modelBuilder.Entity<OneToOneConversation>()
+               .HasOne(typeof(Users))
+               .WithMany()
+               .HasForeignKey("RowCreatedBy")
+               .OnDelete(DeleteBehavior.Restrict)
+               ;
+
+            modelBuilder.Entity<OneToOneConversation>()
+               .HasOne(typeof(Users))
+               .WithMany()
+               .HasForeignKey("RowDeletedBy")
+               .OnDelete(DeleteBehavior.Restrict)
+               ;
             modelBuilder.Entity<Club>()
               .HasOne(typeof(Users))
               .WithMany()
@@ -170,6 +207,13 @@ namespace CorporateClubs.Services.Models
                .HasForeignKey("RowModifiedBy")
                .OnDelete(DeleteBehavior.Restrict)
                ;
+
+            modelBuilder.Entity<OneToOneConversation>()
+              .HasOne(typeof(Users))
+              .WithMany()
+              .HasForeignKey("RowModifiedBy")
+              .OnDelete(DeleteBehavior.Restrict)
+              ;
             modelBuilder.Entity<ClubMembers>()
                .HasOne(typeof(Users))
                .WithMany()

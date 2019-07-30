@@ -6,15 +6,17 @@ export enum ActionTypes{
     USER_NOT_EXIST='USER_NOT_EXIST',
     FETCH_FAILED='FETCH_FAILED',
     LOADING_STARTED="LOADING_STARTED",
-    LOADING_ENDED='LOADING_ENDED'
+    LOADING_ENDED='LOADING_ENDED',
+    STORE_CONNECTION_ID = 'STORE_CONNECTION_ID',
 }
 
 export interface PayloadType {
     LoggedUser?: IUsers,
-    message?: string
-    error?:string
-    isLoading?: boolean
-    Status?: string
+    message?: string,
+    error?:string,
+    isLoading?: boolean,
+    Status?: string,
+    connection?:any
 
 }
 
@@ -67,21 +69,29 @@ export function loadingEnded():ActionReturnType
        Payload: {isLoading:false}
     }
 }
+
+export const storeConnectionID = (connection)=>{
+       
+    return{
+        type:ActionTypes.STORE_CONNECTION_ID,
+        Payload:connection
+    }
+}
+
 export function GetLoggedUserDetails()
 {
-    debugger;
+      
     const headers = { 'Authorization': 'Bearer ' + getToken() };
     return function(dispatch){
         dispatch(loadingStarted());
-        debugger;
+          
         return fetch('http://localhost:3333/api/users/getuserbytoken',{headers:headers})
         .then(data => data.json())
         .then(data =>{
             if(data.message === "Not Found"){
                 throw new Error("User Not Found!");
             }else{
-                console.log(data);
-                debugger;
+                 //(data);
                 dispatch(FetchLoggedUserDetails(data));
                 dispatch(loadingEnded());
             }

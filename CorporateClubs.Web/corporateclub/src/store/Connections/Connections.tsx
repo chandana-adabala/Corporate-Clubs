@@ -27,15 +27,15 @@ class Connections extends React.Component<any,any>{
   }
   componentWillMount()
   {
-    debugger;
+     
     this.props.dispatch(fetchContacts());
     this.props.dispatch(fetchSuggestions());
 
   }
 
   onlyUnique(value, index, self) {
-    debugger;
-    console.log(self.indexOf(value));
+     
+     //(self.indexOf(value));
     return self.indexOf(value) === index;
   }
 
@@ -43,7 +43,7 @@ class Connections extends React.Component<any,any>{
 
   addStatusProperty(event)
 {
-  debugger;
+   
   var role=this.state.role;
   var searchBar=this.state.searchBar;
   var status=this.state.status;
@@ -56,7 +56,7 @@ class Connections extends React.Component<any,any>{
 
 addRoleProperty(event)
 {
-  debugger;
+   
   var role=this.state.role;
   var searchBar=this.state.searchBar;
   var status=this.state.status;
@@ -69,7 +69,7 @@ addRoleProperty(event)
 
 searchBarHandle(event)
 {
-  debugger;
+   
   var role=this.state.role;
   var status=this.state.status;
   var searchBar=event.target.value.toLowerCase();
@@ -80,7 +80,7 @@ searchBarHandle(event)
 
 removeStatusProperty(event)
 {
-  debugger;
+   
   var role=this.state.role;
   var searchBar=this.state.searchBar;
   var status=this.state.status;
@@ -92,7 +92,7 @@ removeStatusProperty(event)
 
 removeRoleProperty(event)
 {
-  debugger;
+   
   var role=this.state.role;
   var searchBar=this.state.searchBar;
   var status=this.state.status;
@@ -111,7 +111,7 @@ handleReset()
 }
 
   render() {
-    debugger;
+     
     return(
       this.props.userContacts==[]?<EmptyConnection/>:
         <div className="connections">
@@ -166,7 +166,7 @@ handleReset()
       <div className="connection_tiles">  
       {this.props.filtereduserContacts.map(userContact=>(<User displayName={userContact.displayName} email={userContact.email} mobileNumber={userContact.mobileNumber} mutualClubs={userContact.mutualClubs} about={userContact.about} profilePic={userContact.profilePic} />))}
       </div>  
-      <Route  path="/connections/newconnection" component={()=><NewConnection userSuggestions={this.props.userSuggestions}/>}/>
+      <Route  path="/connections/newconnection" component={()=><NewConnection userSuggestions={this.props.userSuggestions} from="/connections"/>}/>
         </div>
        
         

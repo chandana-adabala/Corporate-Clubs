@@ -48,7 +48,7 @@ class Profile_Head extends React.Component<any, any>{
     }
 
     componentDidMount() {
-        debugger;
+         
         this.props.dispatch(FetchProfileDetails());
 
     }
@@ -142,7 +142,7 @@ class Profile_Head extends React.Component<any, any>{
 }
 
 function mapStateToProps(State) {
-    debugger;
+     
     return {
         error: State.ProfilePageReducer.error,
         message: State.ProfilePageReducer.message,
